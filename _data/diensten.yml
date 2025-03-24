@@ -1,6 +1,15 @@
 # OpenDiensten - Lijst van open source diensten voor community organisatie
 # YAML-bestand voor gebruik in Jekyll
 
+- naam: Riseup Etherpad
+  beschrijving: Etherpad omgeving beschikbaar gesteld door Riseup
+  categorie: document
+  url: https://pad.riseup.net/
+  favicon: https://www.google.com/s2/favicons?domain=pad.riseup.net&sz=64
+  eu_hosting: false
+  zelf_hosten: false
+  status: live
+
 - naam: Listmonk
   beschrijving: Open source nieuwsbriefdienst
   categorie: nieuwsbrief
