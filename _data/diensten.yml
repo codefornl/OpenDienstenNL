@@ -3,6 +3,7 @@
 
 - naam: Jitsi Meet
   aanbieder: Stichting Pleio
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=pleio.nl&sz=64
   beschrijving: Open source videoconferentie gehost door Pleio
   categorie: video
   url: https://videobellen.pleio.nl/
@@ -16,7 +17,7 @@
   beschrijving: Etherpad omgeving beschikbaar gesteld door Riseup
   categorie: document
   url: https://pad.riseup.net/
-  favicon: https://www.google.com/s2/favicons?domain=pad.riseup.net&sz=64
+  favicon: https://www.google.com/s2/favicons?domain=etherpad.org&sz=64
   eu_hosting: false
   zelf_hosten: false
   status: live
