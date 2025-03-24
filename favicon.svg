@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Definities voor gradient en schaduwen -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4158D0" />
+      <stop offset="50%" stop-color="#C850C0" />
+      <stop offset="100%" stop-color="#FFCC70" />
+    </linearGradient>
+    
+    <!-- Filter voor subtiele schaduwen -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.3" />
+    </filter>
+  </defs>
+  
+  <!-- Basis vierkant met licht afgeronde hoekjes -->
+  <rect x="2" y="2" width="60" height="60" rx="8" ry="8" fill="url(#gradient)" />
+  
+  <!-- Drie gevulde vierkantjes met schaduwen -->
+  <rect x="12" y="12" width="16" height="16" rx="3" ry="3" fill="white" fill-opacity="0.9" filter="url(#shadow)" />
+  <rect x="12" y="36" width="16" height="16" rx="3" ry="3" fill="white" fill-opacity="0.9" filter="url(#shadow)" />
+  <rect x="36" y="36" width="16" height="16" rx="3" ry="3" fill="white" fill-opacity="0.9" filter="url(#shadow)" />
+  
+  <!-- Rechtsboven vierkant met alleen een dikke rand (open) en schaduw -->
+  <rect x="36" y="12" width="16" height="16" rx="3" ry="3" fill="none" stroke="white" stroke-width="3" filter="url(#shadow)" />
+</svg>
