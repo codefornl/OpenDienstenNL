@@ -1,0 +1,114 @@
+# OpenDiensten - Lijst van open source diensten voor community organisatie
+# YAML-bestand voor gebruik in Jekyll
+
+- naam: Listmonk
+  beschrijving: Open source nieuwsbriefdienst
+  categorie: nieuwsbrief
+  url: https://listmonk.app/
+  favicon: https://www.google.com/s2/favicons?domain=listmonk.app&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+
+- naam: Plone
+  beschrijving: Veilig en gebruiksvriendelijk CMS
+  categorie: website
+  url: https://plone.com/cloud
+  favicon: https://www.google.com/s2/favicons?domain=plone.com&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+
+- naam: Element
+  beschrijving: Beveiligde chat op basis van Matrix
+  categorie: chat
+  url: https://element.io/
+  favicon: https://www.google.com/s2/favicons?domain=element.io&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+
+- naam: Jitsi Meet
+  beschrijving: Open source videoconferentie
+  categorie: video
+  url: https://jitsi.org/
+  favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+
+- naam: Excalidraw
+  beschrijving: Virtuele whiteboard voor schetsen
+  categorie: whiteboard
+  url: https://excalidraw.com/
+  favicon: https://www.google.com/s2/favicons?domain=excalidraw.com&sz=64
+  eu_hosting: false
+  zelf_hosten: true
+
+- naam: CryptPad
+  beschrijving: Veilige en versleutelde documenten
+  categorie: document
+  url: https://cryptpad.fr/
+  favicon: https://www.google.com/s2/favicons?domain=cryptpad.fr&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+
+- naam: Framadate
+  beschrijving: Open source planning en agenda
+  categorie: agenda
+  url: https://framadate.org/
+  favicon: https://www.google.com/s2/favicons?domain=framadate.org&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+
+- naam: Taiga
+  beschrijving: Open source projectmanagement
+  categorie: project
+  url: https://taiga.io/
+  favicon: https://www.google.com/s2/favicons?domain=taiga.io&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+
+- naam: Nextcloud
+  beschrijving: Veilige bestandsopslag en -deling
+  categorie: opslag
+  url: https://nextcloud.com/
+  favicon: https://www.google.com/s2/favicons?domain=nextcloud.com&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+
+- naam: BigBlueButton
+  beschrijving: Open source webconferentie platform
+  categorie: video
+  url: https://bigbluebutton.org/
+  favicon: https://www.google.com/s2/favicons?domain=bigbluebutton.org&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+
+- naam: OnlyOffice
+  beschrijving: Online documentbewerking en samenwerking
+  categorie: document
+  url: https://www.onlyoffice.com/
+  favicon: https://www.google.com/s2/favicons?domain=onlyoffice.com&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+
+- naam: Rocket.Chat
+  beschrijving: Open source team communicatie
+  categorie: chat
+  url: https://rocket.chat/
+  favicon: https://www.google.com/s2/favicons?domain=rocket.chat&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+
+- naam: OpenBoard
+  beschrijving: Open source interactief whiteboard
+  categorie: whiteboard
+  url: https://openboard.ch/
+  favicon: https://www.google.com/s2/favicons?domain=openboard.ch&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+
+- naam: Wekan
+  beschrijving: Open source kanban board
+  categorie: project
+  url: https://wekan.github.io/
+  favicon: https://www.google.com/s2/favicons?domain=wekan.github.io&sz=64
+  eu_hosting: false
+  zelf_hosten: true

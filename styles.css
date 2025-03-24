@@ -1,0 +1,102 @@
+/* Reset en basis stijlen */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap');
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    height: 100vh;
+    background: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2070') center center no-repeat;
+    background-position: fixed;
+}
+
+.desktop {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 20px;
+    backdrop-filter: blur(8px);
+    /* background-color: rgba(255, 255, 255, 0.4); */
+}
+
+/* Header stijlen */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 3.75rem; /* 2.5rem * 1.5 */
+    color: #2c3e50;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+/* Iconen container */
+.icons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 60px; /* 40px * 1.5 */
+    flex-grow: 1;
+    padding: 60px; /* 40px * 1.5 */
+}
+
+/* Icoon stijlen */
+.icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 165px; /* 110px * 1.5 */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 22px 15px; /* 15px * 1.5, 10px * 1.5 */
+    border-radius: 18px; /* 12px * 1.5 */
+}
+
+.icon:hover {
+    transform: translateY(-7.5px); /* -5px * 1.5 */
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 7.5px 22.5px rgba(0, 0, 0, 0.1); /* 5px * 1.5, 15px * 1.5 */
+}
+
+.icon img {
+    width: 72px; /* 48px * 1.5 */
+    height: 72px; /* 48px * 1.5 */
+    margin-bottom: 15px; /* 10px * 1.5 */
+    border-radius: 12px; /* 8px * 1.5 */
+    padding: 6px; /* 4px * 1.5 */
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1); /* 2px * 1.5, 10px * 1.5 */
+    transition: all 0.3s;
+}
+
+.icon:hover img {
+    transform: scale(1.1);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); /* 4px * 1.5, 12px * 1.5 */
+}
+
+.icon span {
+    text-align: center;
+    font-size: 1.35rem; /* 0.9rem * 1.5 */
+}
+
+/* Footer stijlen */
+footer {
+    text-align: center;
+    padding: 22px; /* 15px * 1.5 */
+    font-size: 1.35rem; /* 0.9rem * 1.5 */
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 12px; /* 8px * 1.5 */
+    margin: 0 30px 30px; /* 20px * 1.5 */
+    backdrop-filter: blur(5px);
+}
