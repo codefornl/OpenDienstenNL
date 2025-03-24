@@ -12,7 +12,8 @@ body {
     color: #333;
     height: 100vh;
     background: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2070') center center no-repeat;
-    background-position: fixed;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .desktop {
