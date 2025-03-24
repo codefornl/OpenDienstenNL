@@ -16,9 +16,17 @@ title: OpenDiensten
         <img src="{{ dienst.favicon }}" alt="{{ dienst.naam }}">
         <span>{{ dienst.naam }}</span>
         <div class="icon-label">{{ dienst.categorie }}</div>
+        <div class="provider">
         {% if dienst.eu_hosting %}
-            <div class="eu-flag-indicator" title="Gehost in de EU">🇪🇺</div>
+            <span class="eu-flag">🇪🇺</span>
+        {% else %}
+            <span class="non-eu-flag" title="Niet in EU gehost">
+            <span class="eu-flag-base">🇪🇺</span>
+            <span class="prohibited-symbol">✘</span>
+            </span>
         {% endif %}
+        <span class="provider-name">{{ dienst.aanbieder }}</span>
+        </div>
       </a>
     {% endfor %}
   </main>
