@@ -14,6 +14,7 @@
 
 - naam: Etherpad
   aanbieder: Riseup
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=riseup.net&sz=64
   beschrijving: Etherpad omgeving beschikbaar gesteld door Riseup
   categorie: document
   url: https://pad.riseup.net/
