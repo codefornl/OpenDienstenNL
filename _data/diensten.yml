@@ -8,6 +8,7 @@
   favicon: https://www.google.com/s2/favicons?domain=listmonk.app&sz=64
   eu_hosting: true
   zelf_hosten: true
+  status: live
 
 - naam: Plone
   beschrijving: Veilig en gebruiksvriendelijk CMS
@@ -16,6 +17,7 @@
   favicon: https://www.google.com/s2/favicons?domain=plone.com&sz=64
   eu_hosting: true
   zelf_hosten: true
+  status: live
 
 - naam: Element
   beschrijving: Beveiligde chat op basis van Matrix
@@ -24,6 +26,7 @@
   favicon: https://www.google.com/s2/favicons?domain=element.io&sz=64
   eu_hosting: true
   zelf_hosten: true
+  status: live
 
 - naam: Jitsi Meet
   beschrijving: Open source videoconferentie
@@ -32,6 +35,7 @@
   favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
   eu_hosting: true
   zelf_hosten: true
+  status: live
 
 - naam: Excalidraw
   beschrijving: Virtuele whiteboard voor schetsen
@@ -40,6 +44,7 @@
   favicon: https://www.google.com/s2/favicons?domain=excalidraw.com&sz=64
   eu_hosting: false
   zelf_hosten: true
+  status: live
 
 - naam: CryptPad
   beschrijving: Veilige en versleutelde documenten
@@ -48,6 +53,7 @@
   favicon: https://www.google.com/s2/favicons?domain=cryptpad.fr&sz=64
   eu_hosting: true
   zelf_hosten: true
+  status: live
 
 - naam: Framadate
   beschrijving: Open source planning en agenda
@@ -56,6 +62,7 @@
   favicon: https://www.google.com/s2/favicons?domain=framadate.org&sz=64
   eu_hosting: true
   zelf_hosten: true
+  status: live
 
 - naam: Taiga
   beschrijving: Open source projectmanagement
@@ -64,6 +71,7 @@
   favicon: https://www.google.com/s2/favicons?domain=taiga.io&sz=64
   eu_hosting: true
   zelf_hosten: true
+  status: live
 
 - naam: Nextcloud
   beschrijving: Veilige bestandsopslag en -deling
@@ -72,6 +80,7 @@
   favicon: https://www.google.com/s2/favicons?domain=nextcloud.com&sz=64
   eu_hosting: true
   zelf_hosten: true
+  status: live
 
 - naam: BigBlueButton
   beschrijving: Open source webconferentie platform
@@ -80,6 +89,7 @@
   favicon: https://www.google.com/s2/favicons?domain=bigbluebutton.org&sz=64
   eu_hosting: true
   zelf_hosten: true
+  status: live
 
 - naam: OnlyOffice
   beschrijving: Online documentbewerking en samenwerking
@@ -88,6 +98,7 @@
   favicon: https://www.google.com/s2/favicons?domain=onlyoffice.com&sz=64
   eu_hosting: true
   zelf_hosten: true
+  status: live
 
 - naam: Rocket.Chat
   beschrijving: Open source team communicatie
@@ -96,6 +107,7 @@
   favicon: https://www.google.com/s2/favicons?domain=rocket.chat&sz=64
   eu_hosting: true
   zelf_hosten: true
+  status: live
 
 - naam: OpenBoard
   beschrijving: Open source interactief whiteboard
@@ -104,6 +116,7 @@
   favicon: https://www.google.com/s2/favicons?domain=openboard.ch&sz=64
   eu_hosting: true
   zelf_hosten: true
+  status: live
 
 - naam: Wekan
   beschrijving: Open source kanban board
@@ -112,3 +125,4 @@
   favicon: https://www.google.com/s2/favicons?domain=wekan.github.io&sz=64
   eu_hosting: false
   zelf_hosten: true
+  status: live

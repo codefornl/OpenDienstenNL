@@ -10,7 +10,8 @@ title: OpenDiensten
   </header>
   
   <main class="icons-container">
-    {% for dienst in site.data.diensten %}
+    {% assign diensten = site.data.diensten | where: 'status', 'live' %}
+    {% for dienst in diensten %}
       <a href="{{ dienst.url }}" class="icon" target="_blank">
         <img src="{{ dienst.favicon }}" alt="{{ dienst.naam }}">
         <span>{{ dienst.naam }}</span>
