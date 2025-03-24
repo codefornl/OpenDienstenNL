@@ -15,6 +15,7 @@ title: OpenDiensten
       <a href="{{ dienst.url }}" class="icon" target="_blank">
         <img src="{{ dienst.favicon }}" alt="{{ dienst.naam }}">
         <span>{{ dienst.naam }}</span>
+        <div class="icon-label">{{ dienst.categorie }}</div>
       </a>
     {% endfor %}
   </main>

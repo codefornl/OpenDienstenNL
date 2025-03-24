@@ -112,3 +112,24 @@ footer {
     margin: 0 30px 30px; /* 20px * 1.5 */
     backdrop-filter: blur(5px);
 }
+
+/* Label voor type dienst */
+.icon-label {
+    font-size: 0.85rem;
+    background-color: rgba(65, 88, 208, 0.8);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-top: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-weight: normal;
+}
+
+/* Verwijder onderstreping van links */
+a.icon {
+    text-decoration: none;
+}
+
+a.icon:hover {
+    text-decoration: none;
+}
