@@ -72,6 +72,15 @@
   zelf_hosten: true
   status: live
 
+- naam: TLDraw
+  beschrijving: Very good free whiteboard
+  categorie: whiteboard
+  url: https://www.tldraw.com/
+  favicon: https://www.google.com/s2/favicons?domain=tldraw.com&sz=64
+  eu_hosting: false
+  zelf_hosten: true
+  status: live
+
 - naam: CryptPad
   beschrijving: Veilige en versleutelde documenten
   categorie: document
