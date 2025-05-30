@@ -25,6 +25,18 @@
   zelf_hosten: true
   status: live
 
+- naam: Jitsi Meet
+  aanbieder: Jitsi
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
+  spoelkeuken_url: https://spoelkeuken.publicspaces.net/tool/Jitsi
+  beschrijving: Open source videoconferentie gehost door Jitsi
+  categorie: video
+  url: https://meet.jit.si/
+  favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
+  eu_hosting: false
+  zelf_hosten: true
+  status: live
+
 - naam: Etherpad
   aanbieder: Riseup
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=riseup.net&sz=64
