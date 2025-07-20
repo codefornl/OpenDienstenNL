@@ -33,6 +33,16 @@ body {
     overflow-y: auto;
 }
 
+.sidebar-logo {
+    text-align: left;
+}
+
+.codefor-logo {
+    height: 32px;
+    width: auto;
+    opacity: 0.8;
+}
+
 .sidebar-header h1 {
     font-size: 1.75rem;
     color: #1a1a1a;

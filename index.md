@@ -5,6 +5,9 @@ title: OpenDiensten
 
 <div class="app-container">
   <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="https://codefor.nl/img/Logo-orange-01.png" alt="Code for NL" class="codefor-logo">
+    </div>
     <header class="sidebar-header">
       <h1>Open Diensten</h1>
       <h2>Open & gratis publiek toegankelijke SaaS omgevingen voor community organisatie</h2>
