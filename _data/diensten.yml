@@ -55,7 +55,7 @@
   favicon: https://www.google.com/s2/favicons?domain=listmonk.app&sz=64
   eu_hosting: true
   zelf_hosten: true
-  status: live
+  status: disabled
 
 - naam: Plone
   beschrijving: Veilig en gebruiksvriendelijk CMS
@@ -64,7 +64,7 @@
   favicon: https://www.google.com/s2/favicons?domain=plone.com&sz=64
   eu_hosting: true
   zelf_hosten: true
-  status: live
+  status: disabled
 
 - naam: Element
   beschrijving: Beveiligde chat op basis van Matrix
@@ -73,7 +73,7 @@
   favicon: https://www.google.com/s2/favicons?domain=element.io&sz=64
   eu_hosting: true
   zelf_hosten: true
-  status: live
+  status: disabled
 
 - naam: Excalidraw
   beschrijving: Virtuele whiteboard voor schetsen
@@ -82,7 +82,7 @@
   favicon: https://www.google.com/s2/favicons?domain=excalidraw.com&sz=64
   eu_hosting: false
   zelf_hosten: true
-  status: live
+  status: disabled
 
 - naam: TLDraw
   beschrijving: Very good free whiteboard
@@ -91,7 +91,7 @@
   favicon: https://www.google.com/s2/favicons?domain=tldraw.com&sz=64
   eu_hosting: false
   zelf_hosten: true
-  status: live
+  status: disabled
 
 - naam: CryptPad
   beschrijving: Veilige en versleutelde documenten
@@ -100,7 +100,7 @@
   favicon: https://www.google.com/s2/favicons?domain=cryptpad.fr&sz=64
   eu_hosting: true
   zelf_hosten: true
-  status: live
+  status: disabled
 
 - naam: Framadate
   beschrijving: Open source planning en agenda
@@ -109,7 +109,7 @@
   favicon: https://www.google.com/s2/favicons?domain=framadate.org&sz=64
   eu_hosting: true
   zelf_hosten: true
-  status: live
+  status: disabled
 
 - naam: Taiga
   beschrijving: Open source projectmanagement
@@ -118,7 +118,7 @@
   favicon: https://www.google.com/s2/favicons?domain=taiga.io&sz=64
   eu_hosting: true
   zelf_hosten: true
-  status: live
+  status: disabled
 
 - naam: Nextcloud
   beschrijving: Veilige bestandsopslag en -deling
@@ -127,7 +127,7 @@
   favicon: https://www.google.com/s2/favicons?domain=nextcloud.com&sz=64
   eu_hosting: true
   zelf_hosten: true
-  status: live
+  status: disabled
 
 - naam: BigBlueButton
   beschrijving: Open source webconferentie platform
@@ -136,7 +136,7 @@
   favicon: https://www.google.com/s2/favicons?domain=bigbluebutton.org&sz=64
   eu_hosting: true
   zelf_hosten: true
-  status: live
+  status: disabled
 
 - naam: OnlyOffice
   beschrijving: Online documentbewerking en samenwerking
@@ -145,7 +145,7 @@
   favicon: https://www.google.com/s2/favicons?domain=onlyoffice.com&sz=64
   eu_hosting: true
   zelf_hosten: true
-  status: live
+  status: disabled
 
 - naam: Rocket.Chat
   beschrijving: Open source team communicatie
@@ -154,7 +154,7 @@
   favicon: https://www.google.com/s2/favicons?domain=rocket.chat&sz=64
   eu_hosting: true
   zelf_hosten: true
-  status: live
+  status: disabled
 
 - naam: OpenBoard
   beschrijving: Open source interactief whiteboard
@@ -163,7 +163,7 @@
   favicon: https://www.google.com/s2/favicons?domain=openboard.ch&sz=64
   eu_hosting: true
   zelf_hosten: true
-  status: live
+  status: disabled
 
 - naam: Wekan
   beschrijving: Open source kanban board
@@ -172,4 +172,4 @@
   favicon: https://www.google.com/s2/favicons?domain=wekan.github.io&sz=64
   eu_hosting: false
   zelf_hosten: true
-  status: live
+  status: disabled

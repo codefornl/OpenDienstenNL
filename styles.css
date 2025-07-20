@@ -8,207 +8,245 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     color: #333;
-    height: 100vh;
-    background: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2070') center center no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+    min-height: 100vh;
+    background: #f8f9fa;
+    margin: 0;
+    line-height: 1.6;
 }
 
-.desktop {
+/* App container - main layout */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 300px;
+    background: white;
+    border-right: 1px solid #e5e5e5;
+    padding: 32px 24px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-header h1 {
+    font-size: 1.75rem;
+    color: #1a1a1a;
+    font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: -0.025em;
+}
+
+.sidebar-header h2 {
+    font-size: 0.95rem;
+    color: #666;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 32px;
+}
+
+/* Filter menu */
+.filter-menu h3 {
+    font-size: 1rem;
+    color: #1a1a1a;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.category-filters {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    padding: 20px;
-    backdrop-filter: blur(8px);
-    /* background-color: rgba(255, 255, 255, 0.4); */
+    gap: 8px;
 }
 
-/* Header stijlen */
-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-h1 {
-    font-size: 3.75rem; /* 2.5rem * 1.5 */
-    color: #2c3e50;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 0.5em;
-}
-
-h2 {
-    font-size: 1rem; /* 2.5rem * 1.5 */
-    color: #2c3e50;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    line-height: 1.4em;
-}
-
-/* Iconen container */
-.icons-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 60px; /* 40px * 1.5 */
-    flex-grow: 1;
-    padding: 60px; /* 40px * 1.5 */
-}
-
-/* Icoon stijlen */
-.icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 165px; /* 110px * 1.5 */
+.filter-button {
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    text-align: left;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 22px 15px; /* 15px * 1.5, 10px * 1.5 */
-    border-radius: 18px; /* 12px * 1.5 */
+    font-size: 0.9rem;
+    color: #666;
+    transition: all 0.2s ease;
+    text-transform: capitalize;
 }
 
-.icon:hover {
-    transform: translateY(-7.5px); /* -5px * 1.5 */
-    background-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 7.5px 22.5px rgba(0, 0, 0, 0.1); /* 5px * 1.5, 15px * 1.5 */
+.filter-button:hover {
+    background-color: #f5f5f5;
+    color: #333;
 }
 
-.icon img {
-    width: 72px; /* 48px * 1.5 */
-    height: 72px; /* 48px * 1.5 */
-    margin-bottom: 15px; /* 10px * 1.5 */
-    border-radius: 12px; /* 8px * 1.5 */
-    padding: 6px; /* 4px * 1.5 */
-    background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1); /* 2px * 1.5, 10px * 1.5 */
+.filter-button.active {
+    background-color: #e5e5e5;
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+/* Content area */
+.content-area {
+    flex: 1;
+    margin-left: 300px;
+    padding: 32px;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 16px;
+}
+
+/* Service cards */
+.service-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+}
+
+.service-card:hover {
+    border-color: #d4d4d4;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.favicon-container {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.service-favicon {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
     transition: all 0.3s;
 }
 
-.icon:hover img {
-    transform: scale(1.1);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); /* 4px * 1.5, 12px * 1.5 */
+.provider-favicon {
+    position: absolute;
+    bottom: -6px;
+    right: -6px;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50%;
+    background-color: white !important;
+    padding: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    border: 1px solid #e2e8f0;
 }
 
-.icon span {
-    text-align: center;
-    font-size: 1.35rem; /* 0.9rem * 1.5 */
+.service-info {
+    flex: 1;
+    min-width: 0;
 }
 
-/* Footer stijlen */
-footer {
-    text-align: center;
-    padding: 22px; /* 15px * 1.5 */
-    font-size: 1.35rem; /* 0.9rem * 1.5 */
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 12px; /* 8px * 1.5 */
-    margin: 0 30px 30px; /* 20px * 1.5 */
-    backdrop-filter: blur(5px);
+.service-info h4 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 4px;
 }
 
-/* Label voor type dienst */
-.icon-label {
-    display: inline-block;
-    text-decoration: none;
-    font-size: 0.85rem;
-    background-color: rgba(65, 88, 208, 0.8);
-    color: white;
-    padding: 3px 10px;
-    border-radius: 12px;
-    margin-top: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    font-weight: normal;
-    margin: 10px 3px;
+.service-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 12px;
+    line-height: 1.4;
 }
 
-/* Verwijder onderstreping van links */
-a.icon {
-    text-decoration: none;
-    position: relative;
-}
-
-a.icon:hover {
-    text-decoration: none;
-}
-
-.provider {
+.service-meta {
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-top: 8px;
-    font-size: 0.75rem;
-  }
-  
-  .eu-flag {
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.category-badge {
+    font-size: 0.8rem;
+    background-color: #f8f8f8;
+    color: #666;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.provider-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.eu-flag {
     font-size: 1rem;
-  }
-  
-  .non-eu-flag {
+}
+
+.non-eu-flag {
     position: relative;
     font-size: 1rem;
-  }
-  
-  .eu-flag-base {
+}
+
+.eu-flag-base {
     opacity: 0.7;
-  }
-  
-  .prohibited-symbol {
+}
+
+.prohibited-symbol {
     position: absolute;
     top: 0;
     left: 0.1em;
     color: red;
     font-size: 1em !important;
-  }
-  
-  .by {
-    font-weight: 300;
-    color: #888;
-    font-style: italic;
-    opacity: 0.8;
-    font-size: 0.7rem !important;
-    margin-top: 20px;
-  }
-  
-  .provider-name {
-    font-weight: 300;
-    font-style: italic;
-    opacity: 0.8;
-    font-size: 0.7rem !important;
-  }
+}
 
-  .favicon-container {
-    position: relative;
-    width: 72px;
-    height: 72px;
-    margin-bottom: 15px;
-  }
-  
-  .service-favicon {
-    width: 100%;
-    height: 100%;
-    border-radius: 12px;
-    padding: 6px;
-    background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s;
-  }
-  
-  .provider-favicon {
-    position: absolute;
-    bottom: -24px;
-    right: -10px;
-    width: 34px !important;
-    height: 34px !important;
-    border-radius: 50%;
-    background-color: white !important;
-    padding: 2px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-  }
+.provider-name {
+    font-weight: 400;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #e5e5e5;
+    }
+    
+    .content-area {
+        margin-left: 0;
+        padding: 16px;
+    }
+    
+    .category-filters {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .filter-button {
+        flex-shrink: 0;
+    }
+}
