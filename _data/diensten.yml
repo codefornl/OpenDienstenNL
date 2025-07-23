@@ -173,3 +173,146 @@
   eu_hosting: false
   zelf_hosten: true
   status: disabled
+
+- naam: Framapad
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
+  beschrijving: Collaboratief tekst bewerken zonder login
+  categorie: document
+  url: https://framapad.org/
+  favicon: https://www.google.com/s2/favicons?domain=framapad.org&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+  status: live
+
+- naam: Framacalc
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
+  beschrijving: Online spreadsheet, direct bruikbaar
+  categorie: document
+  url: https://framacalc.org/
+  favicon: https://www.google.com/s2/favicons?domain=framacalc.org&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+  status: live
+
+- naam: Framadate
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
+  beschrijving: Doodle-alternatief voor plannen zonder account
+  categorie: agenda
+  url: https://framadate.org/
+  favicon: https://www.google.com/s2/favicons?domain=framadate.org&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+  status: live
+
+- naam: Framaforms
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
+  beschrijving: Formulieren maken à la Google Forms
+  categorie: formulieren
+  url: https://framaforms.org/
+  favicon: https://www.google.com/s2/favicons?domain=framaforms.org&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+  status: live
+
+- naam: Framaestro
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
+  beschrijving: Beheer meerdere pads tegelijk
+  categorie: document
+  url: https://framaestro.org/
+  favicon: https://www.google.com/s2/favicons?domain=framaestro.org&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+  status: live
+
+- naam: Framadrop
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
+  beschrijving: Versleutelde bestandsdeling zonder login
+  categorie: opslag
+  url: https://framadrop.org/
+  favicon: https://www.google.com/s2/favicons?domain=framadrop.org&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+  status: live
+
+- naam: Framagit
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
+  beschrijving: Git-platform als alternatief voor GitHub
+  categorie: ontwikkeling
+  url: https://framagit.org/
+  favicon: https://www.google.com/s2/favicons?domain=framagit.org&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+  status: live
+
+- naam: Framindmap
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
+  beschrijving: Visueel mindmaps maken in je browser
+  categorie: visualisatie
+  url: https://framindmap.org/
+  favicon: https://www.google.com/s2/favicons?domain=framindmap.org&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+  status: live
+
+- naam: Framaslides
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
+  beschrijving: Maak HTML-presentaties (Reveal.js)
+  categorie: presentatie
+  url: https://framaslides.org/
+  favicon: https://www.google.com/s2/favicons?domain=framaslides.org&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+  status: live
+
+- naam: Framaestro
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
+  beschrijving: Synchroniseer meerdere Etherpads in 1 overzicht
+  categorie: document
+  url: https://framaestro.org/
+  favicon: https://www.google.com/s2/favicons?domain=framaestro.org&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+  status: live
+
+- naam: Mobilizon
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=mobilizon.org&sz=64
+  beschrijving: Gedecentraliseerd platform voor evenementen
+  categorie: agenda
+  url: https://mobilizon.fr/
+  favicon: https://www.google.com/s2/favicons?domain=mobilizon.fr&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+  status: live
+
+- naam: PeerTube
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=joinpeertube.org&sz=64
+  beschrijving: Gedecentraliseerd videoplatform, alternatief voor YouTube
+  categorie: video
+  url: https://peertube.fr/
+  favicon: https://www.google.com/s2/favicons?domain=peertube.fr&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+  status: live
+
+- naam: Framanotes
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
+  beschrijving: Minimalistische notitieblok zonder tracking
+  categorie: document
+  url: https://mensuel.framapad.org/p/framanotes
+  favicon: https://www.google.com/s2/favicons?domain=framapad.org&sz=64
+  eu_hosting: true
+  zelf_hosten: false
+  status: live
