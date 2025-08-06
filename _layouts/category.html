@@ -70,13 +70,13 @@
         // Get services for this category
         var services = [
             {% assign diensten = site.data.diensten | where: 'categorie', page.categorie | where: 'status', 'live' %}
-            {% for dienst in diensten %}
+            {% for dienst in diensten %}{% if dienst.random_url %}
                 {
                     naam: "{{ dienst.naam }}",
                     url: "{{ dienst.url }}",
-                    random_url: {% if dienst.random_url %}"{{ dienst.random_url }}"{% else %}null{% endif %},
+                    random_url: "{{ dienst.random_url }}",
                     software: "{{ dienst.software }}"
-                }{% unless forloop.last %},{% endunless %}
+                }{% unless forloop.last %},{% endunless %}{% endif %}
             {% endfor %}
         ];
 

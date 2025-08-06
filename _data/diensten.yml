@@ -331,18 +331,6 @@
   zelf_hosten: true
   status: live
 
-- naam: Framanotes
-  software: Framanotes
-  aanbieder: Framasoft
-  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
-  beschrijving: Minimalistische notitieblok zonder tracking
-  categorie: samen-schrijven
-  url: https://mensuel.framapad.org/p/framanotes
-  favicon: https://www.google.com/s2/favicons?domain=framapad.org&sz=64
-  eu_hosting: true
-  zelf_hosten: false
-  status: live
-
 - naam: Etherpad
   software: Etherpad
   aanbieder: Systemli
