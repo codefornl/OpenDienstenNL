@@ -88,21 +88,31 @@
             var randomSuffix = '';
             var timestamp = Date.now().toString() + Math.random().toString();
             
-            {% if page.categorie == 'video' %}
+            {% if page.categorie == 'videobellen' %}
                 // For video calls, use room name
                 randomSuffix = 'room-' + timestamp.replace(/\./g, '').substring(0, 10);
-            {% elsif page.categorie == 'document' %}
+            {% elsif page.categorie == 'samen-schrijven' %}
                 // For documents/pads, use pad name
                 randomSuffix = 'pad-' + timestamp.replace(/\./g, '').substring(0, 10);
-            {% elsif page.categorie == 'whiteboard' %}
+            {% elsif page.categorie == 'brainstormen' %}
                 // For whiteboards, use board name
                 randomSuffix = 'board-' + timestamp.replace(/\./g, '').substring(0, 10);
+            {% elsif page.categorie == 'spreadsheets' %}
+                // For spreadsheets, use sheet name
+                randomSuffix = 'sheet-' + timestamp.replace(/\./g, '').substring(0, 10);
+            {% elsif page.categorie == 'presenteren' %}
+                // For presentations, use presentation name
+                randomSuffix = 'pres-' + timestamp.replace(/\./g, '').substring(0, 10);
             {% endif %}
             
             // Construct final URL
             var finalUrl;
-            if (randomService.random_url && randomSuffix) {
-                // Use random_url if available
+            if (randomService.random_url) {
+                // Use random_url and always generate a suffix for it
+                if (!randomSuffix) {
+                    // Generate generic suffix if category doesn't have specific format
+                    randomSuffix = 'session-' + timestamp.replace(/\./g, '').substring(0, 10);
+                }
                 finalUrl = randomService.random_url.replace(/\/$/, '') + randomSuffix;
             } else {
                 // Otherwise just use the regular URL
