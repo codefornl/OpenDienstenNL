@@ -1,1 +1,6 @@
 title: Open Diensten
+
+collections:
+  categories:
+    output: true
+    permalink: /:name

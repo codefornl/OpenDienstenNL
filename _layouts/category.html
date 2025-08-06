@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random {{ page.title }} - {{ site.title }}</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f8f9fa;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .loading h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .loading p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #ff6600;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .fallback {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #999;
+        }
+        .fallback a {
+            color: #ff6600;
+            text-decoration: none;
+        }
+        .fallback a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading">
+        <h1>Random {{ page.title }}</h1>
+        <p>Een moment geduld, we kiezen een {{ page.categorie }} service voor je...</p>
+        <div class="spinner"></div>
+        <div class="fallback">
+            <p>Werkt het niet? <a href="/">Ga terug naar de homepage</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Get services for this category
+        var services = [
+            {% assign diensten = site.data.diensten | where: 'categorie', page.categorie | where: 'status', 'live' %}
+            {% for dienst in diensten %}
+                {
+                    naam: "{{ dienst.naam }}",
+                    url: "{{ dienst.url }}",
+                    random_url: {% if dienst.random_url %}"{{ dienst.random_url }}"{% else %}null{% endif %},
+                    software: "{{ dienst.software }}"
+                }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+        ];
+
+        if (services.length > 0) {
+            // Pick a random service
+            var randomService = services[Math.floor(Math.random() * services.length)];
+            
+            // Generate random suffix based on category
+            var randomSuffix = '';
+            var timestamp = Date.now().toString() + Math.random().toString();
+            
+            {% if page.categorie == 'video' %}
+                // For video calls, use room name
+                randomSuffix = 'room-' + timestamp.replace(/\./g, '').substring(0, 10);
+            {% elsif page.categorie == 'document' %}
+                // For documents/pads, use pad name
+                randomSuffix = 'pad-' + timestamp.replace(/\./g, '').substring(0, 10);
+            {% elsif page.categorie == 'whiteboard' %}
+                // For whiteboards, use board name
+                randomSuffix = 'board-' + timestamp.replace(/\./g, '').substring(0, 10);
+            {% endif %}
+            
+            // Construct final URL
+            var finalUrl;
+            if (randomService.random_url && randomSuffix) {
+                // Use random_url if available
+                finalUrl = randomService.random_url.replace(/\/$/, '') + randomSuffix;
+            } else {
+                // Otherwise just use the regular URL
+                finalUrl = randomService.url;
+            }
+            
+            // Update loading message
+            document.querySelector('.loading p').textContent = 'Je wordt doorgestuurd naar ' + randomService.naam + '...';
+            
+            // Redirect after a short delay
+            setTimeout(function() {
+                window.location.href = finalUrl;
+            }, 1500);
+            
+        } else {
+            document.querySelector('.loading p').textContent = 'Sorry, geen {{ page.categorie }} services beschikbaar.';
+            document.querySelector('.spinner').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

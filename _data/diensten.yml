@@ -7,8 +7,9 @@
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=pleio.nl&sz=64
   spoelkeuken_url: https://spoelkeuken.publicspaces.net/tool/Jitsi
   beschrijving: Open source videoconferentie gehost door Pleio
-  categorie: video
+  categorie: videobellen
   url: https://videobellen.pleio.nl/
+  random_url: https://videobellen.pleio.nl/
   favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
   eu_hosting: true
   zelf_hosten: true
@@ -20,8 +21,9 @@
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=bit.nl&sz=64
   spoelkeuken_url: https://spoelkeuken.publicspaces.net/tool/Jitsi
   beschrijving: Open source videoconferentie gehost door Bit.NL
-  categorie: video
+  categorie: videobellen
   url: https://meetme.bit.nl/
+  random_url: https://meetme.bit.nl/
   favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
   eu_hosting: true
   zelf_hosten: true
@@ -33,8 +35,9 @@
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
   spoelkeuken_url: https://spoelkeuken.publicspaces.net/tool/Jitsi
   beschrijving: Open source videoconferentie gehost door Jitsi
-  categorie: video
+  categorie: videobellen
   url: https://meet.jit.si/
+  random_url: https://meet.jit.si/
   favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
   eu_hosting: false
   zelf_hosten: true
@@ -45,8 +48,9 @@
   aanbieder: Riseup
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=riseup.net&sz=64
   beschrijving: Etherpad omgeving beschikbaar gesteld door Riseup
-  categorie: document
+  categorie: samen-schrijven
   url: https://pad.riseup.net/
+  random_url: https://pad.riseup.net/p/
   favicon: https://www.google.com/s2/favicons?domain=etherpad.org&sz=64
   eu_hosting: false
   zelf_hosten: false
@@ -55,7 +59,7 @@
 - naam: Listmonk
   software: Listmonk
   beschrijving: Open source nieuwsbriefdienst
-  categorie: nieuwsbrief
+  categorie: nieuwsbrieven
   url: https://listmonk.app/
   favicon: https://www.google.com/s2/favicons?domain=listmonk.app&sz=64
   eu_hosting: true
@@ -65,7 +69,7 @@
 - naam: Plone
   software: Plone
   beschrijving: Veilig en gebruiksvriendelijk CMS
-  categorie: website
+  categorie: website-maken
   url: https://plone.com/cloud
   favicon: https://www.google.com/s2/favicons?domain=plone.com&sz=64
   eu_hosting: true
@@ -75,7 +79,7 @@
 - naam: Element
   software: Element
   beschrijving: Beveiligde chat op basis van Matrix
-  categorie: chat
+  categorie: chatten
   url: https://element.io/
   favicon: https://www.google.com/s2/favicons?domain=element.io&sz=64
   eu_hosting: true
@@ -85,7 +89,7 @@
 - naam: Excalidraw
   software: Excalidraw
   beschrijving: Virtuele whiteboard voor schetsen
-  categorie: whiteboard
+  categorie: brainstormen
   url: https://excalidraw.com/
   favicon: https://www.google.com/s2/favicons?domain=excalidraw.com&sz=64
   eu_hosting: false
@@ -95,7 +99,7 @@
 - naam: TLDraw
   software: TLDraw
   beschrijving: Very good free whiteboard
-  categorie: whiteboard
+  categorie: brainstormen
   url: https://www.tldraw.com/
   favicon: https://www.google.com/s2/favicons?domain=tldraw.com&sz=64
   eu_hosting: false
@@ -105,7 +109,7 @@
 - naam: CryptPad
   software: CryptPad
   beschrijving: Veilige en versleutelde documenten
-  categorie: document
+  categorie: samen-schrijven
   url: https://cryptpad.fr/
   favicon: https://www.google.com/s2/favicons?domain=cryptpad.fr&sz=64
   eu_hosting: true
@@ -115,7 +119,7 @@
 - naam: Framadate
   software: Framadate
   beschrijving: Open source planning en agenda
-  categorie: agenda
+  categorie: plannen
   url: https://framadate.org/
   favicon: https://www.google.com/s2/favicons?domain=framadate.org&sz=64
   eu_hosting: true
@@ -125,7 +129,7 @@
 - naam: Taiga
   software: Taiga
   beschrijving: Open source projectmanagement
-  categorie: project
+  categorie: projecten
   url: https://taiga.io/
   favicon: https://www.google.com/s2/favicons?domain=taiga.io&sz=64
   eu_hosting: true
@@ -135,7 +139,7 @@
 - naam: Nextcloud
   software: Nextcloud
   beschrijving: Veilige bestandsopslag en -deling
-  categorie: opslag
+  categorie: bestanden-delen
   url: https://nextcloud.com/
   favicon: https://www.google.com/s2/favicons?domain=nextcloud.com&sz=64
   eu_hosting: true
@@ -145,7 +149,7 @@
 - naam: BigBlueButton
   software: BigBlueButton
   beschrijving: Open source webconferentie platform
-  categorie: video
+  categorie: videobellen
   url: https://bigbluebutton.org/
   favicon: https://www.google.com/s2/favicons?domain=bigbluebutton.org&sz=64
   eu_hosting: true
@@ -156,7 +160,7 @@
   software: OnlyOffice
   aanbieder: Ascensio System SIA
   beschrijving: Online documentbewerking en samenwerking
-  categorie: document
+  categorie: samen-schrijven
   url: https://www.onlyoffice.com/
   favicon: https://www.google.com/s2/favicons?domain=onlyoffice.com&sz=64
   eu_hosting: true
@@ -167,7 +171,7 @@
   software: Rocket.Chat
   aanbieder: Rocket.Chat
   beschrijving: Open source team communicatie
-  categorie: chat
+  categorie: chatten
   url: https://rocket.chat/
   favicon: https://www.google.com/s2/favicons?domain=rocket.chat&sz=64
   eu_hosting: true
@@ -177,7 +181,7 @@
 - naam: OpenBoard
   software: OpenBoard
   beschrijving: Open source interactief whiteboard
-  categorie: whiteboard
+  categorie: brainstormen
   url: https://openboard.ch/
   favicon: https://www.google.com/s2/favicons?domain=openboard.ch&sz=64
   eu_hosting: true
@@ -187,7 +191,7 @@
 - naam: Wekan
   software: Wekan
   beschrijving: Open source kanban board
-  categorie: project
+  categorie: projecten
   url: https://wekan.github.io/
   favicon: https://www.google.com/s2/favicons?domain=wekan.github.io&sz=64
   eu_hosting: false
@@ -199,8 +203,9 @@
   aanbieder: Framasoft
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
   beschrijving: Collaboratief tekst bewerken zonder login
-  categorie: document
+  categorie: samen-schrijven
   url: https://framapad.org/
+  random_url: https://mensuel.framapad.org/p/
   favicon: https://www.google.com/s2/favicons?domain=framapad.org&sz=64
   eu_hosting: true
   zelf_hosten: true
@@ -211,7 +216,7 @@
   aanbieder: Framasoft
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
   beschrijving: Online spreadsheet, direct bruikbaar
-  categorie: document
+  categorie: spreadsheets
   url: https://framacalc.org/
   favicon: https://www.google.com/s2/favicons?domain=framacalc.org&sz=64
   eu_hosting: true
@@ -223,7 +228,7 @@
   aanbieder: Framasoft
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
   beschrijving: Doodle-alternatief voor plannen zonder account
-  categorie: agenda
+  categorie: plannen
   url: https://framadate.org/
   favicon: https://www.google.com/s2/favicons?domain=framadate.org&sz=64
   eu_hosting: true
@@ -242,24 +247,12 @@
   zelf_hosten: true
   status: live
 
-- naam: Framaestro
-  software: Framaestro
-  aanbieder: Framasoft
-  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
-  beschrijving: Beheer meerdere pads tegelijk
-  categorie: document
-  url: https://framaestro.org/
-  favicon: https://www.google.com/s2/favicons?domain=framaestro.org&sz=64
-  eu_hosting: true
-  zelf_hosten: true
-  status: live
-
 - naam: Framadrop
   software: Framadrop
   aanbieder: Framasoft
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
   beschrijving: Versleutelde bestandsdeling zonder login
-  categorie: opslag
+  categorie: bestanden-delen
   url: https://framadrop.org/
   favicon: https://www.google.com/s2/favicons?domain=framadrop.org&sz=64
   eu_hosting: true
@@ -271,7 +264,7 @@
   aanbieder: Framasoft
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
   beschrijving: Git-platform als alternatief voor GitHub
-  categorie: ontwikkeling
+  categorie: code-delen
   url: https://framagit.org/
   favicon: https://www.google.com/s2/favicons?domain=framagit.org&sz=64
   eu_hosting: true
@@ -283,7 +276,7 @@
   aanbieder: Framasoft
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
   beschrijving: Visueel mindmaps maken in je browser
-  categorie: visualisatie
+  categorie: brainstormen
   url: https://framindmap.org/
   favicon: https://www.google.com/s2/favicons?domain=framindmap.org&sz=64
   eu_hosting: true
@@ -295,7 +288,7 @@
   aanbieder: Framasoft
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
   beschrijving: Maak HTML-presentaties (Reveal.js)
-  categorie: presentatie
+  categorie: presenteren
   url: https://framaslides.org/
   favicon: https://www.google.com/s2/favicons?domain=framaslides.org&sz=64
   eu_hosting: true
@@ -307,7 +300,7 @@
   aanbieder: Framasoft
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
   beschrijving: Synchroniseer meerdere Etherpads in 1 overzicht
-  categorie: document
+  categorie: samen-schrijven
   url: https://framaestro.org/
   favicon: https://www.google.com/s2/favicons?domain=framaestro.org&sz=64
   eu_hosting: true
@@ -319,7 +312,7 @@
   aanbieder: Framasoft
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=mobilizon.org&sz=64
   beschrijving: Gedecentraliseerd platform voor evenementen
-  categorie: agenda
+  categorie: plannen
   url: https://mobilizon.fr/
   favicon: https://www.google.com/s2/favicons?domain=mobilizon.fr&sz=64
   eu_hosting: true
@@ -331,7 +324,7 @@
   aanbieder: Framasoft
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=joinpeertube.org&sz=64
   beschrijving: Gedecentraliseerd videoplatform, alternatief voor YouTube
-  categorie: video
+  categorie: video-delen
   url: https://peertube.fr/
   favicon: https://www.google.com/s2/favicons?domain=peertube.fr&sz=64
   eu_hosting: true
@@ -343,7 +336,7 @@
   aanbieder: Framasoft
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
   beschrijving: Minimalistische notitieblok zonder tracking
-  categorie: document
+  categorie: samen-schrijven
   url: https://mensuel.framapad.org/p/framanotes
   favicon: https://www.google.com/s2/favicons?domain=framapad.org&sz=64
   eu_hosting: true
@@ -355,8 +348,9 @@
   aanbieder: Systemli
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=systemli.org&sz=64
   beschrijving: Collaboratieve tekstbewerking voor activisten
-  categorie: document
+  categorie: samen-schrijven
   url: https://pad.systemli.org/
+  random_url: https://pad.systemli.org/p/
   favicon: https://www.google.com/s2/favicons?domain=systemli.org&sz=64
   eu_hosting: true
   zelf_hosten: true
@@ -367,8 +361,9 @@
   aanbieder: Systemli
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=systemli.org&sz=64
   beschrijving: Privacygerichte videoconferentie gehost in Duitsland
-  categorie: video
+  categorie: videobellen
   url: https://vc.systemli.org/
+  random_url: https://vc.systemli.org/
   favicon: https://www.google.com/s2/favicons?domain=systemli.org&sz=64
   eu_hosting: true
   zelf_hosten: true
@@ -379,7 +374,7 @@
   aanbieder: Systemli
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=systemli.org&sz=64
   beschrijving: Git-hosting voor activistische en non-profit projecten
-  categorie: ontwikkeling
+  categorie: code-delen
   url: https://git.systemli.org/
   favicon: https://www.google.com/s2/favicons?domain=systemli.org&sz=64
   eu_hosting: true
@@ -391,7 +386,7 @@
   aanbieder: Codeberg e.V.
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=codeberg.org&sz=64
   beschrijving: Git-platform als alternatief voor GitHub
-  categorie: ontwikkeling
+  categorie: code-delen
   url: https://codeberg.org/
   favicon: https://www.google.com/s2/favicons?domain=codeberg.org&sz=64
   eu_hosting: true
@@ -403,7 +398,7 @@
   aanbieder: Codeberg e.V.
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=codeberg.org&sz=64
   beschrijving: Gratis statische site-hosting voor publieke projecten
-  categorie: website
+  categorie: website-maken
   url: https://codeberg.page/
   favicon: https://www.google.com/s2/favicons?domain=codeberg.page&sz=64
   eu_hosting: true
@@ -415,7 +410,7 @@
   aanbieder: Disroot
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=disroot.org&sz=64
   beschrijving: Bestanden delen en samenwerken, privacyvriendelijk
-  categorie: opslag
+  categorie: bestanden-delen
   url: https://cloud.disroot.org/
   favicon: https://www.google.com/s2/favicons?domain=cloud.disroot.org&sz=64
   eu_hosting: true
@@ -427,8 +422,9 @@
   aanbieder: Disroot
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=disroot.org&sz=64
   beschrijving: Collaboratief tekst bewerken zonder login
-  categorie: document
+  categorie: samen-schrijven
   url: https://pad.disroot.org/
+  random_url: https://pad.disroot.org/p/
   favicon: https://www.google.com/s2/favicons?domain=pad.disroot.org&sz=64
   eu_hosting: true
   zelf_hosten: true
@@ -439,7 +435,7 @@
   aanbieder: Fairkom
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=fairkom.eu&sz=64
   beschrijving: Open source Jitsi-hosting door Oostenrijkse coöperatie
-  categorie: video
+  categorie: videobellen
   url: https://fairmeeting.net/
   favicon: https://www.google.com/s2/favicons?domain=fairmeeting.net&sz=64
   eu_hosting: true

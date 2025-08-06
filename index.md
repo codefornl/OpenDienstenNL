@@ -20,6 +20,10 @@ title: OpenDiensten
   </aside>
   
   <main class="content-area">
+    <div class="quick-actions">
+      <a href="/videobellen" class="action-button">Start videogesprek</a>
+      <a href="/samen-schrijven" class="action-button">Start samen schrijven</a>
+    </div>
     <div class="services-grid">
       {% assign diensten = site.data.diensten | where: 'status', 'live' %}
       {% for dienst in diensten %}

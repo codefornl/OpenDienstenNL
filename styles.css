@@ -225,6 +225,40 @@ body {
     font-weight: 400;
 }
 
+/* Quick actions sectie */
+.quick-actions {
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.action-button {
+    background-color: #EB8C3A;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: inline-block;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.action-button:hover {
+    background-color: #e55500;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.action-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 /* Responsive design */
 @media (max-width: 1024px) {
     .services-grid {
