@@ -21,8 +21,22 @@ title: OpenDiensten
   
   <main class="content-area">
     <div class="quick-actions">
-      <a href="/videobellen" class="action-button">Start videogesprek</a>
-      <a href="/samen-schrijven" class="action-button">Start samen schrijven</a>
+      <a href="/videobellen" class="action-button random-button" target="_blank">Start videogesprek</a>
+      <a href="/samen-schrijven" class="action-button random-button" target="_blank">Start samen schrijven</a>
+    </div>
+    
+    <div id="rating-popover" class="rating-popover" style="display: none;">
+      <div class="popover-content">
+        <h3>Hoe was de kwaliteit?</h3>
+        <div class="star-rating">
+          <span class="star" data-rating="1">☆</span>
+          <span class="star" data-rating="2">☆</span>
+          <span class="star" data-rating="3">☆</span>
+          <span class="star" data-rating="4">☆</span>
+          <span class="star" data-rating="5">☆</span>
+        </div>
+        <button class="close-popover">×</button>
+      </div>
     </div>
     <div class="services-grid">
       {% assign diensten = site.data.diensten | where: 'status', 'live' %}
@@ -60,6 +74,96 @@ title: OpenDiensten
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Rating popover functionality
+    var popover = document.getElementById('rating-popover');
+    var randomButtons = document.querySelectorAll('.random-button');
+    var stars = document.querySelectorAll('.star');
+    var closeBtn = document.querySelector('.close-popover');
+    
+    // Show popover when random button is clicked
+    randomButtons.forEach(function(button) {
+      button.addEventListener('click', function(e) {
+        // Show popover
+        popover.style.display = 'flex';
+        
+        // Store which service was clicked
+        popover.dataset.service = e.target.textContent;
+      });
+    });
+    
+    // Handle star clicks
+    stars.forEach(function(star, index) {
+      star.addEventListener('click', function() {
+        var rating = parseInt(star.dataset.rating);
+        
+        // Fill stars up to clicked rating
+        stars.forEach(function(s, i) {
+          if (i < rating) {
+            s.textContent = '★';
+            s.classList.add('filled');
+          } else {
+            s.textContent = '☆';
+            s.classList.remove('filled');
+          }
+        });
+        
+        // Store rating (could be sent to an API or stored locally)
+        console.log('Service:', popover.dataset.service, 'Rating:', rating);
+        
+        // Hide popover after rating
+        setTimeout(function() {
+          popover.style.display = 'none';
+          // Reset stars
+          stars.forEach(function(s) {
+            s.textContent = '☆';
+            s.classList.remove('filled');
+          });
+        }, 1000);
+      });
+      
+      // Hover effect
+      star.addEventListener('mouseenter', function() {
+        var hoverRating = parseInt(star.dataset.rating);
+        stars.forEach(function(s, i) {
+          if (i < hoverRating) {
+            s.classList.add('hover');
+          } else {
+            s.classList.remove('hover');
+          }
+        });
+      });
+    });
+    
+    // Reset hover on mouse leave
+    document.querySelector('.star-rating').addEventListener('mouseleave', function() {
+      stars.forEach(function(s) {
+        s.classList.remove('hover');
+      });
+    });
+    
+    // Close button
+    closeBtn.addEventListener('click', function() {
+      popover.style.display = 'none';
+      // Reset stars
+      stars.forEach(function(s) {
+        s.textContent = '☆';
+        s.classList.remove('filled');
+      });
+    });
+    
+    // Close on background click
+    popover.addEventListener('click', function(e) {
+      if (e.target === popover) {
+        popover.style.display = 'none';
+        // Reset stars
+        stars.forEach(function(s) {
+          s.textContent = '☆';
+          s.classList.remove('filled');
+        });
+      }
+    });
+    
+    // Category filter functionality
     var categories = {};
     var allServices = [];
     

@@ -16,6 +16,77 @@ body {
     line-height: 1.6;
 }
 
+/* Rating Popover */
+.rating-popover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.popover-content {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+    max-width: 400px;
+    text-align: center;
+}
+
+.popover-content h3 {
+    margin-bottom: 24px;
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.star-rating {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.star {
+    font-size: 2.5rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.star:hover,
+.star.hover {
+    color: #ffd700;
+    transform: scale(1.1);
+}
+
+.star.filled {
+    color: #ff6600;
+}
+
+.close-popover {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #999;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: color 0.2s ease;
+}
+
+.close-popover:hover {
+    color: #333;
+}
+
 /* App container - main layout */
 .app-container {
     display: flex;
