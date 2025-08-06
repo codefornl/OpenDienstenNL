@@ -113,7 +113,7 @@
                     // Generate generic suffix if category doesn't have specific format
                     randomSuffix = 'session-' + timestamp.replace(/\./g, '').substring(0, 10);
                 }
-                finalUrl = randomService.random_url.replace(/\/$/, '') + randomSuffix;
+                finalUrl = randomService.random_url + randomSuffix;
             } else {
                 // Otherwise just use the regular URL
                 finalUrl = randomService.url;
