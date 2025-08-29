@@ -11,8 +11,8 @@ title: OpenDiensten
     <header class="sidebar-header">
       <h1>Open Diensten</h1>
       <h2>Open & gratis publiek toegankelijke SaaS omgevingen voor community organisatie</h2>
+      {% include github-logo.html %}
     </header>
-    
     <nav class="filter-menu">
       <h3>Categorieën</h3>
       <div class="category-filters"></div>

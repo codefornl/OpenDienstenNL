@@ -106,12 +106,33 @@ body {
 
 .sidebar-logo {
     text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .codefor-logo {
     height: 32px;
     width: auto;
     opacity: 0.8;
+}
+
+.github-link {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    margin: 12px 0;
+}
+
+.github-link:hover {
+    color: #333;
+}
+
+.github-logo {
+    width: 24px;
+    height: 24px;
 }
 
 .sidebar-header h1 {
@@ -127,7 +148,7 @@ body {
     color: #666;
     font-weight: 400;
     line-height: 1.5;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
 }
 
 /* Filter menu */
