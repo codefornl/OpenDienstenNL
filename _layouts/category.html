@@ -81,6 +81,9 @@
         ];
 
         if (services.length > 0) {
+            // Generate unique session ID
+            var sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
             // Pick a random service
             var randomService = services[Math.floor(Math.random() * services.length)];
             
@@ -119,8 +122,39 @@
                 finalUrl = randomService.url;
             }
             
+            // Store the generated URL in localStorage
+            try {
+                var storedUrls = JSON.parse(localStorage.getItem('openDienstenUrls') || '[]');
+                var urlEntry = {
+                    sessionId: sessionId,
+                    url: finalUrl,
+                    service: randomService.naam,
+                    software: randomService.software,
+                    category: '{{ page.categorie }}',
+                    timestamp: new Date().toISOString()
+                };
+                storedUrls.push(urlEntry);
+                localStorage.setItem('openDienstenUrls', JSON.stringify(storedUrls));
+            } catch (e) {
+                console.warn('Could not save URL to localStorage:', e);
+            }
+            
             // Update loading message
             document.querySelector('.loading p').textContent = 'Je wordt doorgestuurd naar ' + randomService.naam + '...';
+            
+            // Store sessionId for rating correlation
+            try {
+                sessionStorage.setItem('openDienstenCurrentSession', JSON.stringify({
+                    sessionId: sessionId,
+                    service: randomService.naam,
+                    category: '{{ page.categorie }}',
+                    timestamp: new Date().toISOString(),
+                    needsRating: true
+                }));
+                console.log('Stored session for rating:', sessionId, randomService.naam);
+            } catch (e) {
+                console.warn('Could not save session to sessionStorage:', e);
+            }
             
             // Redirect after a short delay
             setTimeout(function() {

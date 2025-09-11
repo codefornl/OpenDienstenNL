@@ -98,10 +98,16 @@ body {
     width: 300px;
     background: white;
     border-right: 1px solid #e5e5e5;
-    padding: 32px 24px;
+    padding: 24px;
     position: fixed;
     height: 100vh;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    margin-bottom: 24px;
 }
 
 .sidebar-logo {
@@ -109,6 +115,8 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-bottom: 16px;
+    order: 3;
 }
 
 .codefor-logo {
@@ -143,6 +151,13 @@ body {
     letter-spacing: -0.025em;
 }
 
+.sidebar-header h1 img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+}
+
 .sidebar-header h2 {
     font-size: 0.95rem;
     color: #666;
@@ -151,7 +166,62 @@ body {
     margin-bottom: 20px;
 }
 
+.sidebar p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+/* Main navigation */
+.main-nav {
+    margin-bottom: 24px;
+    order: 2;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 4px;
+    background: #f0f2f5;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.main-nav li {
+    flex: 1;
+}
+
+.main-nav .nav-link {
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.main-nav .nav-link:hover {
+    color: #333;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.main-nav .nav-link.active {
+    color: #fff;
+    background: #ff6600;
+    box-shadow: 0 2px 4px rgba(255, 102, 0, 0.25);
+}
+
 /* Filter menu */
+.filter-menu {
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid #e5e5e5;
+}
+
 .filter-menu h3 {
     font-size: 1rem;
     color: #1a1a1a;
@@ -194,6 +264,109 @@ body {
     flex: 1;
     margin-left: 300px;
     padding: 32px;
+}
+
+/* Geschiedenis view */
+.geschiedenis-view {
+    margin-top: 20px;
+}
+
+.geschiedenis-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.geschiedenis-view h2 {
+    color: #1a1a1a;
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.clear-history-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+.clear-history-btn:hover {
+    background-color: #c82333;
+}
+
+.diensten-lijst {
+    display: grid;
+    gap: 16px;
+}
+
+.dienst-item {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s ease;
+}
+
+.dienst-item:hover {
+    border-color: #ff6600;
+    box-shadow: 0 4px 12px rgba(255, 102, 0, 0.1);
+}
+
+.dienst-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.dienst-rating {
+    flex-shrink: 0;
+    margin-left: 16px;
+}
+
+.dienst-info h3 {
+    color: #1a1a1a;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.dienst-meta {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+
+.dienst-url {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Monaco', 'Menlo', monospace;
+    font-size: 0.85rem;
+    word-break: break-all;
+    border-left: 3px solid #ff6600;
+}
+
+.dienst-url a {
+    color: #ff6600;
+    text-decoration: none;
+}
+
+.dienst-url a:hover {
+    text-decoration: underline;
+}
+
+.empty-state {
+    text-align: center;
+    color: #666;
+    padding: 40px 20px;
+    font-style: italic;
 }
 
 .services-grid {
@@ -265,6 +438,61 @@ body {
     color: #666;
     margin-bottom: 12px;
     line-height: 1.4;
+}
+
+/* Service ratings */
+.service-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+}
+
+.rating-stars {
+    color: #ff6600;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.rating-text {
+    color: #666;
+    font-weight: 500;
+}
+
+/* Ratings in history view */
+.service-rating-history {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    background: rgba(255, 102, 0, 0.08);
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 102, 0, 0.2);
+}
+
+.service-rating-history .rating-stars {
+    color: #ff6600;
+    font-size: 0.95rem;
+    font-weight: bold;
+}
+
+.service-rating-history .rating-text {
+    color: #ff6600;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.service-rating-history.no-rating {
+    background: rgba(153, 153, 153, 0.08);
+    border: 1px solid rgba(153, 153, 153, 0.2);
+}
+
+.service-rating-history.no-rating .rating-text {
+    color: #999;
+    font-style: italic;
+    font-weight: 500;
 }
 
 .service-meta {

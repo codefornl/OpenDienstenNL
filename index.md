@@ -5,14 +5,22 @@ title: OpenDiensten
 
 <div class="app-container">
   <aside class="sidebar">
+    <header class="sidebar-header">
+      <h1><img src="./open-diensten-title-logo.svg" alt="OpenDiensten" style="width: 80%; margin-top: 20px;"></h1>
+    </header>
     <div class="sidebar-logo">
       <img src="https://codefor.nl/img/Logo-orange-01.png" alt="Code for NL" class="codefor-logo">
     </div>
-    <header class="sidebar-header">
-      <h1>Open Diensten</h1>
-      <h2>Open & gratis publiek toegankelijke SaaS omgevingen voor community organisatie</h2>
+    <div>
+      <p>Open & gratis publiek toegankelijke SaaS omgevingen voor community organisatie</p>
       {% include github-logo.html %}
-    </header>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/" class="nav-link active">Overzicht</a></li>
+          <li><a href="#" class="nav-link" id="mijn-diensten-link">Geschiedenis</a></li>
+        </ul>
+      </nav>
+    </div>
     <nav class="filter-menu">
       <h3>Categorieën</h3>
       <div class="category-filters"></div>
@@ -21,8 +29,18 @@ title: OpenDiensten
   
   <main class="content-area">
     <div class="quick-actions">
-      <a href="/videobellen" class="action-button random-button" target="_blank">Start videogesprek</a>
-      <a href="/samen-schrijven" class="action-button random-button" target="_blank">Start samen schrijven</a>
+      <a href="/start-videogesprek" class="action-button random-button" target="_blank">Start videogesprek</a>
+      <a href="/start-samen-schrijven" class="action-button random-button" target="_blank">Start samen schrijven</a>
+    </div>
+
+    <div id="geschiedenis-view" class="geschiedenis-view" style="display: none;">
+      <div class="geschiedenis-header">
+        <h2>Geschiedenis</h2>
+        <button id="clear-history-btn" class="clear-history-btn" style="display: none;">Wis geschiedenis</button>
+      </div>
+      <div id="diensten-lijst" class="diensten-lijst">
+        <p class="empty-state">Je hebt nog geen diensten gegenereerd. Klik op "Start videogesprek" of "Start samen schrijven" om te beginnen!</p>
+      </div>
     </div>
     
     <div id="rating-popover" class="rating-popover" style="display: none;">
@@ -72,173 +90,4 @@ title: OpenDiensten
   </main>
 </div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Rating popover functionality
-    var popover = document.getElementById('rating-popover');
-    var randomButtons = document.querySelectorAll('.random-button');
-    var stars = document.querySelectorAll('.star');
-    var closeBtn = document.querySelector('.close-popover');
-    
-    // Show popover when random button is clicked
-    randomButtons.forEach(function(button) {
-      button.addEventListener('click', function(e) {
-        // Show popover
-        popover.style.display = 'flex';
-        
-        // Store which service was clicked
-        popover.dataset.service = e.target.textContent;
-      });
-    });
-    
-    // Handle star clicks
-    stars.forEach(function(star, index) {
-      star.addEventListener('click', function() {
-        var rating = parseInt(star.dataset.rating);
-        
-        // Fill stars up to clicked rating
-        stars.forEach(function(s, i) {
-          if (i < rating) {
-            s.textContent = '★';
-            s.classList.add('filled');
-          } else {
-            s.textContent = '☆';
-            s.classList.remove('filled');
-          }
-        });
-        
-        // Store rating (could be sent to an API or stored locally)
-        console.log('Service:', popover.dataset.service, 'Rating:', rating);
-        
-        // Hide popover after rating
-        setTimeout(function() {
-          popover.style.display = 'none';
-          // Reset stars
-          stars.forEach(function(s) {
-            s.textContent = '☆';
-            s.classList.remove('filled');
-          });
-        }, 1000);
-      });
-      
-      // Hover effect
-      star.addEventListener('mouseenter', function() {
-        var hoverRating = parseInt(star.dataset.rating);
-        stars.forEach(function(s, i) {
-          if (i < hoverRating) {
-            s.classList.add('hover');
-          } else {
-            s.classList.remove('hover');
-          }
-        });
-      });
-    });
-    
-    // Reset hover on mouse leave
-    document.querySelector('.star-rating').addEventListener('mouseleave', function() {
-      stars.forEach(function(s) {
-        s.classList.remove('hover');
-      });
-    });
-    
-    // Close button
-    closeBtn.addEventListener('click', function() {
-      popover.style.display = 'none';
-      // Reset stars
-      stars.forEach(function(s) {
-        s.textContent = '☆';
-        s.classList.remove('filled');
-      });
-    });
-    
-    // Close on background click
-    popover.addEventListener('click', function(e) {
-      if (e.target === popover) {
-        popover.style.display = 'none';
-        // Reset stars
-        stars.forEach(function(s) {
-          s.textContent = '☆';
-          s.classList.remove('filled');
-        });
-      }
-    });
-    
-    // Category filter functionality
-    var categories = {};
-    var allServices = [];
-    
-    document.querySelectorAll('[data-category]').forEach(function(el) {
-      var category = el.getAttribute('data-category');
-      allServices.push(el);
-      if (!categories[category]) {
-        categories[category] = [];
-      }
-      categories[category].push(el);
-    });
-    
-    // Filter functions
-    function showAllServices() {
-      document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
-      document.querySelector('.filter-button:not([data-category])').classList.add('active');
-      allServices.forEach(function(service) {
-        service.style.display = 'flex';
-      });
-      window.location.hash = '';
-    }
-    
-    function showCategoryServices(category) {
-      document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
-      var button = document.querySelector('.filter-button[data-category="' + category + '"]');
-      if (button) {
-        button.classList.add('active');
-        allServices.forEach(function(service) {
-          service.style.display = 'none';
-        });
-        if (categories[category]) {
-          categories[category].forEach(function(service) {
-            service.style.display = 'flex';
-          });
-        }
-        window.location.hash = category;
-      }
-    }
-    
-    // Add "All" filter
-    var allButton = document.createElement('button');
-    allButton.innerText = 'Alle';
-    allButton.classList.add('filter-button', 'active');
-    allButton.addEventListener('click', function() {
-      showAllServices();
-    });
-    document.querySelector('.category-filters').appendChild(allButton);
-    
-    // Add category filters
-    for (var category in categories) {
-      var button = document.createElement('button');
-      button.innerText = category;
-      button.classList.add('filter-button');
-      button.setAttribute('data-category', category);
-      button.addEventListener('click', function(e) {
-        var selectedCategory = e.target.getAttribute('data-category');
-        showCategoryServices(selectedCategory);
-      });
-      document.querySelector('.category-filters').appendChild(button);
-    }
-    
-    // Handle URL hash on page load
-    function applyHashFilter() {
-      var hash = window.location.hash.substring(1);
-      if (hash && categories[hash]) {
-        showCategoryServices(hash);
-      } else {
-        showAllServices();
-      }
-    }
-    
-    // Apply hash filter on load
-    applyHashFilter();
-    
-    // Listen for hash changes (back/forward navigation)
-    window.addEventListener('hashchange', applyHashFilter);
-  });
-</script>
+<script type="module" src="/js/opendienstenapp.js"></script>

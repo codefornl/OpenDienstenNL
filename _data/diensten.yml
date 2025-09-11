@@ -350,8 +350,8 @@
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=systemli.org&sz=64
   beschrijving: Privacygerichte videoconferentie gehost in Duitsland
   categorie: videobellen
-  url: https://vc.systemli.org/
-  random_url: https://vc.systemli.org/
+  url: https://meet.systemli.org/
+  random_url: https://meet.systemli.org/
   favicon: https://www.google.com/s2/favicons?domain=systemli.org&sz=64
   eu_hosting: true
   zelf_hosten: true

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} - OpenDiensten</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="redirect-container">
+        <div class="redirect-content">
+            <h1>{{ page.title }}</h1>
+            <p>Je wordt doorgestuurd naar een willekeurige dienst...</p>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { ServiceManager } from '/js/ServiceManager.mjs';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            var category = '{{ page.category }}';
+            var services = [
+                {% assign filtered_services = site.data.diensten | where: 'status', 'live' | where: 'categorie', page.category %}
+                {% for dienst in filtered_services %}
+                {
+                    naam: '{{ dienst.naam }}',
+                    software: '{{ dienst.software }}',
+                    aanbieder: '{{ dienst.aanbieder }}',
+                    categorie: '{{ dienst.categorie }}',
+                    url: '{{ dienst.url }}',
+                    random_url: '{{ dienst.random_url }}',
+                    status: '{{ dienst.status }}'
+                }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+            ];
+
+            // Initialize ServiceManager with services data
+            const serviceManager = new ServiceManager();
+            serviceManager.initWithServices(services);
+
+            if (services.length === 0) {
+                document.querySelector('.redirect-content').innerHTML = 
+                    '<h1>Geen diensten beschikbaar</h1>' +
+                    '<p>Er zijn momenteel geen diensten beschikbaar in de categorie "' + category + '".</p>' +
+                    '<a href="/" class="back-button">Terug naar overzicht</a>';
+                return;
+            }
+
+            try {
+                // Get session ID from URL parameter
+                var urlParams = new URLSearchParams(window.location.search);
+                var sessionId = urlParams.get('session');
+                
+                // Use ServiceManager to handle the redirect flow
+                var result = serviceManager.redirectToRandomService(category, sessionId);
+                
+                // Redirect after short delay
+                setTimeout(function() {
+                    window.open(result.url, '_blank');
+                    window.location.href = '/';
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Redirect error:', error);
+                document.querySelector('.redirect-content').innerHTML = 
+                    '<h1>Er ging iets mis</h1>' +
+                    '<p>Er is een fout opgetreden bij het selecteren van een dienst.</p>' +
+                    '<a href="/" class="back-button">Terug naar overzicht</a>';
+            }
+        });
+    </script>
+
+    <style>
+        .redirect-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .redirect-content {
+            text-align: center;
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 400px;
+        }
+        
+        .redirect-content h1 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .redirect-content p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .back-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+        
+        .back-button:hover {
+            background: #5a67d8;
+        }
+    </style>
+</body>
+</html>
