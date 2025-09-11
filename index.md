@@ -176,16 +176,39 @@ title: OpenDiensten
       categories[category].push(el);
     });
     
+    // Filter functions
+    function showAllServices() {
+      document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
+      document.querySelector('.filter-button:not([data-category])').classList.add('active');
+      allServices.forEach(function(service) {
+        service.style.display = 'flex';
+      });
+      window.location.hash = '';
+    }
+    
+    function showCategoryServices(category) {
+      document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
+      var button = document.querySelector('.filter-button[data-category="' + category + '"]');
+      if (button) {
+        button.classList.add('active');
+        allServices.forEach(function(service) {
+          service.style.display = 'none';
+        });
+        if (categories[category]) {
+          categories[category].forEach(function(service) {
+            service.style.display = 'flex';
+          });
+        }
+        window.location.hash = category;
+      }
+    }
+    
     // Add "All" filter
     var allButton = document.createElement('button');
     allButton.innerText = 'Alle';
     allButton.classList.add('filter-button', 'active');
     allButton.addEventListener('click', function() {
-      document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
-      this.classList.add('active');
-      allServices.forEach(function(service) {
-        service.style.display = 'flex';
-      });
+      showAllServices();
     });
     document.querySelector('.category-filters').appendChild(allButton);
     
@@ -197,17 +220,25 @@ title: OpenDiensten
       button.setAttribute('data-category', category);
       button.addEventListener('click', function(e) {
         var selectedCategory = e.target.getAttribute('data-category');
-        document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
-        e.target.classList.add('active');
-        
-        allServices.forEach(function(service) {
-          service.style.display = 'none';
-        });
-        categories[selectedCategory].forEach(function(service) {
-          service.style.display = 'flex';
-        });
+        showCategoryServices(selectedCategory);
       });
       document.querySelector('.category-filters').appendChild(button);
     }
+    
+    // Handle URL hash on page load
+    function applyHashFilter() {
+      var hash = window.location.hash.substring(1);
+      if (hash && categories[hash]) {
+        showCategoryServices(hash);
+      } else {
+        showAllServices();
+      }
+    }
+    
+    // Apply hash filter on load
+    applyHashFilter();
+    
+    // Listen for hash changes (back/forward navigation)
+    window.addEventListener('hashchange', applyHashFilter);
   });
 </script>
