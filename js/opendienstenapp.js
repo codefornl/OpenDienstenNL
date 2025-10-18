@@ -1,49 +1,61 @@
+import { ServicesManager } from './ServicesManager.mjs';
+import { HistoryManager } from './HistoryManager.mjs';
 import { RatingManager } from './RatingManager.mjs';
-import { ServiceManager } from './ServiceManager.mjs';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
   // Initialize managers
-  const ratingManager = new RatingManager();
-  const serviceManager = new ServiceManager();
-  
+  const servicesManager = new ServicesManager();
+  const historyManager = new HistoryManager();
+  const ratingManager = new RatingManager(historyManager);
+
+  // Load services and setup UI
+  await servicesManager.loadServices();
+  servicesManager.renderServices();
+
+  // Setup filters with callback to update history view if visible
+  servicesManager.setupFilters('.category-filters', (selectedCategory) => {
+    // If history view is visible, update it with the new filter
+    const geschiedenisView = document.getElementById('geschiedenis-view');
+    if (geschiedenisView && geschiedenisView.style.display !== 'none') {
+      historyManager.loadStoredServices(selectedCategory);
+    }
+  });
+
   // Log stored data
-  serviceManager.logStoredUrls();
-  ratingManager.logStoredRatings();
-  serviceManager.logLinkedData();
+  historyManager.logStoredUrls();
 
   // Navigation functionality
-  var overzichtView = document.querySelector('.services-grid').parentElement;
-  var geschiedenisView = document.getElementById('geschiedenis-view');
-  var overzichtLink = document.querySelector('.nav-link[href="/"]');
-  var geschiedenisLink = document.getElementById('mijn-diensten-link');
-  var quickActions = document.querySelector('.quick-actions');
+  const geschiedenisView = document.getElementById('geschiedenis-view');
+  const overzichtLink = document.querySelector('.nav-link[href="/"]');
+  const geschiedenisLink = document.getElementById('mijn-diensten-link');
+  const quickActions = document.querySelector('.quick-actions');
 
   function showOverzicht() {
     // Hide geschiedenis view
     geschiedenisView.style.display = 'none';
     // Show overzicht elements
     document.querySelector('.services-grid').style.display = 'grid';
-    quickActions.style.display = 'flex';
+    quickActions.style.display = '';
     document.querySelector('.filter-menu').style.display = 'block';
     // Update nav state
     document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
     overzichtLink.classList.add('active');
-    // Refresh ratings display
-    setTimeout(function() { ratingManager.addRatingsToServices(); }, 100);
   }
 
   function showGeschiedenis() {
     // Hide overzicht elements
     document.querySelector('.services-grid').style.display = 'none';
     quickActions.style.display = 'none';
-    document.querySelector('.filter-menu').style.display = 'none';
+    // Keep filter menu visible for geschiedenis
+    document.querySelector('.filter-menu').style.display = 'block';
     // Show geschiedenis view
     geschiedenisView.style.display = 'block';
     // Update nav state
     document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
     geschiedenisLink.classList.add('active');
-    // Load stored services using ServiceManager
-    serviceManager.loadStoredServices();
+    // Load stored services using HistoryManager with current filter
+    const activeCategory = servicesManager.getActiveCategory();
+    historyManager.loadStoredServices(activeCategory);
   }
 
   // Event listeners
@@ -57,98 +69,53 @@ document.addEventListener('DOMContentLoaded', function() {
     showGeschiedenis();
   });
 
-  // Setup clear history button using ServiceManager
-  serviceManager.setupClearHistoryHandler();
-  
-  // Setup RatingManager
-  ratingManager.init();
-  var randomButtons = document.querySelectorAll('.random-button');
-  ratingManager.setupActionButtonHandlers(randomButtons);
-  
-  // Check for rating request on page load (handled by RatingManager)
-  setTimeout(function() { ratingManager.checkForRatingRequest(); }, 500);
-  
-  
-  // Category filter functionality
-  var categories = {};
-  var allServices = [];
-  
-  document.querySelectorAll('[data-category]').forEach(function(el) {
-    var category = el.getAttribute('data-category');
-    allServices.push(el);
-    if (!categories[category]) {
-      categories[category] = [];
-    }
-    categories[category].push(el);
-  });
-  
-  // Filter functions
-  function showAllServices() {
-    document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
-    document.querySelector('.filter-button:not([data-category])').classList.add('active');
-    allServices.forEach(function(service) {
-      service.style.display = 'flex';
-    });
-    window.location.hash = '';
-  }
-  
-  function showCategoryServices(category) {
-    document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
-    var button = document.querySelector('.filter-button[data-category="' + category + '"]');
-    if (button) {
-      button.classList.add('active');
-      allServices.forEach(function(service) {
-        service.style.display = 'none';
-      });
-      if (categories[category]) {
-        categories[category].forEach(function(service) {
-          service.style.display = 'flex';
-        });
-      }
-      window.location.hash = category;
-    }
-  }
-  
-  // Add "All" filter
-  var allButton = document.createElement('button');
-  allButton.innerText = 'Alle';
-  allButton.classList.add('filter-button', 'active');
-  allButton.addEventListener('click', function() {
-    showAllServices();
-  });
-  document.querySelector('.category-filters').appendChild(allButton);
-  
-  // Add category filters
-  for (var category in categories) {
-    var button = document.createElement('button');
-    button.innerText = category;
-    button.classList.add('filter-button');
-    button.setAttribute('data-category', category);
-    button.addEventListener('click', function(e) {
-      var selectedCategory = e.target.getAttribute('data-category');
-      showCategoryServices(selectedCategory);
-    });
-    document.querySelector('.category-filters').appendChild(button);
-  }
-  
-  // Handle URL hash on page load
-  function applyHashFilter() {
-    var hash = window.location.hash.substring(1);
-    if (hash && categories[hash]) {
-      showCategoryServices(hash);
-    } else {
-      showAllServices();
-    }
-  }
-  
-  // Apply hash filter on load
-  applyHashFilter();
-  
-  // Listen for hash changes (back/forward navigation)
-  window.addEventListener('hashchange', applyHashFilter);
+  // Setup clear history button using HistoryManager
+  historyManager.setupClearHistoryHandler();
 
-  // Add ratings on page load using RatingManager
-  console.log('Calling addRatingsToServices on page load');
-  ratingManager.addRatingsToServices();
-  
+  // Initialize RatingManager
+  ratingManager.init();
+
+  // Setup action button handlers
+  const randomButtons = document.querySelectorAll('.random-button');
+  randomButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      let category;
+      if (button.href.includes('videogesprek')) {
+        category = 'videobellen';
+      } else if (button.href.includes('samen-schrijven')) {
+        category = 'samen-schrijven';
+      }
+
+      if (category) {
+        try {
+          const service = servicesManager.selectRandomService(category);
+          const uniqueUrl = servicesManager.generateUniqueUrl(service, category);
+          const sessionId = historyManager.generateSessionId();
+
+          // Store in history
+          historyManager.storeGeneratedUrl(sessionId, service, category, uniqueUrl);
+
+          // Open redirect page in new tab with session ID
+          const redirectUrl = `/redirect.html?session=${sessionId}`;
+          window.open(redirectUrl, '_blank');
+
+          // Immediately show rating popover on current tab
+          ratingManager.showRatingPopover(sessionId);
+        } catch (error) {
+          console.error('Error generating service URL:', error);
+          alert('Geen diensten beschikbaar voor deze categorie.');
+        }
+      }
+    });
+  });
+
+  // Apply hash filter on load
+  servicesManager.applyHashFilter();
+
+  // Listen for hash changes (back/forward navigation)
+  window.addEventListener('hashchange', () => {
+    servicesManager.applyHashFilter();
+  });
 });

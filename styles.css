@@ -325,11 +325,6 @@ body {
     margin-bottom: 12px;
 }
 
-.dienst-rating {
-    flex-shrink: 0;
-    margin-left: 16px;
-}
-
 .dienst-info h3 {
     color: #1a1a1a;
     font-size: 1.1rem;
@@ -440,66 +435,42 @@ body {
     line-height: 1.4;
 }
 
-/* Service ratings */
-.service-rating {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    font-size: 0.85rem;
-}
-
-.rating-stars {
-    color: #ff6600;
-    font-size: 1rem;
-    letter-spacing: 1px;
-}
-
-.rating-text {
-    color: #666;
-    font-weight: 500;
-}
-
-/* Ratings in history view */
-.service-rating-history {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.9rem;
-    background: rgba(255, 102, 0, 0.08);
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 102, 0, 0.2);
-}
-
-.service-rating-history .rating-stars {
-    color: #ff6600;
-    font-size: 0.95rem;
-    font-weight: bold;
-}
-
-.service-rating-history .rating-text {
-    color: #ff6600;
-    font-weight: 600;
-    font-size: 0.85rem;
-}
-
-.service-rating-history.no-rating {
-    background: rgba(153, 153, 153, 0.08);
-    border: 1px solid rgba(153, 153, 153, 0.2);
-}
-
-.service-rating-history.no-rating .rating-text {
-    color: #999;
-    font-style: italic;
-    font-weight: 500;
-}
-
 .service-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.service-meta-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+}
+
+/* Service ratings in overview */
+.service-rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    background: rgba(255, 102, 0, 0.08);
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 102, 0, 0.2);
+    margin: 4px 0;
+}
+
+.service-rating .rating-stars {
+    color: #ff6600;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.service-rating .rating-text {
+    color: #ff6600;
+    font-weight: 600;
+    font-size: 0.8rem;
 }
 
 .category-badge {
@@ -550,6 +521,9 @@ body {
     padding: 20px;
     margin-bottom: 20px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
 
 .action-button {
@@ -565,7 +539,7 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     display: inline-block;
     text-decoration: none;
-    margin: 0 5px;
+    margin: 0;
 }
 
 .action-button:hover {
@@ -613,4 +587,94 @@ body {
     .filter-button {
         flex-shrink: 0;
     }
+}
+
+/* History view styling */
+.date-header {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin: 24px 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #EB8C3A;
+}
+
+.date-group {
+    margin-bottom: 32px;
+}
+
+/* History service cards - use same base styling as service cards */
+.service-card.history-variant {
+    margin-bottom: 12px;
+}
+
+.history-timestamp {
+    font-size: 0.85rem;
+    color: #999;
+    font-weight: 500;
+    margin: 4px 0 8px 0;
+}
+
+.history-url {
+    font-size: 0.85rem;
+    color: #007bff;
+    font-family: 'Monaco', 'Consolas', monospace;
+    margin: 4px 0 12px 0;
+    word-break: break-all;
+    background: #f8f9fa;
+    padding: 6px 8px;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+}
+
+/* Empty state for history */
+.empty-state {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 40px 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 1px dashed #ddd;
+}
+
+/* Clear history button */
+.clear-history-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-bottom: 20px;
+}
+
+.clear-history-btn:hover {
+    background: #c82333;
+}
+
+/* Service ratings in history */
+.service-rating-history {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    background: rgba(255, 102, 0, 0.08);
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 102, 0, 0.2);
+}
+
+.service-rating-history .rating-stars {
+    color: #ff6600;
+    font-size: 0.95rem;
+    font-weight: bold;
+}
+
+.service-rating-history .rating-text {
+    color: #ff6600;
+    font-weight: 600;
+    font-size: 0.85rem;
 }

@@ -1,16 +1,17 @@
 export class RatingManager {
-  constructor() {
+  constructor(historyManager) {
+    this.historyManager = historyManager;
     this.popover = null;
     this.stars = null;
     this.closeBtn = null;
-    this.currentSessionData = null;
+    this.currentSessionId = null;
   }
 
   init() {
     this.popover = document.getElementById('rating-popover');
     this.stars = document.querySelectorAll('.star');
     this.closeBtn = document.querySelector('.close-popover');
-    
+
     if (!this.popover || !this.stars.length || !this.closeBtn) {
       console.warn('Rating elements not found');
       return;
@@ -28,259 +29,127 @@ export class RatingManager {
         this.selectRating(rating);
         this.saveRating(rating);
       });
-      
-      // Hover effect
+
+      // Handle star hover for preview
       star.addEventListener('mouseenter', () => {
-        const hoverRating = parseInt(star.dataset.rating);
-        this.highlightStars(hoverRating);
+        const rating = parseInt(star.dataset.rating);
+        this.previewRating(rating);
       });
     });
-    
-    // Reset hover on mouse leave
-    document.querySelector('.star-rating').addEventListener('mouseleave', () => {
-      this.stars.forEach(s => s.classList.remove('hover'));
-    });
-    
-    // Close button
+
+    // Handle close button
     this.closeBtn.addEventListener('click', () => {
       this.hidePopover();
     });
-    
-    // Close on background click
+
+    // Handle background click
     this.popover.addEventListener('click', (e) => {
       if (e.target === this.popover) {
         this.hidePopover();
       }
     });
+
+    // Reset preview on mouse leave
+    this.popover.addEventListener('mouseleave', () => {
+      this.resetStars();
+    });
   }
 
-  showRatingPopup(sessionId, service, category, actualService) {
-    this.currentSessionData = {
-      sessionId,
-      service,
-      category,
-      actualService
-    };
+  // Check for pending rating request
+  checkForRatingRequest() {
+    const ratingRequest = localStorage.getItem('ratingRequest');
+    if (ratingRequest) {
+      // Small delay to ensure the user has returned to the main page
+      setTimeout(() => {
+        this.showRatingPopover(ratingRequest);
+      }, 1000);
+    }
+  }
 
+  // Show rating popover for a specific session
+  showRatingPopover(sessionId) {
+    const entry = this.historyManager.getEntryBySessionId(sessionId);
+    if (!entry) {
+      console.warn('No entry found for session:', sessionId);
+      return;
+    }
+
+    // Don't show if already rated (unless called directly from action button)
+    if (entry.rating && localStorage.getItem('ratingRequest')) {
+      localStorage.removeItem('ratingRequest');
+      return;
+    }
+
+    this.currentSessionId = sessionId;
+    this.resetStars();
     this.popover.style.display = 'flex';
-    this.popover.dataset.service = category;
-    this.popover.dataset.sessionId = sessionId;
-    this.popover.dataset.actualService = actualService;
-    console.log('Showing rating popup for:', actualService);
+
+    // Update popover title with service name
+    const title = this.popover.querySelector('h3');
+    if (title) {
+      title.textContent = `Hoe was ${entry.service.naam}?`;
+    }
   }
 
   hidePopover() {
     this.popover.style.display = 'none';
-    this.resetStars();
+    this.currentSessionId = null;
+    localStorage.removeItem('ratingRequest');
   }
 
-  selectRating(rating) {
-    // Fill stars up to clicked rating
-    this.stars.forEach((s, i) => {
-      if (i < rating) {
-        s.textContent = '★';
-        s.classList.add('filled');
-      } else {
-        s.textContent = '☆';
-        s.classList.remove('filled');
+  previewRating(rating) {
+    this.stars.forEach((star, index) => {
+      star.classList.remove('filled', 'hover');
+      if (index < rating) {
+        star.classList.add('hover');
       }
     });
   }
 
-  highlightStars(rating) {
-    this.stars.forEach((s, i) => {
-      if (i < rating) {
-        s.classList.add('hover');
-      } else {
-        s.classList.remove('hover');
+  selectRating(rating) {
+    this.stars.forEach((star, index) => {
+      star.classList.remove('filled', 'hover');
+      if (index < rating) {
+        star.classList.add('filled');
       }
     });
   }
 
   resetStars() {
-    this.stars.forEach(s => {
-      s.textContent = '☆';
-      s.classList.remove('filled', 'hover');
+    this.stars.forEach(star => {
+      star.classList.remove('filled', 'hover');
     });
   }
 
   saveRating(rating) {
-    try {
-      const storedRatings = JSON.parse(localStorage.getItem('openDienstenRatings') || '[]');
-      const ratingEntry = {
-        sessionId: this.popover.dataset.sessionId || null,
-        service: this.popover.dataset.actualService || this.popover.dataset.service,
-        action: this.popover.dataset.service,
-        rating: rating,
-        timestamp: new Date().toISOString()
-      };
-      
-      storedRatings.push(ratingEntry);
-      localStorage.setItem('openDienstenRatings', JSON.stringify(storedRatings));
-      console.log('Rating opgeslagen voor service:', ratingEntry.service, 'Rating:', ratingEntry.rating);
-      
-      // Clear session info after rating
-      try {
-        sessionStorage.removeItem('openDienstenCurrentSession');
-      } catch (e) {
-        // ignore
-      }
-    } catch (e) {
-      console.warn('Could not save rating to localStorage:', e);
+    if (!this.currentSessionId) {
+      console.warn('No current session ID for rating');
+      return;
     }
-    
-    // Hide popover after rating
-    setTimeout(() => {
-      this.hidePopover();
-    }, 1000);
-  }
 
-  checkForRatingRequest() {
-    try {
-      const currentSession = JSON.parse(sessionStorage.getItem('openDienstenCurrentSession') || '{}');
-      if (currentSession.sessionId && currentSession.service && currentSession.needsRating) {
-        // Show rating popup
-        this.showRatingPopup(
-          currentSession.sessionId,
-          currentSession.category || 'service',
-          currentSession.category,
-          currentSession.service
-        );
-        
-        // Mark that rating popup has been shown
-        currentSession.needsRating = false;
-        sessionStorage.setItem('openDienstenCurrentSession', JSON.stringify(currentSession));
-      }
-    } catch (e) {
-      console.warn('Could not check for rating request:', e);
-    }
-  }
+    // Save rating to history
+    const success = this.historyManager.updateRating(this.currentSessionId, rating);
 
-  logStoredRatings() {
-    try {
-      const storedRatings = JSON.parse(localStorage.getItem('openDienstenRatings') || '[]');
-      if (storedRatings.length > 0) {
-        console.log('⭐ Service ratings van OpenDiensten:', storedRatings);
-        console.table(storedRatings.map(entry => ({
-          'SessionID': entry.sessionId || 'Onbekend',
-          'Service': entry.service,
-          'Actie': entry.action || entry.service,
-          'Rating': '★'.repeat(entry.rating) + '☆'.repeat(5 - entry.rating) + ' (' + entry.rating + '/5)',
-          'Datum': new Date(entry.timestamp).toLocaleString('nl-NL')
-        })));
-      } else {
-        console.log('⭐ Nog geen service ratings van OpenDiensten');
-      }
-    } catch (e) {
-      console.warn('Could not read ratings from localStorage:', e);
-    }
-  }
+    if (success) {
+      console.log(`Rating ${rating} saved for session ${this.currentSessionId}`);
 
-  addRatingsToServices() {
-    try {
-      const storedRatings = JSON.parse(localStorage.getItem('openDienstenRatings') || '[]');
-      console.log('addRatingsToServices: Found ratings:', storedRatings);
-      if (storedRatings.length === 0) {
-        console.log('No ratings found, skipping rating display');
-        return;
-      }
+      // Hide popover after short delay
+      setTimeout(() => {
+        this.hidePopover();
 
-      // Calculate average ratings per service
-      const serviceRatings = {};
-      storedRatings.forEach(rating => {
-        const serviceName = rating.service;
-        if (!serviceRatings[serviceName]) {
-          serviceRatings[serviceName] = { total: 0, count: 0 };
+        // Refresh history view if it's currently visible
+        const geschiedenisView = document.getElementById('geschiedenis-view');
+        if (geschiedenisView && geschiedenisView.style.display !== 'none') {
+          this.historyManager.loadStoredServices();
         }
-        serviceRatings[serviceName].total += rating.rating;
-        serviceRatings[serviceName].count++;
-      });
-      
-      console.log('Calculated service ratings:', serviceRatings);
-
-      // Add ratings to service cards
-      const serviceCards = document.querySelectorAll('.service-card');
-      console.log('Found', serviceCards.length, 'service cards');
-      serviceCards.forEach(card => {
-        const serviceName = card.querySelector('h4').textContent.trim();
-        console.log('Checking card for service:', serviceName);
-        if (serviceRatings[serviceName]) {
-          console.log('Found rating for', serviceName, ':', serviceRatings[serviceName]);
-          const average = serviceRatings[serviceName].total / serviceRatings[serviceName].count;
-          const count = serviceRatings[serviceName].count;
-          
-          // Remove existing rating if any
-          const existingRating = card.querySelector('.service-rating');
-          if (existingRating) {
-            existingRating.remove();
-          }
-          
-          // Create rating display
-          const ratingDiv = document.createElement('div');
-          ratingDiv.className = 'service-rating';
-          
-          const starsSpan = document.createElement('span');
-          starsSpan.className = 'rating-stars';
-          const fullStars = Math.floor(average);
-          const hasHalfStar = average - fullStars >= 0.5;
-          
-          starsSpan.innerHTML = '★'.repeat(fullStars) + 
-            (hasHalfStar ? '☆' : '') + 
-            '☆'.repeat(5 - fullStars - (hasHalfStar ? 1 : 0));
-          
-          const ratingText = document.createElement('span');
-          ratingText.className = 'rating-text';
-          ratingText.textContent = average.toFixed(1) + ' (' + count + ')';
-          
-          ratingDiv.appendChild(starsSpan);
-          ratingDiv.appendChild(ratingText);
-          
-          // Insert after service description
-          const description = card.querySelector('.service-description');
-          if (description && description.parentNode) {
-            description.parentNode.insertBefore(ratingDiv, description.nextSibling);
-          }
-        }
-      });
-    } catch (e) {
-      console.warn('Could not add ratings to services:', e);
+      }, 500);
+    } else {
+      console.error('Failed to save rating');
     }
   }
 
-  setupActionButtonHandlers(randomButtons) {
-    randomButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        // Generate session ID for tracking
-        const sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
-        const actionText = button.textContent.trim();
-        
-        // Store session info
-        try {
-          const sessionData = {
-            sessionId: sessionId,
-            service: 'Willekeurige ' + (actionText.includes('videogesprek') ? 'videodienst' : 'schrijfdienst'),
-            category: actionText.includes('videogesprek') ? 'videobellen' : 'samen-schrijven',
-            needsRating: true,
-            timestamp: new Date().toISOString()
-          };
-          sessionStorage.setItem('openDienstenCurrentSession', JSON.stringify(sessionData));
-        } catch (e) {
-          console.warn('Could not store session data:', e);
-        }
-        
-        // Add session ID to the redirect URL
-        const originalHref = button.getAttribute('href');
-        const newHref = originalHref + '?session=' + encodeURIComponent(sessionId);
-        button.setAttribute('href', newHref);
-        
-        // Show rating popup immediately
-        this.showRatingPopup(
-          sessionId,
-          actionText.includes('videogesprek') ? 'videobellen' : 'samen-schrijven',
-          actionText.includes('videogesprek') ? 'videobellen' : 'samen-schrijven',
-          actionText
-        );
-      });
-    });
+  // Manual trigger for testing
+  triggerRatingForSession(sessionId) {
+    this.showRatingPopover(sessionId);
   }
 }

@@ -1,0 +1,23 @@
+---
+layout: null
+---
+[
+  {% assign all_diensten = site.data.diensten %}
+  {% for dienst in all_diensten %}
+  {
+    "naam": "{{ dienst.naam }}",
+    "software": "{{ dienst.software }}",
+    "aanbieder": {% if dienst.aanbieder %}"{{ dienst.aanbieder }}"{% else %}null{% endif %},
+    "aanbieder_favicon": {% if dienst.aanbieder_favicon %}"{{ dienst.aanbieder_favicon }}"{% else %}null{% endif %},
+    "spoelkeuken_url": {% if dienst.spoelkeuken_url %}"{{ dienst.spoelkeuken_url }}"{% else %}null{% endif %},
+    "beschrijving": "{{ dienst.beschrijving }}",
+    "categorie": "{{ dienst.categorie }}",
+    "url": "{{ dienst.url }}",
+    "random_url": {% if dienst.random_url %}"{{ dienst.random_url }}"{% else %}null{% endif %},
+    "favicon": "{{ dienst.favicon }}",
+    "eu_hosting": {{ dienst.eu_hosting }},
+    "zelf_hosten": {{ dienst.zelf_hosten }},
+    "status": "{{ dienst.status }}"
+  }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]

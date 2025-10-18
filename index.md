@@ -42,7 +42,7 @@ title: OpenDiensten
         <p class="empty-state">Je hebt nog geen diensten gegenereerd. Klik op "Start videogesprek" of "Start samen schrijven" om te beginnen!</p>
       </div>
     </div>
-    
+
     <div id="rating-popover" class="rating-popover" style="display: none;">
       <div class="popover-content">
         <h3>Hoe was de kwaliteit?</h3>
@@ -56,36 +56,9 @@ title: OpenDiensten
         <button class="close-popover">×</button>
       </div>
     </div>
-    <div class="services-grid">
-      {% assign diensten = site.data.diensten | where: 'status', 'live' %}
-      {% for dienst in diensten %}
-          <a href="{{ dienst.url }}" class="service-card" target="_blank" data-category="{{ dienst.categorie | slugify }}">
-              <div class="favicon-container">
-                  <img src="{{ dienst.favicon }}" alt="{{ dienst.naam }}" class="service-favicon">
-                  {% if dienst.aanbieder_favicon %}
-                  <img src="{{ dienst.aanbieder_favicon }}" alt="{{ dienst.aanbieder }}" class="provider-favicon">
-                  {% endif %}
-              </div>
-              <div class="service-info">
-                <h4>{{ dienst.naam }}</h4>
-                <p class="service-description">{{ dienst.beschrijving }}</p>
-                <div class="service-meta">
-                  <span class="category-badge">{{ dienst.categorie }}</span>
-                  <div class="provider-info">
-                    {% if dienst.eu_hosting %}
-                        <span class="eu-flag">🇪🇺</span>
-                    {% else %}
-                        <span class="non-eu-flag" title="Niet in EU gehost">
-                        <span class="eu-flag-base">🇪🇺</span>
-                        <span class="prohibited-symbol">✘</span>
-                        </span>
-                    {% endif %}
-                    <span class="provider-name">{{ dienst.aanbieder }}</span>
-                  </div>
-                </div>
-              </div>
-          </a>
-      {% endfor %}
+
+    <div class="services-grid" id="services-grid">
+      <!-- Services will be rendered here by JavaScript -->
     </div>
   </main>
 </div>
