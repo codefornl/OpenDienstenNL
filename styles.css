@@ -695,6 +695,45 @@ body {
     color: #000;
 }
 
+.history-title-container {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 4px;
+    padding-right: 32px; /* Make room for delete button */
+}
+
+.history-title {
+    margin: 0;
+    display: inline;
+    transition: color 0.2s ease;
+}
+
+.history-title:hover {
+    color: #ff6600;
+}
+
+.rename-btn {
+    background-color: transparent;
+    color: #ccc;
+    border: none;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    vertical-align: baseline;
+}
+
+.rename-btn:hover {
+    color: #ff6600;
+}
+
+.rename-btn:active {
+    color: #e55a00;
+}
+
 .history-timestamp {
     font-size: 0.85rem;
     color: #999;

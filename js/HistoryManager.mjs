@@ -25,7 +25,8 @@ export class HistoryManager {
       category: category,
       url: url,
       timestamp: timestamp,
-      rating: null // Will be set later via rating popover
+      rating: null, // Will be set later via rating popover
+      customName: null // Custom name set by user, null = use default
     });
 
     // Keep only last 50 entries
@@ -165,6 +166,19 @@ export class HistoryManager {
     return false;
   }
 
+  // Update custom name for a specific session
+  updateCustomName(sessionId, customName) {
+    const storedUrls = this.getStoredUrls();
+    const entryIndex = storedUrls.findIndex(entry => entry.sessionId === sessionId);
+
+    if (entryIndex !== -1) {
+      storedUrls[entryIndex].customName = customName || null;
+      localStorage.setItem(this.storageKey, JSON.stringify(storedUrls));
+      return true;
+    }
+    return false;
+  }
+
   // Get entry by session ID
   getEntryBySessionId(sessionId) {
     const storedUrls = this.getStoredUrls();
@@ -267,8 +281,37 @@ export class HistoryManager {
     const serviceInfo = document.createElement('div');
     serviceInfo.className = 'service-info';
 
+    // Title with rename functionality
+    const titleContainer = document.createElement('div');
+    titleContainer.className = 'history-title-container';
+
     const title = document.createElement('h4');
-    title.textContent = entry.service.naam;
+    title.className = 'history-title';
+    title.textContent = this.getDisplayName(entry);
+    title.style.cursor = 'pointer';
+    title.title = 'Klik om te hernoemen';
+
+    // Make title clickable for rename
+    title.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.showRenameDialog(entry);
+    });
+
+    const renameBtn = document.createElement('button');
+    renameBtn.className = 'rename-btn';
+    renameBtn.innerHTML = '✎';
+    renameBtn.title = 'Hernoem';
+    renameBtn.setAttribute('aria-label', 'Hernoem');
+
+    renameBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.showRenameDialog(entry);
+    });
+
+    titleContainer.appendChild(title);
+    titleContainer.appendChild(renameBtn);
 
     const description = document.createElement('p');
     description.className = 'service-description';
@@ -338,7 +381,7 @@ export class HistoryManager {
       serviceMeta.appendChild(ratingDisplay);
     }
 
-    serviceInfo.appendChild(title);
+    serviceInfo.appendChild(titleContainer);
     serviceInfo.appendChild(timestampDisplay);
     serviceInfo.appendChild(urlDisplay);
     serviceInfo.appendChild(serviceMeta);
@@ -376,6 +419,41 @@ export class HistoryManager {
   getCurrentActiveCategory() {
     const activeFilter = document.querySelector('.category-filters .filter-btn.active');
     return activeFilter ? activeFilter.dataset.category : null;
+  }
+
+  // Get display name for an entry (custom or default)
+  getDisplayName(entry) {
+    if (entry.customName) {
+      return entry.customName;
+    }
+    // Default: "Service door Aanbieder"
+    return `${entry.service.naam} door ${entry.service.aanbieder}`;
+  }
+
+  // Show rename dialog
+  showRenameDialog(entry) {
+    const currentName = this.getDisplayName(entry);
+    const defaultName = `${entry.service.naam} door ${entry.service.aanbieder}`;
+
+    const newName = prompt(
+      `Geef deze sessie een naam:\n\n(Laat leeg voor standaard: "${defaultName}")`,
+      currentName  // Prefill with current display name
+    );
+
+    // null means cancelled, empty string means reset to default
+    if (newName === null) {
+      return; // User cancelled
+    }
+
+    const trimmedName = newName.trim();
+    // If same as default, store as null, otherwise store the custom name
+    const finalName = (trimmedName === '' || trimmedName === defaultName) ? null : trimmedName;
+
+    if (this.updateCustomName(entry.sessionId, finalName)) {
+      // Refresh the view
+      const activeCategory = this.getCurrentActiveCategory();
+      this.loadStoredServices(activeCategory);
+    }
   }
 
   // Truncate URL for display
