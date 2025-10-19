@@ -72,6 +72,9 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Setup clear history button using HistoryManager
   historyManager.setupClearHistoryHandler();
 
+  // Setup export/import handlers
+  historyManager.setupExportImportHandlers();
+
   // Initialize RatingManager
   ratingManager.init();
 

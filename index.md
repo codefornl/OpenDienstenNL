@@ -36,7 +36,12 @@ title: OpenDiensten
     <div id="geschiedenis-view" class="geschiedenis-view" style="display: none;">
       <div class="geschiedenis-header">
         <h2>Geschiedenis</h2>
-        <button id="clear-history-btn" class="clear-history-btn" style="display: none;">Wis geschiedenis</button>
+        <div class="geschiedenis-actions">
+          <button id="export-history-btn" class="history-action-btn" style="display: none;">Exporteer</button>
+          <button id="import-history-btn" class="history-action-btn" style="display: none;">Importeer</button>
+          <input type="file" id="import-file-input" accept=".json" style="display: none;">
+          <button id="clear-history-btn" class="history-action-btn danger" style="display: none;">Wis alles</button>
+        </div>
       </div>
       <div id="diensten-lijst" class="diensten-lijst">
         <p class="empty-state">Je hebt nog geen diensten gegenereerd. Klik op "Start videogesprek" of "Start samen schrijven" om te beginnen!</p>

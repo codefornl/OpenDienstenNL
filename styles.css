@@ -285,6 +285,35 @@ body {
     font-weight: 600;
 }
 
+.geschiedenis-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.history-action-btn {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+.history-action-btn:hover {
+    background-color: #e55a00;
+}
+
+.history-action-btn.danger {
+    background-color: #dc3545;
+}
+
+.history-action-btn.danger:hover {
+    background-color: #c82333;
+}
+
+/* Legacy support */
 .clear-history-btn {
     background-color: #dc3545;
     color: white;
@@ -564,7 +593,7 @@ body {
     .app-container {
         flex-direction: column;
     }
-    
+
     .sidebar {
         position: static;
         width: 100%;
@@ -572,20 +601,44 @@ body {
         border-right: none;
         border-bottom: 1px solid #e5e5e5;
     }
-    
+
     .content-area {
         margin-left: 0;
         padding: 16px;
     }
-    
+
     .category-filters {
         flex-direction: row;
         flex-wrap: wrap;
         gap: 8px;
     }
-    
+
     .filter-button {
         flex-shrink: 0;
+    }
+
+    /* Mobile responsive geschiedenis header */
+    .geschiedenis-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .geschiedenis-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .history-action-btn {
+        flex: 1;
+        min-width: calc(50% - 4px);
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
+    .history-action-btn.danger {
+        flex-basis: 100%;
+        margin-top: 4px;
     }
 }
 
@@ -604,8 +657,42 @@ body {
 }
 
 /* History service cards - use same base styling as service cards */
-.service-card.history-variant {
+.history-card-wrapper {
+    position: relative;
     margin-bottom: 12px;
+}
+
+.service-card.history-variant {
+    width: 100%;
+}
+
+.delete-history-item {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    color: #666;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+    padding: 0;
+}
+
+.delete-history-item:hover {
+    color: #333;
+    transform: scale(1.1);
+}
+
+.delete-history-item:active {
+    color: #000;
 }
 
 .history-timestamp {

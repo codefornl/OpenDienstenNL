@@ -47,6 +47,111 @@ export class HistoryManager {
     localStorage.removeItem(this.storageKey);
   }
 
+  // Delete a specific entry by session ID
+  deleteEntry(sessionId) {
+    const storedUrls = this.getStoredUrls();
+    const filteredUrls = storedUrls.filter(entry => entry.sessionId !== sessionId);
+    localStorage.setItem(this.storageKey, JSON.stringify(filteredUrls));
+    return true;
+  }
+
+  // Export data as JSON file
+  exportData() {
+    const data = {
+      version: "1.0",
+      exportDate: new Date().toISOString(),
+      application: "OpenDiensten",
+      services: this.getStoredUrls()
+    };
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `opendiensten-backup-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // Import data from JSON file
+  async importData(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+
+          // Validate data structure
+          if (!data.services || !Array.isArray(data.services)) {
+            reject(new Error('Ongeldig bestandsformaat'));
+            return;
+          }
+
+          // Validate version (future-proofing)
+          if (data.version && data.version !== "1.0") {
+            console.warn('Verschillende versie gedetecteerd:', data.version);
+          }
+
+          // Get existing data
+          const existingUrls = this.getStoredUrls();
+          const existingSessionIds = new Set(existingUrls.map(entry => entry.sessionId));
+
+          // Merge: add new entries, update existing ones if imported is newer
+          const mergedUrls = [...existingUrls];
+          let importedCount = 0;
+          let updatedCount = 0;
+
+          data.services.forEach(importedEntry => {
+            // Validate entry structure
+            if (!importedEntry.sessionId || !importedEntry.service || !importedEntry.url) {
+              console.warn('Ongeldige entry geskipt:', importedEntry);
+              return;
+            }
+
+            if (existingSessionIds.has(importedEntry.sessionId)) {
+              // Update existing entry if imported is newer
+              const existingIndex = mergedUrls.findIndex(e => e.sessionId === importedEntry.sessionId);
+              const existingTimestamp = new Date(mergedUrls[existingIndex].timestamp);
+              const importedTimestamp = new Date(importedEntry.timestamp);
+
+              if (importedTimestamp > existingTimestamp) {
+                mergedUrls[existingIndex] = importedEntry;
+                updatedCount++;
+              }
+            } else {
+              // Add new entry
+              mergedUrls.push(importedEntry);
+              importedCount++;
+            }
+          });
+
+          // Sort by timestamp (newest first)
+          mergedUrls.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+          // Keep only last 100 entries after import
+          if (mergedUrls.length > 100) {
+            mergedUrls.splice(100);
+          }
+
+          // Save merged data
+          localStorage.setItem(this.storageKey, JSON.stringify(mergedUrls));
+
+          resolve({
+            imported: importedCount,
+            updated: updatedCount,
+            total: mergedUrls.length
+          });
+        } catch (error) {
+          reject(error);
+        }
+      };
+
+      reader.onerror = () => reject(new Error('Fout bij het lezen van het bestand'));
+      reader.readAsText(file);
+    });
+  }
+
   // Update rating for a specific session
   updateRating(sessionId, rating) {
     const storedUrls = this.getStoredUrls();
@@ -71,6 +176,8 @@ export class HistoryManager {
     const storedUrls = this.getStoredUrls();
     const dienstenLijst = document.getElementById('diensten-lijst');
     const clearHistoryBtn = document.getElementById('clear-history-btn');
+    const exportHistoryBtn = document.getElementById('export-history-btn');
+    const importHistoryBtn = document.getElementById('import-history-btn');
 
     if (!dienstenLijst) {
       console.error('Diensten lijst container not found');
@@ -86,17 +193,26 @@ export class HistoryManager {
       });
     }
 
-    if (filteredUrls.length === 0) {
-      const message = activeCategory && activeCategory !== 'alle'
-        ? `Je hebt nog geen diensten uit de categorie "${this.getCategoryDisplayName(activeCategory)}" gegenereerd.`
-        : 'Je hebt nog geen diensten gegenereerd. Klik op "Start videogesprek" of "Start samen schrijven" om te beginnen!';
+    if (storedUrls.length === 0) {
+      // No history at all - show only import button
+      const message = 'Je hebt nog geen diensten gegenereerd. Klik op "Start videogesprek" of "Start samen schrijven" om te beginnen!';
       dienstenLijst.innerHTML = `<p class="empty-state">${message}</p>`;
       if (clearHistoryBtn) clearHistoryBtn.style.display = 'none';
+      if (exportHistoryBtn) exportHistoryBtn.style.display = 'none';
+      if (importHistoryBtn) importHistoryBtn.style.display = 'inline-block'; // Always show import
       return;
     }
 
-    // Show clear button
-    if (clearHistoryBtn) clearHistoryBtn.style.display = 'block';
+    // Show all action buttons when there's history
+    if (clearHistoryBtn) clearHistoryBtn.style.display = 'inline-block';
+    if (exportHistoryBtn) exportHistoryBtn.style.display = 'inline-block';
+    if (importHistoryBtn) importHistoryBtn.style.display = 'inline-block';
+
+    if (filteredUrls.length === 0) {
+      const message = `Je hebt nog geen diensten uit de categorie "${this.getCategoryDisplayName(activeCategory)}" gegenereerd.`;
+      dienstenLijst.innerHTML = `<p class="empty-state">${message}</p>`;
+      return;
+    }
 
     // Group by date
     const groupedByDate = this.groupByDate(filteredUrls);
@@ -123,6 +239,9 @@ export class HistoryManager {
 
   // Create a service card for history view (same style as service cards)
   createHistoryServiceCard(entry) {
+    const cardWrapper = document.createElement('div');
+    cardWrapper.className = 'history-card-wrapper';
+
     const card = document.createElement('a');
     card.href = entry.url;
     card.className = 'service-card history-variant';
@@ -227,7 +346,36 @@ export class HistoryManager {
     card.appendChild(faviconContainer);
     card.appendChild(serviceInfo);
 
-    return card;
+    // Create delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'delete-history-item';
+    deleteBtn.innerHTML = '×';
+    deleteBtn.title = 'Verwijder deze entry';
+    deleteBtn.setAttribute('aria-label', 'Verwijder');
+
+    // Prevent navigation when clicking delete button
+    deleteBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (confirm(`Weet je zeker dat je "${entry.service.naam}" wilt verwijderen uit de geschiedenis?`)) {
+        this.deleteEntry(entry.sessionId);
+        // Refresh the view
+        const activeCategory = this.getCurrentActiveCategory();
+        this.loadStoredServices(activeCategory);
+      }
+    });
+
+    cardWrapper.appendChild(card);
+    cardWrapper.appendChild(deleteBtn);
+
+    return cardWrapper;
+  }
+
+  // Get current active category from the UI
+  getCurrentActiveCategory() {
+    const activeFilter = document.querySelector('.category-filters .filter-btn.active');
+    return activeFilter ? activeFilter.dataset.category : null;
   }
 
   // Truncate URL for display
@@ -305,6 +453,45 @@ export class HistoryManager {
         if (confirm('Weet je zeker dat je alle geschiedenis wilt wissen?')) {
           this.clearStoredUrls();
           this.loadStoredServices();
+        }
+      });
+    }
+  }
+
+  // Setup export/import handlers
+  setupExportImportHandlers() {
+    const exportHistoryBtn = document.getElementById('export-history-btn');
+    const importHistoryBtn = document.getElementById('import-history-btn');
+    const importFileInput = document.getElementById('import-file-input');
+
+    if (exportHistoryBtn) {
+      exportHistoryBtn.addEventListener('click', () => {
+        this.exportData();
+      });
+    }
+
+    if (importHistoryBtn && importFileInput) {
+      importHistoryBtn.addEventListener('click', () => {
+        importFileInput.click();
+      });
+
+      importFileInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        try {
+          const result = await this.importData(file);
+          alert(`Import geslaagd!\n\n${result.imported} nieuwe items toegevoegd\n${result.updated} items bijgewerkt\nTotaal: ${result.total} items`);
+
+          // Refresh the view
+          const activeCategory = this.getCurrentActiveCategory();
+          this.loadStoredServices(activeCategory);
+        } catch (error) {
+          alert(`Import mislukt: ${error.message}`);
+          console.error('Import error:', error);
+        } finally {
+          // Reset file input
+          importFileInput.value = '';
         }
       });
     }
