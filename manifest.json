@@ -1,0 +1,20 @@
+{
+  "name": "OpenDiensten",
+  "short_name": "OpenDiensten",
+  "description": "Open & gratis publiek toegankelijke SaaS omgevingen voor community organisatie",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff6600",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "lang": "nl-NL"
+}
