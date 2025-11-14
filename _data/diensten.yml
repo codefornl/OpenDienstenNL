@@ -94,7 +94,7 @@
   favicon: https://www.google.com/s2/favicons?domain=excalidraw.com&sz=64
   eu_hosting: false
   zelf_hosten: true
-  status: disabled
+  status: live
 
 - naam: TLDraw
   software: TLDraw
@@ -438,6 +438,18 @@
   categorie: suite
   url: https://fairapps.net/
   favicon: https://www.google.com/s2/favicons?domain=fairapps.net&sz=64
+  eu_hosting: true
+  zelf_hosten: true
+  status: live
+
+- naam: Doodle
+  software: Doodle
+  aanbieder: Doodle
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=doodle.com&sz=64
+  beschrijving: Doodle voor plannen zonder account
+  categorie: plannen
+  url: https://doodle.com/
+  favicon: https://www.google.com/s2/favicons?domain=doodle.com&sz=64
   eu_hosting: true
   zelf_hosten: true
   status: live
