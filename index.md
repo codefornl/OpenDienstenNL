@@ -12,7 +12,7 @@ title: OpenDiensten
       <img src="https://codefor.nl/img/Logo-orange-01.png" alt="Code for NL" class="codefor-logo">
     </div>
     <div>
-      <p>Open & gratis publiek toegankelijke SaaS omgevingen voor community organisatie</p>
+      <p>{{ site.description }} (<a href="#" onclick="document.getElementById('credits-modal').style.display='block'">credits</a>)</p>
       {% include github-logo.html %}
       <nav class="main-nav">
         <ul>
@@ -69,3 +69,5 @@ title: OpenDiensten
 </div>
 
 <script type="module" src="/js/opendienstenapp.js"></script>
+
+{% include credits-modal.html %}

@@ -1,7 +1,10 @@
+---
+permalink: /manifest.json
+---
 {
-  "name": "OpenDiensten",
-  "short_name": "OpenDiensten",
-  "description": "Open & gratis publiek toegankelijke SaaS omgevingen voor community organisatie",
+  "name": "{{ site.title | escape }}",
+  "short_name": "{{ site.title | escape }}",
+  "description": "{{ site.description | escape }}",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

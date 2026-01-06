@@ -1,10 +1,10 @@
 ---
-layout: null
+permalink: /api.json
 ---
 {
   "meta": {
-    "title": "Open Diensten NL",
-    "description": "Open & gratis publiek toegankelijke SaaS omgevingen voor community organisatie",
+    "title": "{{ site.title | escape }}",
+    "description": "{{ site.description }}",
     "version": "1.0",
     "last_updated": "{{ site.time | date_to_xmlschema }}",
     "total_services": {{ site.data.diensten | where: 'status', 'live' | size }}
