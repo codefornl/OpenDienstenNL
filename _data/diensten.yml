@@ -31,6 +31,19 @@
 
 - naam: Jitsi Meet
   software: Jitsi Meet
+  aanbieder: Speakup
+  aanbieder_favicon: https://speakup.nl/favicon.svg
+  spoelkeuken_url: https://spoelkeuken.publicspaces.net/tool/Jitsi
+  beschrijving: Open source videoconferentie gehost door Speakup.nl
+  categorie: videobellen
+  url: https://meet.speakup.nl/
+  random_url: https://meet.speakup.nl/
+  favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
+  zelf_hosten: true
+  status: live
+
+- naam: Jitsi Meet
+  software: Jitsi Meet
   aanbieder: Jitsi
   aanbieder_favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
   spoelkeuken_url: https://spoelkeuken.publicspaces.net/tool/Jitsi
