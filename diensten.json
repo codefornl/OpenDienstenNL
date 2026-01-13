@@ -16,7 +16,6 @@ layout: null
     "random_url": {% if dienst.random_url %}"{{ dienst.random_url }}"{% else %}null{% endif %},
     "favicon": "{{ dienst.favicon }}",
     "eu_hosting": {{ dienst.eu_hosting }},
-    "zelf_hosten": {{ dienst.zelf_hosten }},
     "status": "{{ dienst.status }}"
   }{% unless forloop.last %},{% endunless %}
   {% endfor %}
