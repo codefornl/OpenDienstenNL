@@ -478,7 +478,19 @@
   url: https://fairapps.net/
   favicon: https://www.google.com/s2/favicons?domain=fairapps.net&sz=64
   eu_hosting: true
-  zelf_hosten: true
+  zelf_hosten: false
+  status: live
+
+- naam: Framasoft
+  software: Framasoft
+  aanbieder: Framasoft
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
+  beschrijving: Bundel van ethische apps zoals Nextcloud, BBB, OnlyOffice
+  categorie: suite
+  url: https://framasoft.org/
+  favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
+  eu_hosting: true
+  zelf_hosten: false
   status: live
 
 - naam: Doodle
