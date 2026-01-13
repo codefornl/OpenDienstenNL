@@ -35,7 +35,6 @@ All service data is stored in `_data/diensten.yml`. Each service entry contains:
 - `url`: Service URL
 - `favicon`: Service icon URL
 - `eu_hosting`: Boolean for EU hosting status
-- `zelf_hosten`: Boolean for self-hosting capability
 - `status`: Service status (live/disabled)
 
 ### Key Files

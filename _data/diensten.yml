@@ -12,7 +12,6 @@
   random_url: https://videobellen.pleio.nl/
   favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Jitsi Meet
@@ -26,7 +25,6 @@
   random_url: https://meetme.bit.nl/
   favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Jitsi Meet
@@ -40,7 +38,6 @@
   random_url: https://meet.speakup.nl/
   favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Jitsi Meet
@@ -54,7 +51,6 @@
   random_url: https://meet.jit.si/
   favicon: https://www.google.com/s2/favicons?domain=jitsi.org&sz=64
   eu_hosting: false
-  zelf_hosten: true
   status: live
 
 - naam: Alkemio
@@ -67,7 +63,6 @@
   random_url: https://alkem.io/
   favicon: https://www.google.com/s2/favicons?domain=alkem.io&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Etherpad
@@ -80,7 +75,6 @@
   random_url: https://pad.riseup.net/p/
   favicon: https://www.google.com/s2/favicons?domain=etherpad.org&sz=64
   eu_hosting: false
-  zelf_hosten: false
   status: live
 
 - naam: Listmonk
@@ -90,7 +84,6 @@
   url: https://listmonk.app/
   favicon: https://www.google.com/s2/favicons?domain=listmonk.app&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: disabled
 
 - naam: Plone
@@ -100,7 +93,6 @@
   url: https://plone.com/cloud
   favicon: https://www.google.com/s2/favicons?domain=plone.com&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: disabled
 
 - naam: Element
@@ -110,7 +102,6 @@
   url: https://element.io/
   favicon: https://www.google.com/s2/favicons?domain=element.io&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: disabled
 
 - naam: Excalidraw
@@ -120,7 +111,6 @@
   url: https://excalidraw.com/
   favicon: https://www.google.com/s2/favicons?domain=excalidraw.com&sz=64
   eu_hosting: false
-  zelf_hosten: true
   status: live
 
 - naam: TLDraw
@@ -130,7 +120,6 @@
   url: https://www.tldraw.com/
   favicon: https://www.google.com/s2/favicons?domain=tldraw.com&sz=64
   eu_hosting: false
-  zelf_hosten: true
   status: disabled
 
 - naam: CryptPad
@@ -140,7 +129,6 @@
   url: https://cryptpad.fr/
   favicon: https://www.google.com/s2/favicons?domain=cryptpad.fr&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: disabled
 
 - naam: Framadate
@@ -150,7 +138,6 @@
   url: https://framadate.org/
   favicon: https://www.google.com/s2/favicons?domain=framadate.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: disabled
 
 - naam: Taiga
@@ -160,7 +147,6 @@
   url: https://taiga.io/
   favicon: https://www.google.com/s2/favicons?domain=taiga.io&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: disabled
 
 - naam: Nextcloud
@@ -170,7 +156,6 @@
   url: https://nextcloud.com/
   favicon: https://www.google.com/s2/favicons?domain=nextcloud.com&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: disabled
 
 - naam: BigBlueButton
@@ -180,7 +165,6 @@
   url: https://bigbluebutton.org/
   favicon: https://www.google.com/s2/favicons?domain=bigbluebutton.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: disabled
 
 - naam: OnlyOffice
@@ -191,7 +175,6 @@
   url: https://www.onlyoffice.com/
   favicon: https://www.google.com/s2/favicons?domain=onlyoffice.com&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: disabled
 
 - naam: Rocket.Chat
@@ -202,7 +185,6 @@
   url: https://rocket.chat/
   favicon: https://www.google.com/s2/favicons?domain=rocket.chat&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: disabled
 
 - naam: OpenBoard
@@ -212,7 +194,6 @@
   url: https://openboard.ch/
   favicon: https://www.google.com/s2/favicons?domain=openboard.ch&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: disabled
 
 - naam: Wekan
@@ -222,7 +203,6 @@
   url: https://wekan.github.io/
   favicon: https://www.google.com/s2/favicons?domain=wekan.github.io&sz=64
   eu_hosting: false
-  zelf_hosten: true
   status: disabled
 
 - naam: Framapad
@@ -235,7 +215,6 @@
   random_url: https://mensuel.framapad.org/p/
   favicon: https://www.google.com/s2/favicons?domain=framapad.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Framacalc
@@ -247,7 +226,6 @@
   url: https://framacalc.org/
   favicon: https://www.google.com/s2/favicons?domain=framacalc.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Framadate
@@ -259,7 +237,6 @@
   url: https://framadate.org/
   favicon: https://www.google.com/s2/favicons?domain=framadate.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Framaforms
@@ -271,7 +248,6 @@
   url: https://framaforms.org/
   favicon: https://www.google.com/s2/favicons?domain=framaforms.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Framadrop
@@ -283,7 +259,6 @@
   url: https://framadrop.org/
   favicon: https://www.google.com/s2/favicons?domain=framadrop.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: discontinued
 
 - naam: Disroot file upload
@@ -295,7 +270,6 @@
   url: https://upload.disroot.org/
   favicon: https://www.google.com/s2/favicons?domain=upload.disroot.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Framagit
@@ -307,7 +281,6 @@
   url: https://framagit.org/
   favicon: https://www.google.com/s2/favicons?domain=framagit.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Framindmap
@@ -319,7 +292,6 @@
   url: https://framindmap.org/
   favicon: https://www.google.com/s2/favicons?domain=framindmap.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Framaslides
@@ -331,7 +303,6 @@
   url: https://framaslides.org/
   favicon: https://www.google.com/s2/favicons?domain=framaslides.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Framaestro
@@ -343,7 +314,6 @@
   url: https://framaestro.org/
   favicon: https://www.google.com/s2/favicons?domain=framaestro.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Mobilizon
@@ -355,7 +325,6 @@
   url: https://mobilizon.fr/
   favicon: https://www.google.com/s2/favicons?domain=mobilizon.fr&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: PeerTube
@@ -367,7 +336,6 @@
   url: https://peertube.fr/
   favicon: https://www.google.com/s2/favicons?domain=peertube.fr&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Etherpad
@@ -380,7 +348,6 @@
   random_url: https://pad.systemli.org/p/
   favicon: https://www.google.com/s2/favicons?domain=systemli.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Jitsi Meet
@@ -393,7 +360,6 @@
   random_url: https://meet.systemli.org/
   favicon: https://www.google.com/s2/favicons?domain=systemli.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Gitea
@@ -405,7 +371,6 @@
   url: https://git.systemli.org/
   favicon: https://www.google.com/s2/favicons?domain=systemli.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Codeberg
@@ -417,7 +382,6 @@
   url: https://codeberg.org/
   favicon: https://www.google.com/s2/favicons?domain=codeberg.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Codeberg Pages
@@ -429,7 +393,6 @@
   url: https://codeberg.page/
   favicon: https://www.google.com/s2/favicons?domain=codeberg.page&sz=64
   eu_hosting: true
-  zelf_hosten: false
   status: live
 
 - naam: Nextcloud
@@ -441,7 +404,6 @@
   url: https://cloud.disroot.org/
   favicon: https://www.google.com/s2/favicons?domain=cloud.disroot.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: Etherpad
@@ -454,7 +416,6 @@
   random_url: https://pad.disroot.org/p/
   favicon: https://www.google.com/s2/favicons?domain=pad.disroot.org&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: FairMeeting
@@ -466,7 +427,6 @@
   url: https://fairmeeting.net/
   favicon: https://www.google.com/s2/favicons?domain=fairmeeting.net&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
 
 - naam: FairApps
@@ -478,7 +438,6 @@
   url: https://fairapps.net/
   favicon: https://www.google.com/s2/favicons?domain=fairapps.net&sz=64
   eu_hosting: true
-  zelf_hosten: false
   status: live
 
 - naam: Framasoft
@@ -490,7 +449,6 @@
   url: https://framasoft.org/
   favicon: https://www.google.com/s2/favicons?domain=framasoft.org&sz=64
   eu_hosting: true
-  zelf_hosten: false
   status: live
 
 - naam: Doodle
@@ -502,5 +460,4 @@
   url: https://doodle.com/
   favicon: https://www.google.com/s2/favicons?domain=doodle.com&sz=64
   eu_hosting: true
-  zelf_hosten: true
   status: live
