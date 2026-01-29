@@ -461,3 +461,14 @@
   favicon: https://www.google.com/s2/favicons?domain=doodle.com&sz=64
   eu_hosting: true
   status: live
+
+- naam: WorkAdventure
+  software: WorkAdventure
+  aanbieder: WorkAdventure
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=workadventu.re&sz=64
+  beschrijving: Virtuele kantoor- en evenementruimtes
+  categorie: videobellen
+  url: https://workadventu.re/
+  favicon: https://www.google.com/s2/favicons?domain=workadventu.re&sz=64
+  eu_hosting: true
+  status: live
