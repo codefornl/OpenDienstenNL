@@ -473,3 +473,14 @@
   favicon: https://www.google.com/s2/favicons?domain=workadventu.re&sz=64
   eu_hosting: true
   status: live
+
+- naam: Prikkert
+  software: Prikkert
+  aanbieder: Prikkert
+  aanbieder_favicon: https://www.google.com/s2/favicons?domain=prikkert.nl&sz=64
+  beschrijving: Open source platform voor het organiseren van evenementen en bijeenkomsten
+  categorie: plannen
+  url: https://prikkert.nl/
+  favicon: https://www.google.com/s2/favicons?domain=prikkert.nl&sz=64
+  eu_hosting: true
+  status: live
