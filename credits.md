@@ -20,5 +20,7 @@ title: Credits - OpenDiensten
     <p><a href="https://european-alternatives.eu/">European Alternatives</a></p>
     <p><a href="https://civictech.guide/">Civic Tech Guide</a></p>
     <p><a href="https://oecd-opsi.org/toolkits/ogp-toolbox/">OGP Toolbox</a></p>
+    <p><a href="https://github.com/GeiserX/awesome-europe">Awesome Europe</a></p>
+    <p><a href="https://foss-privacy-bigtech.nl/">FOSS, Privacy en minder Big Tech</a></p>
     <p style="margin-top: 3em;">Made with <span class="love">♥</span> by <a href="https://www.codefor.nl" class="codefor-link">Code for NL</a></p>
 </div>
