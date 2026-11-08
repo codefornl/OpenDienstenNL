@@ -10,7 +10,7 @@
 {%- assign cd = include.dienst -%}
 {%- assign cd_std = site.data.profielregister.standaard -%}
 {%- assign cd_alternatieven = site.data.profielen[cd_std].diensten | where: "status", "live" | where: "categorie", cd.categorie | where_exp: "x", "x.open != false" | where_exp: "x", "x.soort != 'infrastructuur'" | size -%}
-{% include organisms/service-card.html dienst=cd eigen=include.eigen %}
+{% include organisms/service-card.html dienst=cd eigen=include.eigen uitfaseren=include.uitfaseren %}
 {%- unless include.naast %}
 <div class="card-strip closed-alternatives">
     {%- if cd_alternatieven > 0 %}

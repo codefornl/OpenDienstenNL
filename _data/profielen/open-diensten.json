@@ -3,7 +3,7 @@
   "versie": 1,
   "id": "open-diensten",
   "naam": "Alle diensten",
-  "beschrijving": "Alle diensten die OpenDiensten kent: de open diensten (gratis en zonder verplichte login, bij aanbieders die je kunt vertrouwen) en wat organisaties nog gebruiken dat geen open dienst is. Andere profielen verwijzen hiernaar.",
+  "beschrijving": "Alle diensten die OpenDiensten kent: de open diensten (gratis en zonder verplichte login, van aanbieders in Europa) en wat organisaties nog gebruiken dat geen open dienst is. Andere profielen verwijzen hiernaar.",
   "website": "https://opendiensten.nl",
   "diensten": [
     {
@@ -307,6 +307,7 @@
     {
       "id": "framindmap-framasoft",
       "naam": "framindmap.org",
+      "open_source": true,
       "beschrijving": "Visueel mindmaps maken in je browser",
       "categorie": "brainstormen",
       "url": "https://framindmap.org/",
@@ -330,6 +331,7 @@
     {
       "id": "framaestro-framasoft",
       "naam": "framaestro.org",
+      "open_source": true,
       "beschrijving": "Synchroniseer meerdere Etherpads in 1 overzicht",
       "categorie": "samen-schrijven",
       "url": "https://framaestro.org/",
@@ -409,6 +411,7 @@
     {
       "id": "codeberg-pages",
       "naam": "codeberg.page",
+      "open_source": true,
       "beschrijving": "Gratis statische site-hosting voor publieke projecten",
       "categorie": "website-maken",
       "url": "https://codeberg.page/",
@@ -454,6 +457,7 @@
     {
       "id": "fairapps-fairkom",
       "naam": "fairapps.net",
+      "open_source": true,
       "beschrijving": "Bundel van ethische apps zoals Nextcloud, BBB, OnlyOffice",
       "categorie": "suite",
       "url": "https://fairapps.net/",
@@ -465,6 +469,7 @@
     {
       "id": "framasoft",
       "naam": "framasoft.org",
+      "open_source": true,
       "beschrijving": "Bundel van ethische apps zoals Nextcloud, BBB, OnlyOffice",
       "categorie": "suite",
       "url": "https://framasoft.org/",
@@ -476,6 +481,7 @@
     {
       "id": "doodle",
       "naam": "doodle.com",
+      "open_source": false,
       "beschrijving": "Doodle voor plannen zonder account",
       "categorie": "plannen",
       "url": "https://doodle.com/",
@@ -726,7 +732,8 @@
       "soort": "infrastructuur",
       "status": "live",
       "redenen": [
-        "gesloten"
+        "gesloten",
+        "betaald"
       ]
     },
     {
@@ -741,7 +748,8 @@
       "soort": "infrastructuur",
       "status": "live",
       "redenen": [
-        "gesloten"
+        "gesloten",
+        "betaald"
       ]
     },
     {
@@ -755,7 +763,10 @@
       "eu_hosting": true,
       "doelgroep": "overheden",
       "soort": "infrastructuur",
-      "status": "live"
+      "status": "live",
+      "redenen": [
+        "betaald"
+      ]
     },
     {
       "id": "pleio-samenwerken",
@@ -768,7 +779,10 @@
       "eu_hosting": true,
       "doelgroep": "overheden",
       "soort": "infrastructuur",
-      "status": "live"
+      "status": "live",
+      "redenen": [
+        "betaald"
+      ]
     },
     {
       "id": "pleio-website",
@@ -781,7 +795,10 @@
       "eu_hosting": true,
       "doelgroep": "overheden",
       "soort": "infrastructuur",
-      "status": "live"
+      "status": "live",
+      "redenen": [
+        "betaald"
+      ]
     }
   ]
 }

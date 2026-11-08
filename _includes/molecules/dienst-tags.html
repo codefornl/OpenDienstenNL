@@ -1,35 +1,21 @@
 {%- comment -%}
-  De labels van een dienst, elk goed of niet:
-    software   open source / closed source   (van de software, _data/software.json; zonder software uit de redenen)
-    hosting    europees / niet europees      (eu_hosting, of de reden buiten-eu)
-    toegang    open dienst / login vereist   (open; bij een dienst die niet open is uit de redenen, ook niet gratis);
-               bij infrastructuur (domeinnamen, nieuwsbrieven) alleen het label infrastructuur
-    doelgroep  voor iedereen / beperkte doelgroep (doelgroep, bv. overheden; die staat in de tooltip)
+  De vijf labels van een dienst, altijd allemaal, elk goed (groen, ✓) of niet (rood, ✗), met dezelfde tekst:
+    software   ✓/✗ open source   (van de software, _data/software.json; zonder software uit open_source of de reden gesloten)
+    hosting    ✓/✗ europees      (eu_hosting, of de reden buiten-eu)
+    prijs      ✓/✗ gratis        (✗ als de redenen betaald noemen)
+    toegang    ✓/✗ geen login    (✓ bij een open dienst zonder de reden account; ✗ bij een login en bij infrastructuur)
+    doelgroep  ✓/✗ voor iedereen (doelgroep, bv. overheden; die staat in de tooltip)
   Dezelfde labels als ServicesManager.dienstTags() in js/ServicesManager.mjs.
   Parameters: dienst
 {%- endcomment -%}
 {%- assign dt = include.dienst -%}
 {%- include data/dienst.html dienst=dt -%}
-{%- if dn_sw.open_source == true -%}
-<span class="tag tag-goed">open source</span>
-{%- elsif dn_sw.open_source == false or dt.redenen contains "gesloten" -%}
-<span class="tag tag-niet">closed source</span>
-{%- endif -%}
-{%- if dt.eu_hosting == true -%}
-<span class="tag tag-goed">europees</span>
-{%- elsif dt.eu_hosting == false or dt.redenen contains "buiten-eu" -%}
-<span class="tag tag-niet">niet europees</span>
-{%- endif -%}
-{%- if dt.soort == "infrastructuur" -%}
-<span class="tag" title="Domeinnamen, nieuwsbrieven en dergelijke: daar betaal je meestal voor, dus de vraag of het een open dienst is, speelt niet">infrastructuur</span>
-{%- elsif dt.open != false -%}
-<span class="tag tag-goed">open dienst</span>
-{%- else -%}
-{%- if dt.redenen contains "account" %}<span class="tag tag-niet">login vereist</span>{% endif -%}
-{%- if dt.redenen contains "betaald" %}<span class="tag tag-niet">niet gratis</span>{% endif -%}
-{%- endif -%}
-{%- if dt.doelgroep -%}
-<span class="tag tag-niet" title="Alleen voor {{ dt.doelgroep | escape }}">beperkte doelgroep</span>
-{%- else -%}
-<span class="tag tag-goed">voor iedereen</span>
-{%- endif -%}
+{%- if dn_sw -%}{%- assign dt_os = dn_sw.open_source -%}{%- else -%}{%- assign dt_os = dt.open_source -%}{%- endif -%}
+{%- if dt.redenen contains "gesloten" -%}{%- assign dt_os = false -%}{%- endif -%}
+{%- assign dt_login = false -%}
+{%- if dt.open != false and dt.soort != "infrastructuur" -%}{%- unless dt.redenen contains "account" -%}{%- assign dt_login = true -%}{%- endunless -%}{%- endif -%}
+<span class="tag {% if dt_os == true %}tag-goed{% else %}tag-niet{% endif %}">open source</span>
+<span class="tag {% if dt.eu_hosting == true %}tag-goed{% else %}tag-niet{% endif %}">europees</span>
+<span class="tag {% if dt.redenen contains "betaald" %}tag-niet{% else %}tag-goed{% endif %}">gratis</span>
+<span class="tag {% if dt_login %}tag-goed{% else %}tag-niet" title="Login vereist{% endif %}">geen login</span>
+<span class="tag {% if dt.doelgroep %}tag-niet" title="Alleen voor {{ dt.doelgroep | escape }}{% else %}tag-goed{% endif %}">voor iedereen</span>

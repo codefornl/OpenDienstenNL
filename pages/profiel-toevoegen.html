@@ -126,6 +126,7 @@ description: Zo zet je het profiel van je organisatie op OpenDiensten, of public
         <tr><td><code>ref</code></td><td>verplicht</td><td>de id van een open dienst, zie <a href="#ids">hieronder</a></td></tr>
         <tr><td><code>bron</code></td><td></td><td>link naar een ander profiel waar de dienst in staat; standaard Alle diensten</td></tr>
         <tr><td><code>url</code></td><td></td><td>alleen bij een dienst die geen open dienst is: waar jullie hem gebruiken, bv. jullie pagina op LinkedIn</td></tr>
+        <tr><td><code>uitfaseren</code></td><td></td><td><code>true</code> als jullie met deze dienst willen stoppen: dikke zwarte rand in jullie profiel, niet in het algemene overzicht</td></tr>
       </table>
 
       <h4>Een volledige dienst</h4>
@@ -138,6 +139,7 @@ description: Zo zet je het profiel van je organisatie op OpenDiensten, of public
         <tr><td><code>beschrijving</code></td><td></td><td>één zin</td></tr>
         <tr><td><code>software</code></td><td></td><td>de software waar de dienst op draait: een id uit <a href="/software.json">software</a>, bv. <code>mastodon</code></td></tr>
         <tr><td><code>aanbieder</code></td><td></td><td>wie de dienst aanbiedt: een id uit <a href="/organisaties.json">organisaties</a>, bv. <code>framasoft</code></td></tr>
+        <tr><td><code>uitfaseren</code></td><td></td><td><code>true</code> als jullie met deze dienst willen stoppen (zie hierboven)</td></tr>
         <tr><td><code>soort</code></td><td></td><td><code>infrastructuur</code> voor domeinnamen, nieuwsbrieven en dergelijke (standaard <code>dienst</code>)</td></tr>
         <tr><td><code>beheer</code></td><td></td><td>wie de dienst als managed service beheert: een id uit <a href="/organisaties.json">organisaties</a>, bv. <code>procolix</code></td></tr>
         <tr><td><code>eu_hosting</code></td><td></td><td><code>true</code> als de dienst in de EU wordt gehost, bij een Europese partij</td></tr>
@@ -177,7 +179,7 @@ description: Zo zet je het profiel van je organisatie op OpenDiensten, of public
         <dt>Kan ik meerdere diensten per onderwerp kiezen?</dt>
         <dd>Ja. De volgorde in je lijst is de volgorde van voorkeur. <em>Start videogesprek</em> kiest daartussen op basis van beoordelingen.</dd>
         <dt>Moet alles een open dienst zijn?</dt>
-        <dd>Nee. Juist het eerlijke overzicht helpt: je ziet wat er nog te doen is. Wat geen open dienst is, staat met een dikke zwarte rand na de open diensten, en <em>Start</em> kiest het nooit.</dd>
+        <dd>Nee. Juist het eerlijke overzicht helpt: je ziet wat er nog te doen is. Wat geen open dienst is, staat na de open diensten, met labels die laten zien waarom, en <em>Start</em> kiest het nooit. Wil je ergens mee stoppen, zet er dan <code>"uitfaseren": true</code> bij: in je profiel krijgt het een dikke zwarte rand, en in het algemene overzicht staat het niet.</dd>
         <dt>Waarom op <code>/.well-known/</code>?</dt>
         <dd>Dat is de gewone plek voor dit soort bestanden, zoals <code>security.txt</code>. Omdat het op jouw domein staat, weet iedereen dat het profiel van jou komt.</dd>
         <dt>Kan ik verwijzen naar diensten uit het profiel van een andere organisatie?</dt>

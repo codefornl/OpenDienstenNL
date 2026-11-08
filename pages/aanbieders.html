@@ -4,7 +4,7 @@ layout: default
 title: Aanbieders
 description: De organisaties die de diensten aanbieden, zoals Framasoft, Disroot en Stichting Pleio, met hun land en per aanbieder de diensten.
 ---
-{%- comment -%} Aanbieders van open diensten, en aanbieders van alleen diensten die geen open dienst zijn; zonder live dienst niet {%- endcomment -%}
+{%- comment -%} Aanbieders van open diensten en van infrastructuur. Aanbieders van alleen diensten die niet open zijn (big tech) staan hier niet: foute opties komen uit profielen. Hun pagina bestaat wel, via de kaartjes. {%- endcomment -%}
 {%- assign ab_alle = site.data.organisaties.organisaties | sort: "naam" -%}
 {%- assign ab_open = "" | split: "" -%}
 {%- assign ab_dicht = "" | split: "" -%}
@@ -49,15 +49,6 @@ description: De organisaties die de diensten aanbieden, zoals Framasoft, Disroot
       </div>
       {%- endif %}
 
-      {%- if ab_dicht.size > 0 %}
-      <h3 class="software-group">Aanbieders van diensten die niet open zijn</h3>
-      <p class="page-lead">Big tech en andere aanbieders van diensten die organisaties nog gebruiken, maar die geen open dienst zijn.</p>
-      <div class="profile-grid">
-        {%- for org in ab_dicht %}
-        {% include organisms/aanbieder-card.html id=org.id %}
-        {%- endfor %}
-      </div>
-      {%- endif %}
     </section>
 
     {% include organisms/site-footer.html %}

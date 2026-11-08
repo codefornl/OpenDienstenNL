@@ -2,15 +2,9 @@ title: Open Diensten
 description: Open & gratis publiek toegankelijke SaaS omgevingen voor community organisatie
 email: info@apitecture.nl
 
-# Uitgever van de website (colofon op /over#colofon)
-uitgever:
-  naam: Apitecture B.V.
-  website: https://www.apitecture.nl
-  adres: Plein 2
-  postcode: 2471 AN
-  plaats: Zwammerdam
-  kvk: "92646379"
-  email: info@apitecture.nl
+# Nog niet online: elke pagina toont een oranje scherm "Even offline" (_layouts/default.html).
+# Zet op false om de site te publiceren. Lokaal staat hij uit via _config.local.yml.
+offline: true
 
 collections:
   # Een pagina per software (/software/<id>/) en per aanbieder (/aanbieders/<id>/); de gegevens staan in
@@ -38,9 +32,14 @@ defaults:
 # Niet publiceren: documentatie en projectbestanden
 exclude:
   - README.md
+  - _config.local.yml
   - LICENSE.md
   - CLAUDE.md
   - docs/
   - scripts/
   - assets/images/logo-design-file.svg
   - assets/images/screenshot.png
+  # Het design system is niet publiek. Lokaal bekijken:
+  #   bundle exec jekyll serve --config _config.yml,_config.local.yml
+  - pages/design-system.html
+  - css/design-system.css

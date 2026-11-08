@@ -25,7 +25,7 @@
             {%- elsif v.type -%}{{ v.type }}
             {%- endif -%}
         </td>
-        <td>{% if st.required contains veld %}<span class="tag tag-niet">verplicht</span>{% endif %}</td>
+        <td>{% if st.required contains veld %}<span class="tag">verplicht</span>{% endif %}</td>
         <td>{{ v.description | escape }}{% if v.default != nil %} Standaard <code>{{ v.default }}</code>.{% endif %}</td>
     </tr>
     {%- endunless %}

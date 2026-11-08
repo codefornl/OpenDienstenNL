@@ -460,7 +460,7 @@ export class HistoryManager {
     if (typeof entry.service.eu_hosting === 'boolean') {
       euTag = document.createElement('span');
       euTag.className = `tag ${entry.service.eu_hosting ? 'tag-goed' : 'tag-niet'}`;
-      euTag.textContent = entry.service.eu_hosting ? 'europees' : 'niet europees';
+      euTag.textContent = 'europees';
     }
 
     const providerName = document.createElement('span');

@@ -1,7 +1,6 @@
 {%- comment -%}
   Aanbiedertegel: de organisatie, haar land en hoeveel diensten ze aanbiedt (en waarvoor).
   Op /aanbieders/. Verwijst naar de pagina van de aanbieder: /aanbieders/<id>/.
-  Biedt ze alleen diensten aan die geen open dienst zijn, dan een dikke zwarte rand.
   Parameters: id (id uit _data/organisaties.json)
 {%- endcomment -%}
 {%- assign ac_org = site.data.organisaties.organisaties | where: "id", include.id | first -%}
@@ -13,7 +12,7 @@
 {%- assign ac_beheer = sd_diensten -%}
 {%- if ac_n == 0 and ac_beheer.size > 0 -%}{%- assign ac_open = ac_beheer -%}{%- assign ac_cats = sd_cats -%}{%- endif -%}
 {%- comment -%} infrastructuur telt hier als niet dicht: geen zwarte rand {%- endcomment -%}
-<a href="/aanbieders/{{ ac_org.id }}/" class="profile-card software-card{% if ac_open.size == 0 %} is-closed{% endif %}">
+<a href="/aanbieders/{{ ac_org.id }}/" class="profile-card software-card">
     {% include atoms/org-logo.html naam=ac_org.naam logo=ac_org.logo %}
     <div class="profile-card-body">
         <h3>{{ ac_org.naam | escape }}</h3>

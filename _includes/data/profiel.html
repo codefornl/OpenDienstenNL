@@ -7,6 +7,7 @@
     rp_closed   daarvan wat geen open dienst is (open: false)
     rp_infra    daarvan de infrastructuur (soort: infrastructuur: domeinnamen, nieuwsbrieven, …), niet open of dicht
     rp_cats     de categorieën, in volgorde van eerste voorkomen
+    rp_uitfaseren  dienst-id's die deze organisatie wil uitfaseren ("uitfaseren": true): in het profiel een dikke zwarte rand
     rp_eigen    de eigen url's van deze organisatie bij verwijzingen naar diensten die geen open dienst zijn,
                 als lijst van "<dienst-id> <url>"; geef hem als eigen= door aan de kaarten
 
@@ -17,6 +18,7 @@
 {%- assign rp = site.data.profielen[include.id] -%}
 {%- assign rp_entries = "" | split: "" -%}
 {%- assign rp_eigen = "" | split: "" -%}
+{%- assign rp_uitfaseren = "" | split: "" -%}
 {%- for rp_e in rp.diensten -%}
   {%- if rp_e.ref -%}
     {%- assign rp_bron = site.data.profielregister.standaard -%}
@@ -32,7 +34,10 @@
   {%- else -%}
     {%- assign rp_d = rp_e -%}
   {%- endif -%}
-  {%- if rp_d -%}{%- assign rp_entries = rp_entries | push: rp_d -%}{%- endif -%}
+  {%- if rp_d -%}
+    {%- assign rp_entries = rp_entries | push: rp_d -%}
+    {%- if rp_e.uitfaseren -%}{%- assign rp_uitfaseren = rp_uitfaseren | push: rp_d.id -%}{%- endif -%}
+  {%- endif -%}
 {%- endfor -%}
 {%- assign rp_shown = rp_entries | where_exp: "d", "d.status != 'disabled'" | where_exp: "d", "d.status != 'discontinued'" -%}
 {%- assign rp_infra = rp_shown | where: "soort", "infrastructuur" -%}

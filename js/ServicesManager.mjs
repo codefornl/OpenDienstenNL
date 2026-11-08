@@ -146,13 +146,6 @@ export class ServicesManager {
     badges.className = 'service-badges';
     badges.appendChild(categoryBadge);
     badges.append(...this.dienstTags(service));
-    if (service.random_url && service.open !== false) {
-      const unique = document.createElement('span');
-      unique.className = 'unique-badge';
-      unique.title = 'Elke klik maakt een nieuwe, eigen link';
-      unique.textContent = 'eigen link';
-      badges.appendChild(unique);
-    }
 
     metaRow.append(badges);
     serviceMeta.appendChild(metaRow);
@@ -198,7 +191,7 @@ export class ServicesManager {
   }
 
   // The labels of a service, same as _includes/molecules/dienst-tags.html:
-  // open source / closed source, europees / niet europees, open dienst / login vereist (and niet gratis)
+  // ✓ or ✗ open source, europees, gratis, geen login, voor iedereen: same text, green or red
   dienstTags(service) {
     const redenen = service.redenen || [];
     const tags = [];
@@ -208,26 +201,15 @@ export class ServicesManager {
       el.textContent = text;
       tags.push(el);
     };
-    if (service.open_source === true) tag('open source', true);
-    else if (service.open_source === false || redenen.includes('gesloten')) tag('closed source', false);
-    if (service.eu_hosting === true) tag('europees', true);
-    else if (service.eu_hosting === false || redenen.includes('buiten-eu')) tag('niet europees', false);
-    if (service.soort === 'infrastructuur') {
-      const el = document.createElement('span');
-      el.className = 'tag';
-      el.textContent = 'infrastructuur';
-      tags.push(el);
-    } else if (service.open !== false) tag('open dienst', true);
-    else {
-      if (redenen.includes('account')) tag('login vereist', false);
-      if (redenen.includes('betaald')) tag('niet gratis', false);
-    }
-    if (service.doelgroep) {
-      tag('beperkte doelgroep', false);
-      tags[tags.length - 1].title = `Alleen voor ${service.doelgroep}`;
-    } else {
-      tag('voor iedereen', true);
-    }
+    // Always all five, like _includes/molecules/dienst-tags.html
+    tag('open source', service.open_source === true && !redenen.includes('gesloten'));
+    tag('europees', service.eu_hosting === true);
+    tag('gratis', !redenen.includes('betaald'));
+    const geenLogin = service.open !== false && service.soort !== 'infrastructuur' && !redenen.includes('account');
+    tag('geen login', geenLogin);
+    if (!geenLogin) tags[tags.length - 1].title = 'Login vereist';
+    tag('voor iedereen', !service.doelgroep);
+    if (service.doelgroep) tags[tags.length - 1].title = `Alleen voor ${service.doelgroep}`;
     return tags;
   }
 

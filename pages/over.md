@@ -2,7 +2,7 @@
 permalink: /over
 layout: default
 title: Wat is een open dienst?
-description: Wat een open dienst is, waarom open source en Europese aanbieders ertoe doen, wie er achter OpenDiensten zit en hoe je meedoet.
+description: Wat een open dienst is, waarom open source en Europese aanbieders ertoe doen, en hoe je meedoet.
 ---
 <div class="app-container">
   {% include organisms/sidebar.html active="over" %}
@@ -18,7 +18,7 @@ description: Wat een open dienst is, waarom open source en Europese aanbieders e
         <li>{% include atoms/hex.html %}<div><strong>Een eigen, geheime link</strong><p>Vaak krijg je een unieke link naar je eigen gesprek of document. Wie de link heeft, doet mee; wie hem niet heeft, kan hem niet vinden. Die link deel je gewoon.</p></div></li>
         <li>{% include atoms/hex.html %}<div><strong>Bij voorkeur open source</strong><p>De meeste open diensten draaien op open source software, zoals Jitsi Meet of Etherpad. Stopt een aanbieder, of bevalt hij niet, dan stap je over naar een andere aanbieder met dezelfde software. Of je host het zelf. Zo blijf je onafhankelijk.</p></div></li>
         <li>{% include atoms/hex.html %}<div><strong>Altijd een aanbieder</strong><p>Iemand host de dienst: een stichting, een coöperatie, een bedrijf. Dezelfde software wordt vaak door meerdere aanbieders aangeboden. Op OpenDiensten zie je bij elke dienst wie dat is.</p></div></li>
-        <li>{% include atoms/hex.html %}<div><strong>Europees of niet</strong><p>Is de aanbieder een Europese partij, dan vallen je gegevens onder Europese wetgeving. Dat zie je aan het label <span class="tag tag-goed">europees</span>; <span class="tag tag-niet">niet europees</span> betekent een aanbieder buiten Europa. Zo staan er bij elke dienst labels: open source of closed source, europees of niet, open dienst of login vereist, en voor iedereen of een beperkte doelgroep.</p></div></li>
+        <li>{% include atoms/hex.html %}<div><strong>Europees of niet</strong><p>Is de aanbieder een Europese partij, dan vallen je gegevens onder Europese wetgeving. Dat zie je aan het label <span class="tag tag-goed">europees</span>; <span class="tag tag-niet">europees</span> betekent een aanbieder buiten Europa. Zo staan er bij elke dienst labels, met een vinkje of een kruisje: open source, europees, gratis, geen login en voor iedereen.</p></div></li>
       </ul>
 
       <h3>Wat gebeurt er als je op Start klikt?</h3>
@@ -33,25 +33,14 @@ description: Wat een open dienst is, waarom open source en Europese aanbieders e
         <li>{% include atoms/hex.html %}<div><strong>Beoordelingen</strong><p>Je beoordelingen tellen altijd mee, zodat goede diensten vaker aan de beurt komen. Zonder geschiedenis bewaren we alleen een telling per dienst, zonder links en zonder tijden.</p></div></li>
       </ul>
 
-      <h3>Wie zit erachter?</h3>
-      <p>OpenDiensten is een initiatief van <a href="https://www.apitecture.nl">Apitecture</a>. OpenDiensten heeft geen relatie met de aanbieders die erop staan.</p>
-      {% include molecules/partners.html %}
-
       <h3>Open data</h3>
       <p>Alle gegevens over diensten, software, aanbieders en profielen zijn open data onder <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.nl">CC0</a>: je mag ze vrij gebruiken, zonder bronvermelding. Ze kloppen misschien niet allemaal. Zie <a href="/ontwikkelaars">Voor ontwikkelaars</a>.</p>
 
       <h3>Meedoen</h3>
       <p>Ken je een open dienst die hier hoort, klopt er iets niet, of wil je meebouwen? Mail naar <a href="mailto:{{ site.email }}">{{ site.email }}</a> of maak een issue aan op <a href="{{ site.github.repository_url | default: 'https://github.com/Apitecture/OpenDienstenNL' }}">GitHub</a>. Bespreek een idee eerst even in een issue voordat je begint met code.</p>
 
-      <h3 id="colofon">Colofon</h3>
-      <p>Deze website wordt aangeboden door {{ site.uitgever.naam }}, {{ site.uitgever.adres }}, {{ site.uitgever.postcode }} {{ site.uitgever.plaats }}. KvK {{ site.uitgever.kvk }}. E-mail: <a href="mailto:{{ site.uitgever.email }}">{{ site.uitgever.email }}</a>.</p>
-
       <h3>Met dank aan</h3>
       <dl class="credits">
-        <dt>Concept en ontwerp</dt>
-        <dd><a href="https://johangroenen.nl/">Johan Groenen</a></dd>
-        <dt>Bijdragen</dt>
-        <dd><a href="https://johangroenen.nl/">Johan Groenen</a>, <a href="https://tiltshift.nl/">Tiltshift</a></dd>
         <dt>Inspiratie</dt>
         <dd>
           <a href="https://switching.software/">Switching.Software</a>,

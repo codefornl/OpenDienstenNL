@@ -82,6 +82,10 @@
           "type": "string",
           "format": "uri",
           "pattern": "^https?://"
+        },
+        "uitfaseren": {
+          "description": "true als jullie met deze dienst willen stoppen. In jullie profiel krijgt hij dan een dikke zwarte rand en het label uitfaseren.",
+          "type": "boolean"
         }
       }
     }

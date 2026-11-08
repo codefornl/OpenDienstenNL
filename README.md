@@ -32,7 +32,11 @@ De site is gemaakt met Jekyll en draait op GitHub Pages.
 jekyll serve
 ```
 
-Open daarna http://localhost:4000. Het design system staat op `/design-system/`.
+Open daarna http://localhost:4000. De publieke site staat nog offline (`offline: true` in `_config.yml`: elke pagina toont "Even offline"). Het design system is ook niet publiek; lokaal bekijk je de hele site, met het design system op `/design-system/`, met:
+
+```bash
+bundle exec jekyll serve --config _config.yml,_config.local.yml
+```
 
 ## Bijdragen
 

@@ -3,7 +3,7 @@ layout: default
 title: Design system
 permalink: /design-system/
 noindex: true
-description: De vormgeving van OpenDiensten van klein naar groot, volgens atomic design. Een initiatief van Apitecture, met de tokens en regels van apitecture.nl/design-system.
+description: De vormgeving van OpenDiensten van klein naar groot, volgens atomic design. Gemaakt door Apitecture, met de tokens en regels van apitecture.nl/design-system.
 stylesheets:
   - /css/design-system.css
 ---
@@ -38,20 +38,20 @@ stylesheets:
         <header class="ds-intro">
             {% include atoms/kicker.html text="OpenDiensten · design system" hex=true %}
             <h2>Design system</h2>
-            <p class="ds-lead">OpenDiensten is een overzicht van open en gratis publiek toegankelijke online diensten voor community-organisatie: videobellen, samen schrijven, plannen en meer, bij aanbieders die je kunt vertrouwen. Nu {{ live.size }} diensten in {{ categorieen.size }} categorieën. OpenDiensten is een initiatief van <a href="https://www.apitecture.nl">Apitecture</a>; daarom neemt het design system de tokennamen, ruimteschaal en regels over uit het <a href="https://www.apitecture.nl/design-system/">design system van apitecture.nl</a>. Hieronder staat alles van klein naar groot, volgens atomic design. Elk component is een Jekyll-include in <code>_includes/</code>, met de echte CSS uit <code>css/style.css</code> en de echte data uit <code>_data/profielen/</code>.</p>
+            <p class="ds-lead">OpenDiensten is een overzicht van open en gratis publiek toegankelijke online diensten voor community-organisatie: videobellen, samen schrijven, plannen en meer, van aanbieders in Europa. Nu {{ live.size }} diensten in {{ categorieen.size }} categorieën. OpenDiensten is gemaakt door <a href="https://www.apitecture.nl">Apitecture</a>; daarom neemt het design system de tokennamen, ruimteschaal en regels over uit het <a href="https://www.apitecture.nl/design-system/">design system van apitecture.nl</a>. Hieronder staat alles van klein naar groot, volgens atomic design. Elk component is een Jekyll-include in <code>_includes/</code>, met de echte CSS uit <code>css/style.css</code> en de echte data uit <code>_data/profielen/</code>.</p>
         </header>
 
         <!-- 0 -->
         <section class="ds-section" id="merk">
             <h2 class="ds-title"><span class="ds-step">0</span>Architectuur en merk</h2>
-            <p class="ds-intro-text">Wie erachter zit. OpenDiensten is een initiatief van Apitecture, met een eigen naam en dezelfde beeldtaal.</p>
+            <p class="ds-intro-text">Wie erachter zit. OpenDiensten is gemaakt door Apitecture, met een eigen naam en dezelfde beeldtaal.</p>
 
             <div class="ds-org-scroll">
             <div class="ds-collab">
                 <div class="ds-collab-parents">
                     <a href="https://www.apitecture.nl" class="ds-sq" style="--brand: var(--accent)">
                         <img src="/assets/images/logos/logo-2024.jpeg" alt="" class="ds-sq-logo">
-                        <strong>Apitecture</strong><small>bv · uitgever</small>
+                        <strong>Apitecture</strong><small>maker</small>
                         <span class="ds-sq-sw"><i style="background:var(--night)"></i><i style="background:#fff"></i><i style="background:var(--accent)"></i></span>
                     </a>
                 </div>
@@ -67,7 +67,7 @@ stylesheets:
             <h3 class="ds-subtitle">De merken</h3>
             <div class="ds-brands">
                 <article class="ds-brand-card" style="--brand: var(--accent)">
-                    <p class="ds-brand-kicker">Uitgever · apitecture.nl</p>
+                    <p class="ds-brand-kicker">Maker · apitecture.nl</p>
                     <p>Licht en betrouwbaar. Nacht <code>#141416</code> en oranje <code>#ff5900</code> uit het logo, de zeshoek als markering. Levert de tokens, de lettertypen, de regels hieronder en het platform waar het draait.</p>
                 </article>
                 <article class="ds-brand-card" style="--brand: var(--accent)">
@@ -83,7 +83,7 @@ stylesheets:
                     <img src="/assets/images/open-diensten-title-logo.svg" alt="Huidig OpenDiensten-logo">
                     {% include molecules/partners.html %}
                 </div>
-                <p class="ds-note">Links de nieuwe merkkop (<code>molecules/brand.html</code>): de naam in Helvetica Neue met de zeshoek van Apitecture. In het midden het huidige logo, dat blijft tot er een nieuw is. Rechts de afzender (<code>molecules/partners.html</code>): een initiatief van Apitecture</p>
+                <p class="ds-note">Links de nieuwe merkkop (<code>molecules/brand.html</code>): de naam in Helvetica Neue met de zeshoek van Apitecture. In het midden het huidige logo, dat blijft tot er een nieuw is. Rechts de afzender (<code>molecules/partners.html</code>): gemaakt door Apitecture</p>
             </div>
         </section>
 
@@ -259,7 +259,7 @@ stylesheets:
             <div class="ds-specimen">
                 {%- assign voorbeeld_li = site.data.profielen[std].diensten | where: "id", "linkedin" | first %}
                 <div class="ds-stage"><span class="service-badges">{% include molecules/dienst-tags.html dienst=voorbeeld %}</span><span class="service-badges">{% include molecules/dienst-tags.html dienst=voorbeeld_li %}</span></div>
-                <p class="ds-note">Labels <code>molecules/dienst-tags.html</code> · drie per dienst, elk goed (<code>.tag-goed</code>, groen met een vinkje) of niet (<code>.tag-niet</code>, grijze rand): open source / closed source (van de software, of de reden <code>gesloten</code>), europees / niet europees (<code>eu_hosting</code>), open dienst / login vereist (en niet gratis, uit de <code>redenen</code>) · in plaats van een vlaggetje · dezelfde labels als <code>dienstTags()</code> in <code>js/ServicesManager.mjs</code></p>
+                <p class="ds-note">Labels <code>molecules/dienst-tags.html</code> · per dienst dezelfde labels, met een vinkje en groen (<code>.tag-goed</code>) of een kruisje en rood (<code>.tag-niet</code>): open source (van de software, of de reden <code>gesloten</code>), europees (<code>eu_hosting</code>), gratis (✗ bij <code>betaald</code>), geen login (✓ bij een open dienst, ✗ bij een login), voor iedereen (<code>doelgroep</code> in de tooltip) · infrastructuur krijgt geen label over login · <em>uitfaseren</em> zwart (<code>.tag-uitfaseren</code>), alleen in een profiel · dezelfde labels als <code>dienstTags()</code> in <code>js/ServicesManager.mjs</code></p>
 <pre><code>{% raw %}{% include molecules/dienst-tags.html dienst=dienst %}{% endraw %}</code></pre>
             </div>
 
@@ -288,13 +288,13 @@ stylesheets:
 
             <div class="ds-specimen">
                 <div class="ds-stage">{% include molecules/brand.html %}</div>
-                <p class="ds-note">Merkkop <code>molecules/brand.html</code> · zeshoek, naam en 'door Apitecture' in mono</p>
+                <p class="ds-note">Merkkop <code>molecules/brand.html</code> · zeshoek en naam; met <code>subtitle</code> een regel eronder in mono</p>
 <pre><code>{% raw %}{% include molecules/brand.html %}{% endraw %}</code></pre>
             </div>
 
             <div class="ds-specimen">
                 <div class="ds-stage ds-stage-card">{% include molecules/partners.html %}</div>
-                <p class="ds-note">Afzender <code>molecules/partners.html</code> · een initiatief van Apitecture · <code>label</code> voor een andere tekst</p>
+                <p class="ds-note">Afzender <code>molecules/partners.html</code> · gemaakt door Apitecture · <code>label</code> voor een andere tekst</p>
 <pre><code>{% raw %}{% include molecules/partners.html %}{% endraw %}</code></pre>
             </div>
 
@@ -348,7 +348,7 @@ stylesheets:
                     {% include organisms/service-card.html dienst=voorbeeld rating=4.3 count=7 %}
                     {% if buiten_eu %}{% include organisms/service-card.html dienst=buiten_eu %}{% endif %}
                 </div>
-                <p class="ds-note">Dienstkaart <code>organisms/service-card.html</code> · een dienst, geen software: groot het logo van de software en klein dat van de aanbieder (<code>atoms/favicon.html</code>), naam (de plek, bv. <code>meetme.bit.nl</code>), eronder "Nextcloud door Disroot" (links naar <code>/software/&lt;id&gt;/</code> en <code>/aanbieders/&lt;id&gt;/</code>), de categorie oranje rechtsboven, beschrijving, categorie, aanbieder en waardering · software en aanbieder komen uit <code>_data/software.json</code> en <code>_data/organisaties.json</code>; de aanbieder linkt naar <code>/aanbieders/&lt;id&gt;/</code> · de titel is de link naar de dienst (<code>a.card-link</code>) en ligt over de hele kaart, zodat software en aanbieder eigen links kunnen zijn · dezelfde markup als <code>createServiceCard()</code> in <code>js/ServicesManager.mjs</code> · met <code>random_url</code> het label <em>eigen link</em>: een klik maakt een unieke link (<code>js/opendienstenapp.js</code>)</p>
+                <p class="ds-note">Dienstkaart <code>organisms/service-card.html</code> · een dienst, geen software: groot het logo van de software en klein dat van de aanbieder (<code>atoms/favicon.html</code>), naam (de plek, bv. <code>meetme.bit.nl</code>), eronder "Nextcloud door Disroot" (links naar <code>/software/&lt;id&gt;/</code> en <code>/aanbieders/&lt;id&gt;/</code>), de categorie oranje rechtsboven, beschrijving, categorie, aanbieder en waardering · software en aanbieder komen uit <code>_data/software.json</code> en <code>_data/organisaties.json</code>; de aanbieder linkt naar <code>/aanbieders/&lt;id&gt;/</code> · de titel is de link naar de dienst (<code>a.card-link</code>) en ligt over de hele kaart, zodat software en aanbieder eigen links kunnen zijn · dezelfde markup als <code>createServiceCard()</code> in <code>js/ServicesManager.mjs</code><code>js/opendienstenapp.js</code>)</p>
                 <table class="ds-props">
                     <tr><th>parameter</th><th>waarden</th></tr>
                     <tr><td><code>dienst</code></td><td>een dienst volgens <code>schemas/dienst.schema.json</code></td></tr>
@@ -362,19 +362,19 @@ stylesheets:
 
             <div class="ds-specimen">
                 <div class="ds-stage"><div class="profile-grid" style="flex: 1; margin: 0">{% include organisms/software-card.html id="jitsi-meet" %}{% include organisms/software-card.html id="etherpad" %}</div></div>
-                <p class="ds-note">Softwaretegel <code>organisms/software-card.html</code> · software, of hij open source is, op hoeveel diensten hij draait en waarvoor · een gesloten product (bv. Word) met een dikke zwarte rand; wat alleen als dienst bestaat (Slack) is geen software · op <code>/software/</code>, en verwijst naar <code>/software/&lt;id&gt;/</code> (<code>_layouts/software.html</code>, met de diensten en bij gesloten software de open alternatieven)</p>
+                <p class="ds-note">Softwaretegel <code>organisms/software-card.html</code> · software, of hij open source is, op hoeveel diensten hij draait en waarvoor · wat alleen als dienst bestaat (Slack) is geen software · op <code>/software/</code>, en verwijst naar <code>/software/&lt;id&gt;/</code> (<code>_layouts/software.html</code>, met de diensten en bij gesloten software de open alternatieven)</p>
 <pre><code>{% raw %}{% include organisms/software-card.html id="jitsi-meet" %}{% endraw %}</code></pre>
             </div>
 
             <div class="ds-specimen">
                 <div class="ds-stage"><div class="profile-grid" style="flex: 1; margin: 0">{% include organisms/aanbieder-card.html id="framasoft" %}{% include organisms/aanbieder-card.html id="microsoft" %}</div></div>
-                <p class="ds-note">Aanbiedertegel <code>organisms/aanbieder-card.html</code> · organisatie, land (<code>atoms/land.html</code>, met het label europees of niet europees) en hoeveel diensten ze aanbiedt en waarvoor · alleen diensten die geen open dienst zijn: dikke zwarte rand · op <code>/aanbieders/</code>, en verwijst naar <code>/aanbieders/&lt;id&gt;/</code> (<code>_layouts/aanbieder.html</code>, met de diensten en een link naar haar profiel als ze er een heeft)</p>
+                <p class="ds-note">Aanbiedertegel <code>organisms/aanbieder-card.html</code> · organisatie, land (<code>atoms/land.html</code>, met het label ✓/✗ europees) en hoeveel diensten ze aanbiedt en waarvoor · op <code>/aanbieders/</code>, en verwijst naar <code>/aanbieders/&lt;id&gt;/</code> (<code>_layouts/aanbieder.html</code>, met de diensten en een link naar haar profiel als ze er een heeft)</p>
 <pre><code>{% raw %}{% include organisms/aanbieder-card.html id="framasoft" %}{% endraw %}</code></pre>
             </div>
 
             <div class="ds-specimen">
                 <div class="ds-stage"><div style="flex: 1; max-width: 460px">{% include organisms/closed-service-card.html dienst=voorbeeld_slack %}</div></div>
-                <p class="ds-note">Geen open dienst <code>organisms/closed-service-card.html</code> · iets wat een organisatie (nog) gebruikt dat geen open dienst is (<code>"open": false</code> in een profiel) · dezelfde dienstkaart met een dikke zwarte rand (<code>.is-closed</code>) en het label, met de redenen (<code>account</code>, <code>gesloten</code>, <code>buiten-eu</code>) in de tooltip; de kaart linkt gewoon door, want leden moeten er wel naartoe · daaronder een strook (<code>.card-strip</code>) naar open alternatieven, of de vraag of iemand er een kent · staat na de open diensten, op Diensten en in het profiel · met <code>naast=true</code> geen strook, want de alternatieven staan erbij · Start kiest hem nooit</p>
+                <p class="ds-note">Geen open dienst <code>organisms/closed-service-card.html</code> · iets wat een organisatie (nog) gebruikt dat geen open dienst is (<code>"open": false</code> in een profiel) · dezelfde dienstkaart, met de labels, met de redenen (<code>account</code>, <code>gesloten</code>, <code>buiten-eu</code>) in de tooltip; de kaart linkt gewoon door, want leden moeten er wel naartoe · daaronder een strook (<code>.card-strip</code>) naar open alternatieven, of de vraag of iemand er een kent · staat na de open diensten, op Diensten en in het profiel · met <code>naast=true</code> geen strook, want de alternatieven staan erbij · Start kiest hem nooit</p>
 <pre><code>{% raw %}{% include organisms/closed-service-card.html dienst=dienst %}{% endraw %}</code></pre>
             </div>
 
@@ -386,7 +386,7 @@ stylesheets:
 
             <div class="ds-specimen">
                 <div class="ds-stage"><div style="flex: 1">{% include organisms/services-by-category.html profiel=voorbeeldprofiel heading="h3" %}</div></div>
-                <p class="ds-note">Diensten per categorie <code>organisms/services-by-category.html</code> · per categorie een kop met anker (<code>id</code> = de categorie) en daaronder één raster (<code>organisms/category-services.html</code>): eerst de open diensten, dan wat nog geen open dienst is (zwarte rand); zonder open dienst een cel die vraagt of iemand er een kent · bij elke kaart wie hem gebruikt · zonder <code>profiel</code> alles uit alle profielen samen (de pagina Diensten, via <code>data/overzicht.html</code>), met <code>profiel</code> alleen de keuze van die organisatie, in hun volgorde · op de site filtert <code>js/opendienstenapp.js</code> dezelfde weergave bij <code>/?profiel=…</code> · met een profiel ook de kaarten van wat geen open dienst is · hier gefilterd op Code for NL</p>
+                <p class="ds-note">Diensten per categorie <code>organisms/services-by-category.html</code> · per categorie een kop met anker (<code>id</code> = de categorie) en daaronder één raster (<code>organisms/category-services.html</code>): eerst de open diensten, dan wat nog geen open dienst is; in een profiel krijgt een dienst die de organisatie wil uitfaseren een dikke zwarte rand (<code>.is-uitfaseren</code>); zonder open dienst een cel die vraagt of iemand er een kent · bij elke kaart wie hem gebruikt · zonder <code>profiel</code> alles uit alle profielen samen (de pagina Diensten, via <code>data/overzicht.html</code>), met <code>profiel</code> alleen de keuze van die organisatie, in hun volgorde · op de site filtert <code>js/opendienstenapp.js</code> dezelfde weergave bij <code>/?profiel=…</code> · met een profiel ook de kaarten van wat geen open dienst is · hier gefilterd op Code for NL</p>
 <pre><code>{% raw %}{% include organisms/services-by-category.html %}
 {% include organisms/services-by-category.html profiel="codefornl" heading="h3" %}{% endraw %}</code></pre>
             </div>

@@ -27,6 +27,10 @@
       "type": "string",
       "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
     },
+    "open_source": {
+      "description": "Alleen voor een dienst zonder software (bv. Doodle, of een verzameling diensten zoals framasoft.org): is de dienst open source? Met software komt dit van de software.",
+      "type": "boolean"
+    },
     "beschrijving": {
       "description": "Korte beschrijving, één zin.",
       "type": "string"
@@ -112,6 +116,10 @@
           "buiten-eu"
         ]
       }
+    },
+    "uitfaseren": {
+      "description": "Alleen in het profiel van een organisatie: true als die met deze dienst wil stoppen. Dan een dikke zwarte rand en het label uitfaseren, alleen in dat profiel.",
+      "type": "boolean"
     }
   }
 }

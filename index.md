@@ -1,6 +1,6 @@
 ---
 layout: default
-description: Open en gratis online diensten voor je vereniging, buurt of initiatief. Videobellen, samen schrijven, plannen en meer, bij aanbieders die je kunt vertrouwen.
+description: Open en gratis online diensten voor je vereniging, buurt of initiatief. Videobellen, samen schrijven, plannen en meer, van aanbieders in Europa.
 ---
 {%- comment -%}
   Diensten: alle live diensten per categorie.

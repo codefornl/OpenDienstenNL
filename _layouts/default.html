@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if page.title %}{{ page.title }} · {% endif %}OpenDiensten</title>
+    <title>{% if site.offline %}Even offline · OpenDiensten{% else %}{% if page.title %}{{ page.title }} · {% endif %}OpenDiensten{% endif %}</title>
     <meta name="description" content="{{ page.description | default: site.description | strip_html | strip_newlines }}">
-    {% if page.noindex %}<meta name="robots" content="noindex">{% endif %}
+    {% if page.noindex or site.offline %}<meta name="robots" content="noindex">{% endif %}
     {% assign v = site.time | date: "%s" %}<link rel="stylesheet" href="/css/style.css?v={{ v }}">
     {% for stylesheet in page.stylesheets %}<link rel="stylesheet" href="{{ stylesheet }}?v={{ v }}">
     {% endfor %}<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
@@ -15,9 +15,18 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="OpenDiensten">
 </head>
-<body>
+<body{% if site.offline %} class="offline-body"{% endif %}>
+{%- if site.offline %}
+    {%- comment -%} Nog niet online: alleen dit scherm. Zet offline: false in _config.yml om te publiceren. {%- endcomment %}
+    <main class="offline">
+        <p class="offline-merk">{% include atoms/hex.html %}OpenDiensten</p>
+        <h1>Even offline</h1>
+        <p>We zijn er nog mee bezig. Tot snel.</p>
+    </main>
+{%- else %}
     {% include molecules/prototype-banner.html %}
     {{ content }}
     {% if page.footer %}{% include organisms/site-footer.html %}{% endif %}
+{%- endif %}
 </body>
 </html>

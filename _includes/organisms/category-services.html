@@ -1,6 +1,6 @@
 {%- comment -%}
   De diensten van één categorie in één raster: eerst de open diensten, dan infrastructuur, dan wat (nog) geen open dienst is
-  (dezelfde kaart met een dikke zwarte rand). Onder elke kaart de software en wie hem gebruikt (molecules/service-strip.html).
+  (dezelfde kaart, met labels). Onder elke kaart de software en wie hem gebruikt (molecules/service-strip.html).
   Is er op Diensten nog geen open dienst, dan een cel die vraagt of iemand er een kent
   (in een profiel doet de strook onder de kaart dat).
 
@@ -12,6 +12,7 @@
     sorteer    true = data-categorie op het raster, zodat js/opendienstenapp.js de open diensten op
                beoordeling sorteert (de keuze van een profiel heeft een eigen volgorde)
     eigen      de eigen url's van een organisatie bij diensten die geen open dienst zijn (rp_eigen)
+    uitfaseren de dienst-id's die een organisatie wil uitfaseren (rp_uitfaseren): dikke zwarte rand
     naast      true = de open alternatieven staan erbij (Diensten); dan geen strook naar alternatieven
                onder een kaart, wel de vraag of iemand er een kent
 {%- endcomment -%}
@@ -21,19 +22,19 @@
 <div class="services-grid"{% if include.sorteer %} data-categorie="{{ cs_cat }}"{% endif %}>
     {%- for dienst in cs_al %}
     <div class="service-item">
-        {% include organisms/service-card.html dienst=dienst %}
+        {% include organisms/service-card.html dienst=dienst uitfaseren=include.uitfaseren %}
         {% include molecules/service-strip.html dienst=dienst %}
     </div>
     {%- endfor %}
     {%- for dienst in include.infra %}
     <div class="service-item">
-        {% include organisms/service-card.html dienst=dienst eigen=include.eigen %}
+        {% include organisms/service-card.html dienst=dienst eigen=include.eigen uitfaseren=include.uitfaseren %}
         {% include molecules/service-strip.html dienst=dienst %}
     </div>
     {%- endfor %}
     {%- for dienst in cs_nog %}
     <div class="service-item">
-        {% include organisms/closed-service-card.html dienst=dienst naast=include.naast eigen=include.eigen %}
+        {% include organisms/closed-service-card.html dienst=dienst naast=include.naast eigen=include.eigen uitfaseren=include.uitfaseren %}
         {% include molecules/service-strip.html dienst=dienst %}
     </div>
     {%- endfor %}

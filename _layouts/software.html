@@ -17,7 +17,7 @@ layout: default
 {%- include data/gebruik.html -%}
 {%- capture swp_meta -%}
   {%- if sw.open_source == true or sw.open_source == false %}
-  <p class="software-meta">{% if sw.open_source == true %}<span class="tag tag-goed">open source</span>{% else %}<span class="tag tag-niet">closed source</span>{% endif %}</p>
+  <p class="software-meta">{% if sw.open_source == true %}<span class="tag tag-goed">open source</span>{% else %}<span class="tag tag-niet">open source</span>{% endif %}</p>
   {%- endif %}
   {%- if sw.broncode %}
   <p class="software-meta"><span class="used-by-label">Broncode</span> {% include atoms/broncode.html url=sw.broncode %}</p>

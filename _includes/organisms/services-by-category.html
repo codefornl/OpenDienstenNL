@@ -42,6 +42,7 @@
         {%- assign pc_closed = rp_closed | where: "categorie", sbc_cat -%}
         {%- assign pc_infra = rp_infra | where: "categorie", sbc_cat -%}
         {%- assign pc_eigen = rp_eigen -%}
+        {%- assign pc_uitfaseren = rp_uitfaseren -%}
         {%- assign pc_total = pc_open.size | plus: pc_closed.size | plus: pc_infra.size -%}
         {%- if pc_total > 0 -%}
           {%- capture pc_status -%}
@@ -51,7 +52,7 @@
           {%- endcapture %}
         <div class="profile-services" data-profiel="{{ sbc_pid }}" data-count="{{ pc_total }}" data-status="{{ pc_status | strip }}"{% if sbc_mode == "alle" %} hidden{% endif %}>
             {%- if pc_open.size > 0 %}{% assign pc_naast = true %}{% else %}{% assign pc_naast = false %}{% endif %}
-            {% include organisms/category-services.html al=pc_open infra=pc_infra nog=pc_closed categorie=sbc_cat eigen=pc_eigen naast=pc_naast %}
+            {% include organisms/category-services.html al=pc_open infra=pc_infra nog=pc_closed categorie=sbc_cat eigen=pc_eigen uitfaseren=pc_uitfaseren naast=pc_naast %}
         </div>
         {%- endif -%}
       {%- endfor -%}

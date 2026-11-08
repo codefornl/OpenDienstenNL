@@ -36,8 +36,8 @@ EIGEN_URL = 'https://opendiensten.nl/profielen/'
 SLUG = /\A[a-z0-9]+(-[a-z0-9]+)*\z/
 HTTP_URL = %r{\Ahttps?://}
 
-DIENST_VELDEN = %w[id naam software beschrijving categorie url random_url favicon aanbieder beheer
-                   spoelkeuken_url eu_hosting doelgroep soort status open redenen].freeze
+DIENST_VELDEN = %w[id naam software open_source beschrijving categorie url random_url favicon aanbieder beheer
+                   spoelkeuken_url eu_hosting doelgroep soort status open redenen uitfaseren].freeze
 SOORTEN = %w[dienst infrastructuur].freeze
 URL_VELDEN = %w[url random_url spoelkeuken_url].freeze
 TEKST_VELDEN = %w[naam beschrijving doelgroep].freeze
@@ -81,7 +81,7 @@ def controleer_dienst(d, pad, bekend)
   end
   fouten << "#{pad}.soort: een van #{SOORTEN.join(', ')}" if d.key?('soort') && !SOORTEN.include?(d['soort'])
   fouten << "#{pad}.status: een van #{STATUSSEN.join(', ')}" if d.key?('status') && !STATUSSEN.include?(d['status'])
-  %w[eu_hosting open].each do |k|
+  %w[eu_hosting open uitfaseren open_source].each do |k|
     fouten << "#{pad}.#{k}: true of false" if d.key?(k) && ![true, false].include?(d[k])
   end
   if d.key?('redenen')
@@ -116,7 +116,8 @@ def controleer_profiel(p, bekend, verwacht_id = nil)
   p['diensten'].each_with_index do |d, i|
     pad = "diensten[#{i}]"
     if d.is_a?(Hash) && d.key?('ref')
-      (d.keys - %w[ref bron url]).each { |k| fouten << "#{pad}: onbekend veld '#{k}' in verwijzing" }
+      (d.keys - %w[ref bron url uitfaseren]).each { |k| fouten << "#{pad}: onbekend veld '#{k}' in verwijzing" }
+      fouten << "#{pad}.uitfaseren: true of false" if d.key?('uitfaseren') && ![true, false].include?(d['uitfaseren'])
       fouten << "#{pad}.url: moet beginnen met http:// of https://" if d.key?('url') && !d['url'].to_s.match?(HTTP_URL)
       fouten << "#{pad}.ref: alleen kleine letters, cijfers en streepjes" unless d['ref'].to_s.match?(SLUG)
       fouten << "#{pad}.bron: moet een https-URL zijn" if d.key?('bron') && !d['bron'].to_s.start_with?('https://')
@@ -230,6 +231,20 @@ def controleer
   Dir[File.join(PROFIELEN, '*.json')].each do |f|
     id = File.basename(f, '.json')
     warn "let op: #{f.sub("#{ROOT}/", '')} staat niet in het register en wordt niet gebruikt" unless geregistreerd.include?(id)
+  end
+
+  # Elke live dienst heeft alles voor de vijf labels: eu_hosting, en open source (van de software, open_source of gesloten)
+  sw_open = JSON.parse(File.read(SOFTWARE))['software'].to_h { |s| [s['id'], s['open_source']] }
+  profielen.each do |id, profiel|
+    (profiel['diensten'] || []).each_with_index do |d, i|
+      next unless d.is_a?(Hash) && !d['ref'] && (d['status'] || 'live') == 'live'
+
+      fouten << "#{id}: diensten[#{i}] (#{d['id']}): eu_hosting ontbreekt (nodig voor het label europees)" unless d.key?('eu_hosting')
+      os = d['software'] ? sw_open[d['software']] : d['open_source']
+      if os.nil? && !(d['redenen'] || []).include?('gesloten')
+        fouten << "#{id}: diensten[#{i}] (#{d['id']}): open source onbekend; zet open_source bij #{d['software'] ? "de software #{d['software']}" : 'de dienst'}"
+      end
+    end
   end
 
   # Elke software en aanbieder heeft een pagina (_software/<id>.md, _aanbieders/<id>.md), en elke pagina hoort ergens bij

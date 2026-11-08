@@ -2,7 +2,7 @@
 permalink: /ontwikkelaars
 layout: default
 title: Voor ontwikkelaars
-description: "Alles om met OpenDiensten verder te bouwen: het design system en het gegevensmodel, met open data in JSON."
+description: "Alles om met OpenDiensten verder te bouwen: het gegevensmodel, met open data in JSON, en de broncode."
 ---
 <div class="app-container">
   {% include organisms/sidebar.html active="ontwikkelaars" %}
@@ -16,15 +16,8 @@ description: "Alles om met OpenDiensten verder te bouwen: het design system en h
       </div>
 
       <div class="profile-grid">
-        <a href="/design-system/" class="profile-card">
-          {% include atoms/org-logo.html naam="1" %}
-          <div class="profile-card-body">
-            <h3>Design system</h3>
-            <p>De vormgeving van klein naar groot, volgens atomic design: tokens, atomen, moleculen en organismen, elk als Jekyll-include, met de regels van Apitecture.</p>
-          </div>
-        </a>
         <a href="/gegevensmodel" class="profile-card">
-          {% include atoms/org-logo.html naam="2" %}
+          {% include atoms/org-logo.html naam="Gegevensmodel" %}
           <div class="profile-card-body">
             <h3>Gegevensmodel</h3>
             <p>Welke informatie er is over diensten, software, organisaties en profielen, met alle velden uit de JSON Schema's en de bestanden om zelf te gebruiken.</p>
@@ -34,7 +27,7 @@ description: "Alles om met OpenDiensten verder te bouwen: het design system en h
 
       <div class="profile-add">
         <h3>De broncode</h3>
-        <p>Alles staat op GitHub, ook de gegevens in <code>_data/</code>. Een dienst toevoegen of verbeteren kan met een pull request; controleer daarna met <code>ruby scripts/profielen.rb controleer</code>.</p>
+        <p>Alles staat op GitHub, ook de gegevens in <code>_data/</code>. Een dienst toevoegen of verbeteren kan met een pull request; controleer daarna met <code>ruby scripts/profielen.rb controleer</code>. Het design system (de componenten volgens atomic design) staat ook in de repository en kun je lokaal bekijken.</p>
         {% include atoms/button.html text="Naar GitHub" href="https://github.com/Apitecture/OpenDienstenNL" variant="secondary" %}
       </div>
     </section>

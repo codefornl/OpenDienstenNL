@@ -1,5 +1,5 @@
 /*
- * OpenDiensten · stijl volgens het design system, zie /design-system/.
+ * OpenDiensten · stijl volgens het design system, zie pages/design-system.html (lokaal op /design-system/).
  * Tokens en basis komen uit de Apitecture-familie (apitecture.nl/design-system):
  * dezelfde namen, ruimteschaal en regels. Daarbovenop staan de componenten
  * van OpenDiensten, elk met een include in _includes/.
@@ -308,7 +308,7 @@ img {
     white-space: nowrap;
 }
 
-/* Labels op een dienstkaart: categorie, en 'eigen link' als de dienst een eigen ruimte kan maken */
+/* Labels op een dienstkaart: categorie */
 .service-badges {
     display: inline-flex;
     flex-wrap: wrap;
@@ -333,12 +333,12 @@ img {
     color: var(--muted);
 }
 
-.service-card.is-closed .category-badge {
+.service-card.is-uitfaseren .category-badge {
     top: 0;
     right: -4px;
 }
 
-/* Labels van een dienst: goed (groen, met een vinkje) of niet (grijze rand) */
+/* Labels van een dienst: goed (groen, ✓) of niet (rood, ✗), met dezelfde tekst */
 .tag {
     display: inline-block;
     padding: 1px var(--space-2);
@@ -350,7 +350,7 @@ img {
     white-space: nowrap;
 }
 
-.tag:not(.tag-goed):not(.tag-niet) {
+.tag:not(.tag-goed):not(.tag-niet):not(.tag-uitfaseren) {
     background: var(--paper-deep);
     color: var(--muted);
 }
@@ -366,20 +366,19 @@ img {
 }
 
 .tag-niet {
-    border-color: var(--line-strong);
-    color: var(--muted);
+    background: var(--danger-subtle);
+    color: var(--danger);
 }
 
-.unique-badge {
-    display: inline-block;
-    padding: 1px var(--space-2);
-    border: 1px solid var(--accent);
-    border-radius: var(--radius-xs);
-    color: var(--accent-text);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
+.tag-niet::before {
+    content: "✗ ";
+    font-weight: 700;
+}
+
+/* Een keuze van de organisatie, geen eigenschap van de dienst */
+.tag-uitfaseren {
+    background: var(--ink);
+    color: var(--card);
 }
 
 /* Favicon van de dienst, met het kleine favicon van de aanbieder erop */
@@ -1346,14 +1345,13 @@ a.service-card:hover,
     scroll-margin-top: var(--space-5);
 }
 
-/* Geen open dienst: dezelfde kaart, met een zwarte rand */
-.service-card.is-closed {
+/* In een profiel: een dienst die de organisatie zelf wil uitfaseren, met een dikke zwarte rand */
+.service-card.is-uitfaseren {
     border: 4px solid var(--ink);
     padding: calc(var(--space-5) - 3px);
 }
 
-a.service-card.is-closed:hover,
-.service-card.is-closed:has(.card-link:hover) {
+.service-card.is-uitfaseren:has(.card-link:hover) {
     border-color: var(--accent);
 }
 
@@ -1844,10 +1842,6 @@ a.service-card.is-closed:hover,
     margin: var(--space-6) 0 var(--space-3);
 }
 
-.software-card.is-closed {
-    border: 4px solid var(--ink);
-}
-
 .software-card .tag,
 .software-meta .tag {
     margin-right: var(--space-2);
@@ -2063,4 +2057,44 @@ a.service-card.is-closed:hover,
         transition: none !important;
         animation: none !important;
     }
+}
+
+/* Nog niet online (offline: true in _config.yml): een oranje scherm */
+.offline-body {
+    margin: 0;
+    background: var(--accent);
+}
+
+.offline {
+    display: grid;
+    place-content: center;
+    min-height: 100vh;
+    padding: var(--space-6);
+    color: var(--night);
+    text-align: center;
+}
+
+.offline h1 {
+    margin: var(--space-4) 0 var(--space-3);
+    font-size: clamp(40px, 8vw, 88px);
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
+
+.offline p {
+    margin: 0;
+    font-size: 18px;
+}
+
+.offline .offline-merk {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.offline .offline-merk .hex {
+    background: var(--night);
 }

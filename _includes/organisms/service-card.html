@@ -5,14 +5,15 @@
   Dezelfde markup als ServicesManager.createServiceCard() in js/ServicesManager.mjs.
   De titel is de link naar de dienst (a.card-link) en ligt over de hele kaart; de software en de aanbieder
   zijn eigen links erbovenop (naar /software/<id>/ en /aanbieders/<id>/). Zo mag dat: geen link in een link.
-  Kan de dienst een eigen ruimte of document maken (random_url), dan staat er 'eigen link' bij, en maakt
+  Kan de dienst een eigen ruimte of document maken (random_url), dan maakt
   js/opendienstenapp.js bij een klik een unieke link in plaats van naar de algemene link te gaan.
-  Labels (molecules/dienst-tags.html): open source / closed source, europees / niet europees,
-  open dienst / login vereist. Is de dienst geen open dienst (open: false), dan ook een dikke zwarte rand.
+  Labels (molecules/dienst-tags.html): ✓ of ✗ open source, europees, geen login, voor iedereen. Een dikke zwarte rand alleen in een profiel, bij een dienst die de organisatie
+  zelf wil uitfaseren ("uitfaseren": true in haar profiel); met het label uitfaseren.
   In een profiel kan een organisatie bij een dienst die geen open dienst is haar eigen url geven
   (bv. haar pagina op LinkedIn); dan gaat de kaart daarheen en staat die url erop.
   Parameters: dienst (volgens schemas/dienst.schema.json), rating, count, link (false = geen link),
-              eigen (lijst "<dienst-id> <url>", rp_eigen uit data/profiel.html)
+              eigen (lijst "<dienst-id> <url>", rp_eigen uit data/profiel.html),
+              uitfaseren (lijst met dienst-id's die de organisatie wil uitfaseren, rp_uitfaseren)
 {%- endcomment -%}
 {%- assign d = include.dienst -%}
 {%- assign card_url = d.url -%}
@@ -21,7 +22,7 @@
   {%- assign ce_parts = ce | split: " " -%}
   {%- if ce_parts[0] == d.id -%}{%- assign card_url = ce_parts[1] -%}{%- assign card_eigen = ce_parts[1] -%}{%- endif -%}
 {%- endfor -%}
-<div class="service-card{% if d.open == false %} is-closed{% endif %}" data-id="{{ d.id }}" data-category="{{ d.categorie }}">
+<div class="service-card{% if include.uitfaseren contains d.id %} is-uitfaseren{% endif %}" data-id="{{ d.id }}" data-category="{{ d.categorie }}">
     {% include atoms/favicon.html dienst=d %}
     <div class="service-info">
         <h4>{% if include.link == false %}{{ d.naam | escape }}{% else %}<a href="{{ card_url | escape }}" target="_blank" rel="noopener" class="card-link">{{ d.naam | escape }}</a>{% endif %}</h4>
@@ -42,8 +43,8 @@
             <div class="service-meta-row">
                 <span class="service-badges">
                     {% include atoms/category-badge.html categorie=d.categorie %}
+                    {%- if include.uitfaseren contains d.id %}<span class="tag tag-uitfaseren" title="Deze organisatie wil hiermee stoppen">uitfaseren</span>{% endif %}
                     {% include molecules/dienst-tags.html dienst=d %}
-                    {%- if d.random_url and d.open != false %}<span class="unique-badge" title="Elke klik maakt een nieuwe, eigen link">eigen link</span>{% endif %}
                 </span>
             </div>
             {%- if include.rating %}

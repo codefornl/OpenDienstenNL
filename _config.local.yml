@@ -1,0 +1,15 @@
+# Alleen lokaal: zet het design system aan (op /design-system/), dat op de publieke site ontbreekt.
+#   bundle exec jekyll serve --config _config.yml,_config.local.yml
+# De exclude-lijst hieronder vervangt die uit _config.yml; houd hem verder gelijk.
+# Lokaal de hele site, ook als hij publiek nog offline staat.
+offline: false
+
+exclude:
+  - README.md
+  - LICENSE.md
+  - CLAUDE.md
+  - docs/
+  - scripts/
+  - assets/images/logo-design-file.svg
+  - assets/images/screenshot.png
+  - _config.local.yml

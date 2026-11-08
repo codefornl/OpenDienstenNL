@@ -5,7 +5,8 @@
     ov_al    de open diensten: eerst die uit het standaardprofiel, dan die alleen in een ander profiel staan
     ov_infra infrastructuur (soort: infrastructuur), zoals domeinnamen; geen oordeel open of niet
     ov_nog   wat geen open dienst is (open: false). Foute opties komen uit profielen: closed source uit
-             Alle diensten (Slack, GitHub) alleen als een profiel het gebruikt; open source (Signal, Element) altijd
+             Alle diensten (Slack, GitHub) alleen als een profiel het gebruikt en niet wil uitfaseren; open source
+             (Signal, Element) altijd. Wat een organisatie wil uitfaseren, staat nooit in het overzicht.
 
   Een dienst die in meer profielen staat (zelfde url), komt er één keer in. Variabelen zijn globaal in Liquid
   (en data/profiel.html zet rp_* opnieuw): lees ze direct na de include.
@@ -25,6 +26,8 @@
   {%- include data/profiel.html id=ov_id -%}
   {%- assign ov_cat = rp_shown | where: "categorie", include.categorie -%}
   {%- for ov_d in ov_cat -%}
+    {%- comment -%} Wat een organisatie wil uitfaseren, staat alleen in haar profiel, niet in het overzicht {%- endcomment -%}
+    {%- if ov_id != ov_std and rp_uitfaseren contains ov_d.id -%}{%- continue -%}{%- endif -%}
     {%- unless ov_urls contains ov_d.url -%}
       {%- assign ov_urls = ov_urls | push: ov_d.url -%}
       {%- if ov_d.soort == "infrastructuur" -%}
@@ -33,7 +36,7 @@
         {%- assign ov_gebruikt = true -%}
         {%- if ov_id == ov_std and ov_d.redenen contains "gesloten" -%}
           {%- assign ov_gebruikt = false -%}
-          {%- for ov_p in gebruik_paren -%}
+          {%- for ov_p in gebruik_blijvend -%}
             {%- assign ov_pu = ov_p | split: " " | last -%}
             {%- if ov_pu == ov_d.url -%}{%- assign ov_gebruikt = true -%}{%- endif -%}
           {%- endfor -%}
