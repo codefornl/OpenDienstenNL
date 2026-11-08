@@ -1,0 +1,6 @@
+---
+permalink: /schemas/profiel.schema.json
+layout: null
+---
+{%- comment -%} Het JSON Schema uit _data/schemas/profiel.json. Zie ook /gegevensmodel. {%- endcomment -%}
+{{ site.data.schemas.profiel | jsonify }}

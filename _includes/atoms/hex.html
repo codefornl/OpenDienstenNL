@@ -1,0 +1,5 @@
+{%- comment -%}
+  Zeshoek: de markering uit het Apitecture-logo. Eén per item, nooit decoratie.
+  Parameters: outline (true = lege cel), label (optioneel; anders aria-hidden)
+{%- endcomment -%}
+<span class="hex{% if include.outline %} hex-outline{% endif %}"{% if include.label %} role="img" aria-label="{{ include.label }}"{% else %} aria-hidden="true"{% endif %}></span>

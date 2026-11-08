@@ -1,0 +1,668 @@
+/* Alleen voor /design-system/. Gebruikt de tokens uit style.css; opbouw als apitecture.nl/design-system/. */
+
+.ds-layout {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: var(--space-7);
+    max-width: 1100px;
+    margin: 0;
+    padding: var(--space-6) var(--space-6) var(--space-8);
+    text-align: left;
+}
+
+.ds-nav {
+    position: sticky;
+    top: var(--space-8);
+    align-self: start;
+}
+
+.ds-nav ol {
+    list-style: none;
+    counter-reset: ds -1;
+    display: grid;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+}
+
+.ds-nav li {
+    counter-increment: ds;
+}
+
+.ds-nav a {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.ds-nav a::before {
+    content: counter(ds) ".";
+    color: var(--muted);
+    min-width: 18px;
+}
+
+.ds-nav a:hover {
+    background: var(--card);
+    text-decoration: none;
+}
+
+.ds-intro {
+    margin-bottom: var(--space-8);
+}
+
+.ds-lead,
+.ds-intro-text {
+    font-size: 17px;
+    color: var(--text);
+    max-width: 720px;
+}
+
+.ds-intro-text {
+    margin-bottom: var(--space-6);
+}
+
+.ds-section {
+    scroll-margin-top: var(--space-6);
+    padding-bottom: var(--space-8);
+    margin-bottom: var(--space-8);
+    border-bottom: 1px solid var(--line);
+}
+
+.ds-section:last-child {
+    border-bottom: 0;
+}
+
+.ds-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: 36px;
+    margin-bottom: var(--space-2);
+}
+
+/* Stapnummer in een zeshoek, de cel uit het logo */
+.ds-step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 40px;
+    height: 46px;
+    background: var(--accent);
+    color: var(--night);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.ds-subtitle {
+    font-size: 21px;
+    margin: var(--space-7) 0 var(--space-4);
+}
+
+.ds-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin: var(--space-5) 0 var(--space-2);
+}
+
+.ds-note {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: var(--space-2);
+}
+
+/* Een voorbeeld met daaronder de klassenaam */
+.ds-specimen {
+    margin-bottom: var(--space-5);
+}
+
+.ds-stage {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--paper);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-md);
+}
+
+.ds-stage > .section-split {
+    flex: 1;
+    margin: 0;
+}
+
+.ds-specimen > .ds-note {
+    font-size: 13px;
+}
+
+/* ===== 0 Stamboom ===== */
+.ds-org-scroll {
+    overflow-x: auto;
+    padding: var(--space-3) 0 var(--space-4);
+}
+
+.ds-org,
+.ds-org ul {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.ds-org ul {
+    position: relative;
+    padding-top: 20px;
+}
+
+.ds-org li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    padding: 20px var(--space-2) 0;
+}
+
+/* Lijnen tussen ouder en kinderen, als in het organigram van publictech.nl */
+.ds-org li::before,
+.ds-org li::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 50%;
+    width: 50%;
+    height: 20px;
+    border-top: 1px solid var(--line-strong);
+}
+
+.ds-org li::after {
+    right: auto;
+    left: 50%;
+    border-left: 1px solid var(--line-strong);
+}
+
+.ds-org li:only-child {
+    padding-top: 0;
+}
+
+.ds-org li:only-child::before,
+.ds-org li:only-child::after,
+.ds-org > li::before,
+.ds-org > li::after {
+    display: none;
+}
+
+.ds-org li:first-child::before,
+.ds-org li:last-child::after {
+    border: 0;
+}
+
+.ds-org li:last-child::before {
+    border-right: 1px solid var(--line-strong);
+    border-radius: 0 var(--radius-sm) 0 0;
+}
+
+.ds-org li:first-child::after {
+    border-radius: var(--radius-sm) 0 0 0;
+}
+
+.ds-org ul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 20px;
+    border-left: 1px solid var(--line-strong);
+}
+
+.ds-org > li {
+    padding-top: 0;
+}
+
+/* Breder dan het scherm: scrollbaar, niet aan de linkerkant afgekapt */
+.ds-org {
+    width: max-content;
+    margin: 0 auto;
+}
+
+.ds-sq {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    width: 132px;
+    padding: var(--space-3) var(--space-2);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--brand, var(--line-strong));
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    text-align: center;
+    line-height: 1.3;
+    text-decoration: none;
+}
+
+a.ds-sq:hover {
+    background: var(--paper);
+    text-decoration: none;
+    color: var(--ink);
+}
+
+.ds-sq strong {
+    font-family: var(--font-sans);
+    font-size: 14px;
+}
+
+.ds-sq small {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.ds-sq-here {
+    border-color: var(--accent);
+    border-top-width: 3px;
+    box-shadow: 0 0 0 1px var(--accent);
+}
+
+.ds-sq-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: var(--space-1);
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    box-shadow: var(--shadow-ring);
+    color: var(--brand, var(--ink));
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 15px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+/* Een logo met eigen witruimte: niet bijsnijden */
+.ds-sq-contain {
+    object-fit: contain;
+    padding: 4px;
+}
+
+.ds-sq-round {
+    border-radius: 50%;
+}
+
+.ds-sq-sw {
+    display: flex;
+    gap: 3px;
+    margin-top: var(--space-1);
+}
+
+.ds-sq-sw i {
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-xs);
+    box-shadow: 0 0 0 1px var(--line);
+}
+
+/* Merkkaarten */
+.ds-brands {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-4);
+}
+
+.ds-brand-card {
+    padding: var(--space-5);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--brand);
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+}
+
+.ds-brand-card p:last-child {
+    margin: 0;
+}
+
+.ds-brand-kicker {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+}
+
+/* ===== 1 Vormtaal ===== */
+.ds-principles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-4);
+}
+
+.ds-principle {
+    padding: var(--space-5);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+}
+
+.ds-principle h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 18px;
+}
+
+.ds-principle p {
+    font-size: 15px;
+    margin: 0;
+}
+
+.ds-honeycomb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+    padding: var(--space-5);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+}
+
+.ds-honeycomb svg {
+    width: 120px;
+    height: auto;
+    flex: none;
+}
+
+.ds-honeycomb p {
+    flex: 1;
+    min-width: 220px;
+    margin: 0;
+}
+
+/* ===== 2 Fundamenten ===== */
+.ds-swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: var(--space-3);
+}
+
+.ds-swatch {
+    background: var(--card);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-ring);
+    overflow: hidden;
+    font-size: 13px;
+}
+
+.ds-swatch-color {
+    display: block;
+    height: 56px;
+    box-shadow: inset 0 -1px 0 var(--line);
+}
+
+.ds-swatch code,
+.ds-swatch span {
+    display: block;
+    padding: 0 var(--space-3);
+    background: none;
+}
+
+.ds-swatch code {
+    padding-top: var(--space-2);
+}
+
+.ds-swatch span {
+    padding-bottom: var(--space-2);
+    color: var(--muted);
+}
+
+.ds-type-row {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: baseline;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.ds-type-row > code {
+    justify-self: start;
+    font-size: 12px;
+}
+
+.ds-type-row > div {
+    color: var(--ink);
+    overflow-wrap: anywhere;
+}
+
+.ds-space {
+    display: grid;
+    gap: var(--space-2);
+}
+
+.ds-space-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    font-size: 13px;
+}
+
+.ds-space-row code {
+    min-width: 90px;
+}
+
+.ds-space-bar {
+    height: 12px;
+    background: var(--accent);
+    border-radius: var(--radius-xs);
+}
+
+.ds-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+}
+
+.ds-box {
+    display: flex;
+    align-items: flex-end;
+    width: 120px;
+    height: 88px;
+    padding: var(--space-2);
+    background: var(--card);
+    border: 1px solid var(--line-strong);
+    font-size: 12px;
+}
+
+.ds-box code {
+    background: none;
+    padding: 0;
+}
+
+/* ===== 6 Templates ===== */
+.ds-templates {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-5);
+}
+
+.ds-template ol {
+    list-style: none;
+    display: grid;
+    gap: var(--space-1);
+    margin: 0 0 var(--space-2);
+    padding: var(--space-2);
+    background: var(--paper-deep);
+    border-radius: var(--radius-sm);
+}
+
+.ds-template li {
+    padding: var(--space-2);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-xs);
+    font-size: 13px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.ds-template li.ds-fill {
+    padding: var(--space-5) var(--space-2);
+    border-color: var(--accent);
+    color: var(--ink);
+}
+
+/* ===== 7 Pagina's ===== */
+.ds-pages {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Samenwerking: twee partners naast elkaar, samen boven OpenDiensten */
+.ds-collab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: max-content;
+    margin: 0 auto;
+}
+
+.ds-collab-parents {
+    display: flex;
+    gap: var(--space-6);
+}
+
+/* Lijn van het midden van elke partner naar het midden van OpenDiensten */
+.ds-collab-join {
+    position: relative;
+    width: calc(132px + var(--space-6));
+    height: 20px;
+    border: 1px solid var(--line-strong);
+    border-top: 0;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
+.ds-collab-join::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    height: 20px;
+    border-left: 1px solid var(--line-strong);
+}
+
+.ds-collab > .ds-sq-here {
+    margin-top: 20px;
+}
+
+/* ===== Voorbeelden met code ===== */
+.ds-stage-card {
+    background: var(--card);
+}
+
+.ds-stage-col {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.ds-specimen > pre {
+    margin-top: var(--space-2);
+}
+
+/* Een zijbalk binnen het podium: niet vast op het scherm */
+.ds-stage .sidebar {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    max-width: 100%;
+}
+
+.ds-props {
+    width: 100%;
+    margin-top: var(--space-2);
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.ds-props th,
+.ds-props td {
+    padding: var(--space-1) var(--space-3) var(--space-1) 0;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+}
+
+.ds-props th {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+}
+
+.ds-logo-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-6);
+}
+
+.ds-logo-row > img {
+    height: 48px;
+    width: auto;
+}
+
+/* Met de zijbalk ernaast is er minder ruimte: de hoofdstukken dan boven de inhoud */
+@media (max-width: 1200px) {
+    .ds-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-5);
+    }
+
+    .ds-nav {
+        position: static;
+    }
+
+    .ds-nav ol {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .ds-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-5);
+    }
+
+    .ds-nav {
+        position: static;
+    }
+
+    .ds-nav ol {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ds-title {
+        font-size: 28px;
+    }
+
+    .ds-type-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-1);
+    }
+}

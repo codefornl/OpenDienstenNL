@@ -1,0 +1,28 @@
+{%- comment -%}
+  De live diensten met een bepaalde software of van een bepaalde aanbieder, uit alle profielen samen
+  (een dienst met dezelfde url één keer).
+  Geeft geen uitvoer; zet:
+    sd_diensten  de diensten, eerst die uit het standaardprofiel
+    sd_cats      hun categorieën
+  Zet ook rp_* (via data/profiel.html). Lees de variabelen direct na de include.
+  Parameters: veld (software of aanbieder, standaard software), id (id uit _data/software.json of _data/organisaties.json)
+{%- endcomment -%}
+{%- assign sd_veld = include.veld | default: "software" -%}
+{%- assign sd_std = site.data.profielregister.standaard -%}
+{%- assign sd_ids = "" | split: "" | push: sd_std -%}
+{%- for sd_r in site.data.profielregister.profielen -%}
+  {%- if sd_r.id != sd_std -%}{%- assign sd_ids = sd_ids | push: sd_r.id -%}{%- endif -%}
+{%- endfor -%}
+{%- assign sd_diensten = "" | split: "" -%}
+{%- assign sd_urls = "" | split: "" -%}
+{%- for sd_id in sd_ids -%}
+  {%- include data/profiel.html id=sd_id -%}
+  {%- assign sd_hier = rp_shown | where: sd_veld, include.id -%}
+  {%- for sd_d in sd_hier -%}
+    {%- unless sd_urls contains sd_d.url -%}
+      {%- assign sd_urls = sd_urls | push: sd_d.url -%}
+      {%- assign sd_diensten = sd_diensten | push: sd_d -%}
+    {%- endunless -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- assign sd_cats = sd_diensten | map: "categorie" | uniq -%}

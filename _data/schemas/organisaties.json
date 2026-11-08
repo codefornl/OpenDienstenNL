@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opendiensten.nl/schemas/organisaties.schema.json",
+  "title": "Organisaties",
+  "description": "Organisaties die diensten aanbieden. Een dienst verwijst hiernaar met aanbieder: <id>.",
+  "type": "object",
+  "required": [
+    "versie",
+    "organisaties"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "versie": {
+      "const": 1
+    },
+    "organisaties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "naam"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "Vaste sleutel, bv. framasoft. Diensten verwijzen hiernaar; verander een bestaande id nooit.",
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "naam": {
+            "description": "Naam van de organisatie.",
+            "type": "string",
+            "minLength": 1
+          },
+          "beschrijving": {
+            "description": "Wie de organisatie is, in één of twee zinnen.",
+            "type": "string"
+          },
+          "website": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https?://"
+          },
+          "logo": {
+            "description": "Icoon van de organisatie: een pad op opendiensten.nl of een https-URL.",
+            "type": "string",
+            "pattern": "^(/|https://)"
+          },
+          "land": {
+            "description": "Land van vestiging, ISO 3166-1 alpha-2, bv. NL.",
+            "type": "string",
+            "pattern": "^[A-Z]{2}$"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+---
+permalink: /profielen/codefornl.json
+layout: null
+---
+{{ site.data.profielen["codefornl"] | jsonify }}

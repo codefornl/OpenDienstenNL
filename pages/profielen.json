@@ -1,0 +1,28 @@
+---
+permalink: /profielen.json
+layout: null
+---
+{%- comment -%}
+  Voor js/start.js: per profiel de open diensten per categorie (ids), met verwijzingen opgelost.
+  De profielen zelf staan op /profielen/<id>.json, het register op /profielen/register.json.
+{%- endcomment -%}
+{%- assign pj_std = site.data.profielregister.standaard -%}
+{
+  {%- assign pj_first = true -%}
+  {%- for r in site.data.profielregister.profielen -%}
+  {%- unless r.id == pj_std -%}
+  {%- include data/profiel.html id=r.id -%}
+  {%- unless pj_first %},{% endunless %}{%- assign pj_first = false %}
+  {{ r.id | jsonify }}: {
+    "naam": {{ rp.naam | jsonify }},
+    "url": "/?profiel={{ r.id }}",
+    "diensten": {
+      {%- for cat in rp_cats -%}
+      {%- assign pj_ids = rp_open | where: "categorie", cat | map: "id" %}
+      {{ cat | jsonify }}: {{ pj_ids | jsonify }}{% unless forloop.last %},{% endunless %}
+      {%- endfor %}
+    }
+  }
+  {%- endunless -%}
+  {%- endfor %}
+}

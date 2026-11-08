@@ -1,0 +1,6 @@
+---
+permalink: /software.json
+layout: null
+---
+{%- comment -%} De lijst uit _data/software.json, volgens _data/schemas/software.json. {%- endcomment -%}
+{{ site.data.software | jsonify }}

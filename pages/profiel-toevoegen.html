@@ -1,0 +1,194 @@
+---
+permalink: /profielen/toevoegen
+layout: default
+title: Profiel toevoegen
+description: Zo zet je het profiel van je organisatie op OpenDiensten, of publiceer je het zelf op je eigen domein. Met een volledig voorbeeld, alle velden en de ids van alle diensten.
+---
+{%- assign std = site.data.profielregister.standaard -%}
+{%- assign alle = site.data.profielen[std].diensten | where: "status", "live" -%}
+{%- assign cats = alle | map: "categorie" | uniq | sort -%}
+<div class="app-container">
+  {% include organisms/sidebar.html active="profielen" %}
+
+  <main class="content-area">
+    <article class="view page-content">
+      {% include atoms/kicker.html text="Profielen" hex=true %}
+      <h2>Profiel toevoegen</h2>
+      <p class="page-lead">Een profiel laat zien welke diensten jouw organisatie gebruikt, en hoeveel daarvan open diensten zijn. Hier lees je hoe je er een maakt, en hoe je het zelf bijhoudt op je eigen website.</p>
+
+      <nav class="toc" aria-label="Op deze pagina">
+        <ol>
+          <li><a href="#waarom">Waarom een profiel?</a></li>
+          <li><a href="#twee-manieren">Twee manieren</a></li>
+          <li><a href="#stappen">Zelf publiceren, stap voor stap</a></li>
+          <li><a href="#voorbeeld">Een volledig voorbeeld</a></li>
+          <li><a href="#velden">Alle velden</a></li>
+          <li><a href="#ids">De ids van alle diensten</a></li>
+          <li><a href="#let-op">Let op: geen geheime links</a></li>
+          <li><a href="#licentie">Open data: CC0</a></li>
+          <li><a href="#vragen">Vragen</a></li>
+        </ol>
+      </nav>
+
+      <h3 id="waarom">Waarom een profiel?</h3>
+      <ul class="hex-list">
+        <li>{% include atoms/hex.html %}<div><strong>Een wegwijzer voor je mensen</strong><p>Waarvoor moet ik waar zijn? Je stuurt je leden, medewerkers of vrijwilligers naar één link, bijvoorbeeld <code>opendiensten.nl/?profiel=codefornl</code>. Daar staat per onderwerp wat jullie gebruiken, en de knoppen <em>Start videogesprek</em> en <em>Start samen schrijven</em> kiezen uit jullie diensten.</p></div></li>
+        <li>{% include atoms/hex.html %}<div><strong>Je weg naar digitale autonomie</strong><p>Gebruik je iets wat (nog) geen open dienst is, zoals Slack of Google Docs, dan zet je dat er eerlijk bij. Het profiel laat zien hoeveel van je diensten al open zijn ({% include atoms/hex.html %} vol) en wat nog niet ({% include atoms/hex.html outline=true %} leeg), met waarom, en wat het open alternatief is.</p></div></li>
+        <li>{% include atoms/hex.html %}<div><strong>Inspiratie voor anderen</strong><p>Andere organisaties zien op <a href="/profielen/">Profielen</a> welke diensten een vergelijkbare organisatie kiest.</p></div></li>
+      </ul>
+
+      <h3 id="twee-manieren">Twee manieren</h3>
+      <div class="choice-grid">
+        <div class="choice">
+          <p class="kicker">Makkelijk</p>
+          <h4>Wij zetten het erop</h4>
+          <p>Mail naar <a href="mailto:{{ site.email }}?subject=Profiel%20toevoegen">{{ site.email }}</a> welke diensten je gebruikt, per onderwerp. Wij maken het profiel en zetten het op OpenDiensten. We zetten een profiel er alleen op als de organisatie daarom vraagt.</p>
+        </div>
+        <div class="choice">
+          <p class="kicker">Aanbevolen</p>
+          <h4>Je publiceert het zelf</h4>
+          <p>Je zet één JSON-bestand op je eigen website. Wij halen het elke nacht op. Je houdt het zelf bij, en omdat het van jouw domein komt, is het meteen bevestigd. Ook dat is een stukje digitale autonomie.</p>
+        </div>
+      </div>
+
+      <h3 id="stappen">Zelf publiceren, stap voor stap</h3>
+      <ol class="steps">
+        <li>
+          <strong>Kies je open diensten.</strong>
+          <p>Zoek op <a href="/">Diensten</a> wat je gebruikt, of wilt gaan gebruiken. Noteer de id van elke dienst; die staan <a href="#ids">hieronder</a>. Je hoeft de gegevens van een open dienst niet over te nemen: een verwijzing <code>{"ref": "jitsi-meet-pleio"}</code> is genoeg.</p>
+        </li>
+        <li>
+          <strong>Zet erbij wat (nog) geen open dienst is.</strong>
+          <p>Bekende diensten zoals Slack, WhatsApp, GitHub of LinkedIn staan al in Alle diensten, met de redenen waarom ze geen open dienst zijn. Verwijs ernaar, met de <code>url</code> waar jullie ze gebruiken: <code>{"ref": "linkedin", "url": "https://www.linkedin.com/company/jullie-naam/"}</code>. Dan gaat het kaartje in jullie profiel naar jullie pagina. Zo'n eigen <code>url</code> kan alleen bij een dienst die geen open dienst is: met een open dienst maak je steeds een nieuwe, unieke link.</p>
+          <p>Staat de dienst er niet in, neem hem dan volledig op, met <code>"open": false</code> en de <code>redenen</code>: <code>account</code> (je moet een account maken), <code>betaald</code>, <code>gesloten</code> (gesloten software) of <code>buiten-eu</code> (aanbieder buiten de EU). De software en de aanbieder zijn id's uit onze lijsten van <a href="/software.json">software</a> en <a href="/organisaties.json">organisaties</a>; staat de jouwe er niet in, vraag ons dan om hem toe te voegen.</p>
+        </li>
+        <li>
+          <strong>Maak het bestand.</strong>
+          <p>Neem het <a href="#voorbeeld">voorbeeld</a> als begin. Kies een korte <code>id</code> voor je organisatie: kleine letters, cijfers en streepjes, bijvoorbeeld <code>dorpshuis-zwammerdam</code>. Die komt in je link: <code>opendiensten.nl/?profiel=dorpshuis-zwammerdam</code>.</p>
+        </li>
+        <li>
+          <strong>Controleer het.</strong>
+          <p>Het bestand volgt het schema <a href="/schemas/profiel.schema.json"><code>profiel.schema.json</code></a>, met <a href="/schemas/dienst.schema.json"><code>dienst.schema.json</code></a> voor een volledige dienst. Zet de regel <code>"$schema"</code> bovenaan, dan helpt een editor als VS Code je met aanvullen en controleren. Een online JSON Schema-validator kan ook.</p>
+        </li>
+        <li>
+          <strong>Zet het op je website.</strong>
+          <p>Op deze vaste plek, zodat het altijd te vinden is:</p>
+          <pre><code>https://&lt;jouw-domein&gt;/.well-known/opendiensten.json</code></pre>
+          <p>Het moet openbaar te lezen zijn, over https, en kleiner dan 1 MB. Meer is niet nodig: wij halen het op met een server, dus je hoeft niets in te stellen voor andere websites (CORS).</p>
+        </li>
+        <li>
+          <strong>Meld het aan.</strong>
+          <p>Mail de link naar <a href="mailto:{{ site.email }}?subject=Profiel%20aanmelden">{{ site.email }}</a>. Wij zetten hem in het <a href="/profielen/register.json">register</a>. Daarna staat je profiel binnen een dag op <a href="/profielen/">Profielen</a>.</p>
+        </li>
+        <li>
+          <strong>Houd het bij.</strong>
+          <p>Pas het bestand op je website aan; binnen een dag staat de nieuwe versie hier. Klopt het bestand niet, dan laten we de vorige versie staan, en hoor je van ons wat er mis is.</p>
+        </li>
+      </ol>
+
+      <h3 id="voorbeeld">Een volledig voorbeeld</h3>
+      <p>Een dorpshuis dat twee videodiensten gebruikt (de eerste heeft de voorkeur), Etherpad om samen te schrijven, en voorlopig nog WhatsApp om te chatten en een pagina op LinkedIn:</p>
+<pre><code>{
+  "$schema": "https://opendiensten.nl/schemas/profiel.schema.json",
+  "versie": 1,
+  "id": "dorpshuis-zwammerdam",
+  "naam": "Dorpshuis Zwammerdam",
+  "beschrijving": "Het dorpshuis van Zwammerdam. Met deze diensten organiseren we activiteiten en vergaderingen.",
+  "website": "https://www.dorpshuis-zwammerdam.nl",
+  "logo": "https://www.dorpshuis-zwammerdam.nl/logo.png",
+  "diensten": [
+    { "ref": "jitsi-meet-pleio" },
+    { "ref": "jitsi-meet-bit" },
+    { "ref": "etherpad-disroot" },
+    { "ref": "whatsapp" },
+    { "ref": "linkedin", "url": "https://www.linkedin.com/company/dorpshuis-zwammerdam/" }
+  ]
+}</code></pre>
+      <p>Dit profiel krijgt {% include atoms/hex.html %}{% include atoms/hex.html %}{% include atoms/hex.html %}{% include atoms/hex.html outline=true %}{% include atoms/hex.html outline=true %}: 3 van 5 open. De kaarten van WhatsApp en LinkedIn wijzen naar open alternatieven, of vragen of iemand er een kent; die van LinkedIn gaat naar de pagina van het dorpshuis.</p>
+
+      <h3 id="velden">Alle velden</h3>
+      <h4>Het profiel</h4>
+      <table class="data-table">
+        <tr><th>veld</th><th></th><th>betekenis</th></tr>
+        <tr><td><code>$schema</code></td><td>aanbevolen</td><td><code>https://opendiensten.nl/schemas/profiel.schema.json</code></td></tr>
+        <tr><td><code>versie</code></td><td>verplicht</td><td>altijd <code>1</code></td></tr>
+        <tr><td><code>id</code></td><td>verplicht</td><td>korte naam voor de link; kleine letters, cijfers en streepjes</td></tr>
+        <tr><td><code>naam</code></td><td>verplicht</td><td>naam van je organisatie</td></tr>
+        <tr><td><code>beschrijving</code></td><td></td><td>wie je bent en waarvoor je deze diensten gebruikt, in een of twee zinnen</td></tr>
+        <tr><td><code>website</code></td><td></td><td>je website</td></tr>
+        <tr><td><code>logo</code></td><td></td><td>een vierkant logo, als https-link; zonder logo tonen we de eerste letter</td></tr>
+        <tr><td><code>diensten</code></td><td>verplicht</td><td>een lijst met verwijzingen en volledige diensten; per onderwerp in volgorde van voorkeur</td></tr>
+      </table>
+
+      <h4>Een verwijzing</h4>
+      <table class="data-table">
+        <tr><th>veld</th><th></th><th>betekenis</th></tr>
+        <tr><td><code>ref</code></td><td>verplicht</td><td>de id van een open dienst, zie <a href="#ids">hieronder</a></td></tr>
+        <tr><td><code>bron</code></td><td></td><td>link naar een ander profiel waar de dienst in staat; standaard Alle diensten</td></tr>
+        <tr><td><code>url</code></td><td></td><td>alleen bij een dienst die geen open dienst is: waar jullie hem gebruiken, bv. jullie pagina op LinkedIn</td></tr>
+      </table>
+
+      <h4>Een volledige dienst</h4>
+      <table class="data-table">
+        <tr><th>veld</th><th></th><th>betekenis</th></tr>
+        <tr><td><code>id</code></td><td>verplicht</td><td>uniek binnen je profiel</td></tr>
+        <tr><td><code>naam</code></td><td>verplicht</td><td>de dienst: de plek waar je hem gebruikt, bv. <code>social.codefor.nl</code>, of de eigen naam van de dienst; niet de naam van de software</td></tr>
+        <tr><td><code>categorie</code></td><td>verplicht</td><td>het onderwerp, bv. <code>chatten</code> of <code>videobellen</code>; zie de koppen <a href="#ids">hieronder</a></td></tr>
+        <tr><td><code>url</code></td><td>verplicht</td><td>waar je mensen naartoe gaan</td></tr>
+        <tr><td><code>beschrijving</code></td><td></td><td>één zin</td></tr>
+        <tr><td><code>software</code></td><td></td><td>de software waar de dienst op draait: een id uit <a href="/software.json">software</a>, bv. <code>mastodon</code></td></tr>
+        <tr><td><code>aanbieder</code></td><td></td><td>wie de dienst aanbiedt: een id uit <a href="/organisaties.json">organisaties</a>, bv. <code>framasoft</code></td></tr>
+        <tr><td><code>soort</code></td><td></td><td><code>infrastructuur</code> voor domeinnamen, nieuwsbrieven en dergelijke (standaard <code>dienst</code>)</td></tr>
+        <tr><td><code>beheer</code></td><td></td><td>wie de dienst als managed service beheert: een id uit <a href="/organisaties.json">organisaties</a>, bv. <code>procolix</code></td></tr>
+        <tr><td><code>eu_hosting</code></td><td></td><td><code>true</code> als de dienst in de EU wordt gehost, bij een Europese partij</td></tr>
+        <tr><td><code>open</code></td><td></td><td><code>false</code> als het geen open dienst is (standaard <code>true</code>)</td></tr>
+        <tr><td><code>redenen</code></td><td></td><td>bij <code>"open": false</code>: <code>account</code>, <code>betaald</code>, <code>gesloten</code>, <code>buiten-eu</code></td></tr>
+        <tr><td><code>favicon</code></td><td></td><td>icoon van de dienst, als https-link</td></tr>
+      </table>
+      <p>Alle velden, met uitleg, staan op de pagina <a href="/gegevensmodel">Gegevensmodel</a>, en in de schema's: <a href="/schemas/profiel.schema.json">profiel</a>, <a href="/schemas/dienst.schema.json">dienst</a>, <a href="/schemas/software.schema.json">software</a> en <a href="/schemas/organisaties.schema.json">organisaties</a>.</p>
+
+      <h3 id="ids">De ids van alle diensten</h3>
+      <p>Per onderwerp de diensten uit <a href="/profielen/open-diensten.json">Alle diensten</a>, met de id om naar te verwijzen. Ook bekende diensten die geen open dienst zijn, zoals Slack of LinkedIn, staan erin; verwijs daarnaar met je eigen <code>url</code>. De koppen zijn de waarden voor <code>categorie</code>.</p>
+      {%- for cat in cats %}
+      {%- assign in_cat = alle | where: "categorie", cat %}
+      <details class="id-list">
+        <summary><strong>{{ cat | replace: "-", " " | capitalize }}</strong> <code>{{ cat }}</code> <span class="filter-count">{{ in_cat.size }}</span></summary>
+        <table class="data-table">
+          <tr><th>dienst</th><th>software</th><th>aanbieder</th><th>id</th></tr>
+          {%- for d in in_cat %}
+          {%- include data/dienst.html dienst=d %}
+          <tr><td>{{ d.naam | escape }}{% if d.open == false %} <span class="closed-badge">geen open dienst</span>{% endif %}</td><td>{{ dn_sw.naam | escape }}</td><td>{{ dn_org.naam | escape }}</td><td><code>{{ d.id }}</code></td></tr>
+          {%- endfor %}
+        </table>
+      </details>
+      {%- endfor %}
+      <p>Staat een open dienst die je gebruikt er niet bij? Mail hem naar <a href="mailto:{{ site.email }}?subject=Open%20dienst%20toevoegen">{{ site.email }}</a>, dan nemen we hem op. Tot die tijd kun je hem volledig in je profiel zetten.</p>
+
+      <h3 id="let-op">Let op: geen geheime links</h3>
+      <p class="notice">Een profiel is openbaar. Zet er dus geen links in die toegang geven tot iets wat niet voor iedereen is: geen vaste vergaderkamer, geen gedeeld document, geen uitnodigingslink voor een besloten groep. Wie de link heeft, kan meedoen.</p>
+      <p>Verwijs liever naar de dienst zelf, of naar een openbare pagina die uitlegt hoe je erbij komt. Een eigen gesprek of document maak je met <em>Start videogesprek</em> en <em>Start samen schrijven</em>; die links blijven bij jou.</p>
+
+      <h3 id="licentie">Open data: CC0</h3>
+      <p class="notice">Met je profiel stel je de gegevens erin beschikbaar onder <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.nl">CC0</a>: iedereen mag ze vrij gebruiken, kopiëren en verwerken, ook zonder bronvermelding. Dat geldt voor een profiel dat je aan ons doorgeeft, en voor een profiel dat je zelf publiceert en in het register laat opnemen.</p>
+      <p>Alle gegevens op OpenDiensten zijn CC0. Ze kloppen misschien niet allemaal; we geven er geen garantie op.</p>
+
+      <h3 id="vragen">Vragen</h3>
+      <dl class="faq">
+        <dt>Kan ik meerdere diensten per onderwerp kiezen?</dt>
+        <dd>Ja. De volgorde in je lijst is de volgorde van voorkeur. <em>Start videogesprek</em> kiest daartussen op basis van beoordelingen.</dd>
+        <dt>Moet alles een open dienst zijn?</dt>
+        <dd>Nee. Juist het eerlijke overzicht helpt: je ziet wat er nog te doen is. Wat geen open dienst is, staat met een dikke zwarte rand na de open diensten, en <em>Start</em> kiest het nooit.</dd>
+        <dt>Waarom op <code>/.well-known/</code>?</dt>
+        <dd>Dat is de gewone plek voor dit soort bestanden, zoals <code>security.txt</code>. Omdat het op jouw domein staat, weet iedereen dat het profiel van jou komt.</dd>
+        <dt>Kan ik verwijzen naar diensten uit het profiel van een andere organisatie?</dt>
+        <dd>Ja, met <code>"bron"</code>: de link naar dat profiel, zoals die in het <a href="/profielen/register.json">register</a> staat.</dd>
+        <dt>Wat zien jullie van mijn mensen?</dt>
+        <dd>Niets. OpenDiensten heeft geen accounts en geen trackers, en wat iemand start of beoordeelt, blijft in de browser van die persoon. Zie <a href="/over#privacy">Wat we bewaren</a>.</dd>
+      </dl>
+
+      <p class="view-status profile-own"><a href="/profielen/">← Terug naar Profielen</a></p>
+    </article>
+
+    {% include organisms/site-footer.html %}
+  </main>
+</div>

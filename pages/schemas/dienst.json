@@ -1,0 +1,6 @@
+---
+permalink: /schemas/dienst.schema.json
+layout: null
+---
+{%- comment -%} Het JSON Schema uit _data/schemas/dienst.json. Zie ook /gegevensmodel. {%- endcomment -%}
+{{ site.data.schemas.dienst | jsonify }}

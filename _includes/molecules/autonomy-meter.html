@@ -1,0 +1,16 @@
+{%- comment -%}
+  Digitale autonomie van een profiel: één zeshoek per dienst die de organisatie gebruikt.
+  Een volle cel is een open dienst, een lege cel (nog) niet. Zo lees je de roadmap in één oogopslag.
+  Parameters: profiel (id uit _data/profielregister.json)
+{%- endcomment -%}
+{%- include data/profiel.html id=include.profiel -%}
+{%- assign am_open = rp_open.size -%}
+{%- assign am_closed = rp_closed.size -%}
+{%- assign am_total = am_open | plus: am_closed -%}
+<div class="autonomy-meter" role="img" aria-label="{{ am_open }} van {{ am_total }} diensten zijn open diensten">
+    <span class="autonomy-cells" aria-hidden="true">
+        {%- if am_open > 0 %}{% for i in (1..am_open) %}<span class="hex"></span>{% endfor %}{% endif -%}
+        {%- if am_closed > 0 %}{% for i in (1..am_closed) %}<span class="hex hex-outline"></span>{% endfor %}{% endif -%}
+    </span>
+    <span class="autonomy-text"><strong>{{ am_open }} van {{ am_total }}</strong> open{% if am_closed > 0 %} · {{ am_closed }} nog niet{% endif %}</span>
+</div>

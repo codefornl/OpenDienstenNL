@@ -1,0 +1,18 @@
+{%- comment -%}
+  Zijbalk: de vaste plek voor waar je bent en wat je kunt doen.
+  Merk, in twee zinnen waar het om gaat, de schakelaar Geschiedenis bijhouden, de startknoppen,
+  de hoofdnavigatie (met de categorieën onder Diensten) en de partners.
+  Parameters: active (diensten | geschiedenis | profielen | software | aanbieders | over)
+{%- endcomment -%}
+<aside class="sidebar">
+    {% include molecules/brand.html %}
+    <p class="sidebar-intro"><strong>Samen aan de slag, weg van big tech.</strong> Open en gratis online diensten, zonder account, bij aanbieders die je kunt vertrouwen.</p>
+    {% include molecules/history-toggle.html %}
+    {% include organisms/quick-actions.html %}
+    {% include organisms/main-nav.html active=include.active %}
+    <div class="sidebar-footer">
+        {% include molecules/partners.html %}
+        {% include atoms/github-link.html %}
+    </div>
+</aside>
+<script type="module" src="/js/nav.js"></script>

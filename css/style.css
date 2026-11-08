@@ -1,0 +1,2066 @@
+/*
+ * OpenDiensten · stijl volgens het design system, zie /design-system/.
+ * Tokens en basis komen uit de Apitecture-familie (apitecture.nl/design-system):
+ * dezelfde namen, ruimteschaal en regels. Daarbovenop staan de componenten
+ * van OpenDiensten, elk met een include in _includes/.
+ * Componenten gebruiken alleen tokens, nooit losse waarden.
+ */
+
+/* Lettertype, lokaal meegeleverd (geen verzoeken naar externe servers). SIL Open Font License. */
+@font-face {
+    font-family: 'Atkinson Hyperlegible Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../assets/fonts/atkinson-hyperlegible-mono-400-latin.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Atkinson Hyperlegible Mono';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../assets/fonts/atkinson-hyperlegible-mono-600-latin.woff2') format('woff2');
+}
+
+/* ===== Tokens ===== */
+:root {
+    /* Merk (Apitecture) */
+    --night: #141416;
+    --accent: #ff5900;
+    /* Oranje voor tekst en links: #ff5900 haalt op wit geen 4.5:1, dit wel (5.6:1) */
+    --accent-text: #b83f00;
+    --accent-strong: #e04e00;
+    --accent-subtle: color-mix(in srgb, var(--accent) 7%, var(--card));
+
+    /* Kern: ondergrond, kaarten, tekst */
+    --paper: #f7f6f3;
+    --paper-deep: #eceae4;
+    --card: #ffffff;
+    --ink: var(--night);
+    --text: #2e2e33;
+    --muted: #5f5f66;
+    --line: rgba(20, 20, 22, 0.12);
+    --line-strong: rgba(20, 20, 22, 0.24);
+
+    /* Betekenis (OpenDiensten): alleen voor status, nooit decoratief */
+    --danger: #b42318;
+    --danger-subtle: color-mix(in srgb, var(--danger) 8%, var(--card));
+    --success: #1a7f37;
+    --success-subtle: color-mix(in srgb, var(--success) 10%, var(--card));
+    --overlay: rgba(20, 20, 22, 0.5);
+
+    --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'Atkinson Hyperlegible Mono', ui-monospace, Menlo, monospace;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+
+    /* Kleine afrondingen, zoals een schema */
+    --radius-xs: 2px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+
+    --shadow-ring: 0 0 0 1px var(--line);
+    --card-shadow: 0 0 0 1px var(--line), 0 4px 14px rgba(20, 20, 22, 0.05);
+    --dialog-shadow: 0 0 0 1px var(--line), 0 16px 48px rgba(20, 20, 22, 0.18);
+
+    --duration-fast: 0.2s;
+    --duration: 0.3s;
+
+    --measure: 42rem;
+    --page: 1100px;
+    --sidebar: 300px;
+}
+
+/* ===== Basis ===== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--paper);
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin: 0 0 var(--space-4);
+}
+
+h1 { font-size: 48px; }
+h2 { font-size: 30px; }
+h3 { font-size: 21px; }
+h4 { font-size: 18px; }
+
+p {
+    margin: 0 0 var(--space-4);
+}
+
+a {
+    color: var(--accent-text);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent-text) 35%, transparent);
+    text-underline-offset: 0.2em;
+    transition: text-decoration-color var(--duration-fast);
+}
+
+a:hover {
+    text-decoration-color: currentColor;
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+}
+
+code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    padding: 1px 5px;
+    border-radius: var(--radius-xs);
+    background: var(--paper-deep);
+    color: var(--ink);
+}
+
+pre {
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    overflow-x: auto;
+    background: var(--night);
+    color: var(--paper);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+pre code {
+    padding: 0;
+    background: none;
+    color: inherit;
+    font-size: inherit;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* ===== Hulpklassen ===== */
+.m-0 { margin: 0; }
+
+/* Verborgen is verborgen, ook als een component zelf een display heeft */
+[hidden] {
+    display: none !important;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* ===== Atomen ===== */
+
+/* Zeshoek: de markering uit het Apitecture-logo */
+.hex {
+    display: inline-block;
+    flex: none;
+    width: 0.8em;
+    height: 0.92em;
+    background: var(--accent);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    vertical-align: -0.08em;
+}
+
+/* Lege cel: nog niets */
+.hex-outline {
+    background: var(--line-strong);
+    position: relative;
+}
+
+.hex-outline::after {
+    content: '';
+    position: absolute;
+    inset: 1.5px;
+    background: var(--paper);
+    clip-path: inherit;
+}
+
+.kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin: 0 0 var(--space-2);
+}
+
+.text-beep {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    margin: var(--space-3) 0 0;
+}
+
+.link-more {
+    font-weight: 700;
+}
+
+/* Knop: primair (oranje), secundair (rand) en gevaar (wissen) */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: var(--night);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--duration-fast), border-color var(--duration-fast);
+}
+
+.button:hover {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    color: var(--night);
+}
+
+.button-secondary {
+    background: var(--card);
+    border-color: var(--line-strong);
+    color: var(--ink);
+}
+
+.button-secondary:hover {
+    background: var(--card);
+    border-color: var(--accent);
+    color: var(--ink);
+}
+
+.button-danger {
+    background: var(--card);
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.button-danger:hover {
+    background: var(--danger-subtle);
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.button-small {
+    padding: var(--space-2) var(--space-4);
+    font-size: 14px;
+}
+
+/* Categorielabel */
+.category-badge {
+    display: inline-block;
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-xs);
+    background: var(--paper-deep);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+/* Labels op een dienstkaart: categorie, en 'eigen link' als de dienst een eigen ruimte kan maken */
+.service-badges {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+}
+
+/* Categorie op een dienstkaart: rechtsboven, tegen de rand, oranje */
+.service-card .category-badge {
+    position: absolute;
+    top: var(--space-1);
+    right: -1px;
+    border-radius: var(--radius-xs) 0 0 var(--radius-xs);
+    background: var(--accent);
+    color: var(--night);
+}
+
+/* Op een historiekaart staan de acties rechtsboven: daar blijft de categorie in de rij met labels */
+.service-card.history-variant .category-badge {
+    position: static;
+    border-radius: var(--radius-xs);
+    background: var(--paper-deep);
+    color: var(--muted);
+}
+
+.service-card.is-closed .category-badge {
+    top: 0;
+    right: -4px;
+}
+
+/* Labels van een dienst: goed (groen, met een vinkje) of niet (grijze rand) */
+.tag {
+    display: inline-block;
+    padding: 1px var(--space-2);
+    border: 1px solid transparent;
+    border-radius: var(--radius-xs);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+.tag:not(.tag-goed):not(.tag-niet) {
+    background: var(--paper-deep);
+    color: var(--muted);
+}
+
+.tag-goed {
+    background: var(--success-subtle);
+    color: var(--success);
+}
+
+.tag-goed::before {
+    content: "✓ ";
+    font-weight: 700;
+}
+
+.tag-niet {
+    border-color: var(--line-strong);
+    color: var(--muted);
+}
+
+.unique-badge {
+    display: inline-block;
+    padding: 1px var(--space-2);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-xs);
+    color: var(--accent-text);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+/* Favicon van de dienst, met het kleine favicon van de aanbieder erop */
+.favicon-container {
+    position: relative;
+    flex: none;
+    width: 48px;
+    height: 48px;
+}
+
+.service-favicon {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-md);
+    object-fit: contain;
+}
+
+.provider-favicon {
+    position: absolute;
+    right: -6px;
+    bottom: -6px;
+    width: 22px;
+    height: 22px;
+    padding: 2px;
+    border-radius: 50%;
+    background: var(--card);
+    box-shadow: var(--shadow-ring);
+    object-fit: contain;
+}
+
+/* Sterren: weergave van een gemiddelde */
+.rating-stars {
+    color: var(--accent);
+    letter-spacing: 0.05em;
+}
+
+/* Submenulink: standaard een chip (zo ook op mobiel) */
+.sub-link {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: border-color var(--duration-fast);
+}
+
+.sub-link:hover {
+    border-color: var(--accent);
+}
+
+.sub-link.active {
+    background: var(--accent-subtle);
+    border-color: var(--accent);
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.sub-link.active::before {
+    content: '';
+    width: 0.7em;
+    height: 0.8em;
+    background: var(--accent);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+
+.filter-count {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* GitHub-link */
+.github-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--muted);
+    transition: color var(--duration-fast);
+}
+
+.github-link:hover {
+    color: var(--ink);
+}
+
+.github-logo {
+    width: 24px;
+    height: 24px;
+}
+
+/* ===== Moleculen ===== */
+
+/* Aanbieder met EU-status */
+.provider-info {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 14px;
+    color: var(--muted);
+}
+
+/* Gemiddelde waardering */
+.service-rating {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-xs);
+    background: var(--accent-subtle);
+    font-size: 14px;
+}
+
+.rating-text {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent-text);
+}
+
+/* Sterren kiezen (invoer) */
+.star-rating {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+}
+
+.star {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--line-strong);
+    font-size: 40px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color var(--duration-fast);
+}
+
+.star:hover,
+.star.hover,
+.star.filled {
+    color: var(--accent);
+}
+
+/* Hoofdnavigatie: Overzicht, Geschiedenis, Wat is een open dienst? */
+.main-nav ul {
+    display: grid;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Een nieuwe groep in het menu: wat ruimte erboven */
+.main-nav .nav-group {
+    margin-top: var(--space-4);
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-size: 16px;
+    /* Een dun oranje streepje: het zijn links */
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: background-color var(--duration-fast);
+}
+
+.nav-link:hover {
+    background: var(--paper);
+    color: var(--ink);
+}
+
+.nav-link.active {
+    background: var(--accent-subtle);
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.nav-link.active::before {
+    content: '';
+    flex: none;
+    width: 0.7em;
+    height: 0.8em;
+    background: var(--accent);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+
+/* Aantal sessies dat nog beoordeeld moet worden */
+.nav-badge {
+    margin-left: auto;
+    min-width: 22px;
+    padding: 0 var(--space-1);
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: var(--night);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: center;
+}
+
+/* Merkkop: OpenDiensten, met 'een dienst van Apitecture' */
+.brand {
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.brand-name {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+}
+
+.brand-name .hex {
+    font-size: 0.9em;
+}
+
+.brand .text-beep {
+    margin-top: var(--space-1);
+    font-size: 13px;
+}
+
+/* Prototype: smalle balk bovenaan */
+.prototype-banner {
+    padding: var(--space-2) var(--space-4);
+    background: var(--accent-subtle);
+    border-bottom: 1px solid var(--line);
+    color: var(--text);
+    font-size: 14px;
+    text-align: center;
+}
+
+.prototype-banner a {
+    color: var(--accent-text);
+}
+
+/* Afzender: Apitecture */
+.partners {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.partners-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+}
+
+.partners-logos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.partners-logos a {
+    display: inline-flex;
+    line-height: 0;
+}
+
+.partners-logos img {
+    width: auto;
+    height: 18px;
+}
+
+/* Lege staat */
+.empty-state {
+    padding: var(--space-6) var(--space-5);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-md);
+    color: var(--muted);
+    text-align: center;
+}
+
+.empty-state .hex {
+    display: block;
+    margin: 0 auto var(--space-3);
+    font-size: 28px;
+}
+
+.empty-state p {
+    margin: 0;
+}
+
+/* ===== Organismen ===== */
+
+/* Dienstkaart */
+.service-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color var(--duration-fast);
+}
+
+a.service-card:hover,
+.service-card:has(.card-link:hover) {
+    border-color: var(--accent);
+    color: inherit;
+}
+
+/* De titel is de link naar de dienst en ligt over de hele kaart; software en aanbieder liggen erbovenop */
+.service-card {
+    position: relative;
+}
+
+.card-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+}
+
+.card-link:focus-visible {
+    outline: none;
+}
+
+.service-card:has(.card-link:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.card-sublink {
+    position: relative;
+    z-index: 1;
+    color: inherit;
+    text-decoration: none;
+}
+
+.card-sublink:hover,
+.card-sublink:focus-visible {
+    color: var(--accent-text);
+    text-decoration: underline;
+}
+
+.service-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.service-info h4 {
+    margin: 0 0 var(--space-1);
+    font-size: 18px;
+}
+
+/* De software waar de dienst op draait, onder de naam van de dienst */
+.service-software {
+    margin: calc(-1 * var(--space-1)) 0 var(--space-1);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.service-description {
+    margin: 0 0 var(--space-3);
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--muted);
+}
+
+.service-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.service-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-3);
+}
+
+/* Raster van dienstkaarten */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+    gap: var(--space-4);
+}
+
+/* Snelle acties */
+.quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+}
+
+/* Submenu: standaard een rij chips (zo ook op mobiel) */
+.sub-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+/* Op een groot scherm: een lijst onder Diensten in de zijbalk.
+   Geen tweede zeshoek: het actieve item krijgt een oranje streep op de lijn. */
+@media (min-width: 769px) {
+    .main-nav .sub-menu {
+        margin: var(--space-1) 0 var(--space-2) var(--space-4);
+    }
+
+    .main-nav .sub-links {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 0;
+        border-left: 1px solid var(--line);
+    }
+
+    .main-nav .sub-link {
+        width: 100%;
+        padding: var(--space-1) var(--space-3);
+        border: 0;
+        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        background: none;
+        transition: background-color var(--duration-fast);
+    }
+
+    .main-nav .sub-link:hover {
+        background: var(--paper);
+    }
+
+    .main-nav .sub-link.active {
+        background: none;
+        box-shadow: inset 2px 0 0 var(--accent);
+        margin-left: -1px;
+    }
+
+    .main-nav .sub-link.active::before {
+        display: none;
+    }
+
+    .main-nav .filter-count {
+        margin-left: auto;
+    }
+}
+
+/* Zijbalk */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    width: var(--sidebar);
+    padding: var(--space-5);
+    background: var(--card);
+    border-right: 1px solid var(--line);
+}
+
+.sidebar p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--muted);
+}
+
+/* Twee zinnen waar het om gaat, tussen merk en startknoppen */
+.sidebar .sidebar-intro {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text);
+}
+
+.sidebar-intro strong {
+    color: var(--ink);
+}
+
+/* De startknoppen in de zijbalk: onder elkaar, over de volle breedte */
+.sidebar .quick-actions {
+    flex-direction: column;
+    margin: 0;
+}
+
+.sidebar .quick-actions .button {
+    width: 100%;
+}
+
+.sidebar-footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: auto;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+}
+
+
+/* Startsessie: een open dienst kiezen, openen en beoordelen */
+.start-session {
+    max-width: var(--measure);
+}
+
+.start-session h2 {
+    font-size: 36px;
+    letter-spacing: -0.02em;
+}
+
+.start-lead {
+    font-size: 18px;
+}
+
+.start-dienst {
+    margin: var(--space-5) 0;
+}
+
+.start-reason {
+    margin: var(--space-3) 0 0;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.start-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: var(--space-5) 0;
+}
+
+.start-share {
+    margin: var(--space-6) 0;
+}
+
+/* Link om te delen, met een kopieerknop */
+.share-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius-sm);
+}
+
+.share-link code {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    overflow-wrap: anywhere;
+    background: none;
+    font-size: 14px;
+}
+
+.start-rating {
+    margin: var(--space-7) 0 var(--space-5);
+    padding: var(--space-5);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--accent);
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+.start-rating h3 {
+    margin-bottom: var(--space-3);
+}
+
+/* Template: startpagina */
+.start-page {
+    max-width: var(--page);
+    min-height: calc(100vh - 80px);
+    margin: 0 auto;
+    padding: var(--space-6) var(--space-4) var(--space-8);
+}
+
+.start-header {
+    margin-bottom: var(--space-8);
+}
+
+/* Kop boven het raster of de geschiedenis: titel links, status of knoppen rechts */
+.view-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--line);
+}
+
+.view-header h2 {
+    margin: 0;
+    font-size: 21px;
+}
+
+.view-status {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.view-header + .view-status {
+    margin: calc(-1 * var(--space-2)) 0 var(--space-5);
+}
+
+.view-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+/* Geschiedenis: kaarten per dag, met hernoemen en verwijderen */
+.date-header {
+    margin: var(--space-6) 0 var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+}
+
+.date-header:first-child {
+    margin-top: 0;
+}
+
+.date-group {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.history-card-wrapper {
+    position: relative;
+}
+
+.history-title-container {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    padding-right: var(--space-6);
+}
+
+.history-title {
+    margin: 0;
+    cursor: pointer;
+}
+
+.rename-btn,
+.delete-history-item {
+    padding: 0 var(--space-1);
+    border: 0;
+    background: none;
+    color: var(--muted);
+    line-height: 1;
+    cursor: pointer;
+    transition: color var(--duration-fast);
+}
+
+.rename-btn {
+    font-size: 15px;
+}
+
+.rename-btn:hover,
+.delete-history-item:hover {
+    color: var(--accent-text);
+}
+
+.history-card-actions {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: 14px;
+}
+
+.delete-history-item {
+    font-size: 24px;
+}
+
+.is-unrated .history-title-container {
+    padding-right: 120px;
+}
+
+.history-timestamp {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.history-url {
+    margin: var(--space-2) 0 var(--space-3);
+    padding: var(--space-1) var(--space-2);
+    overflow-wrap: anywhere;
+    border-left: 2px solid var(--accent);
+    background: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink);
+}
+
+/* Waardering in de geschiedenis: dezelfde vorm als het gemiddelde */
+.service-rating-history {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-xs);
+    background: var(--accent-subtle);
+    font-size: 14px;
+}
+
+/* Lopende tekst op een gewone pagina, zoals Wat is een open dienst? */
+.page-content {
+    max-width: var(--measure);
+}
+
+.page-content h2 {
+    font-size: 36px;
+    letter-spacing: -0.02em;
+}
+
+.page-content h3 {
+    margin-top: var(--space-7);
+}
+
+.page-lead {
+    font-size: 19px;
+}
+
+/* Opsomming met de zeshoek als markering */
+.hex-list {
+    display: grid;
+    gap: var(--space-4);
+    margin: var(--space-6) 0;
+    padding: 0;
+    list-style: none;
+}
+
+.hex-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+}
+
+.hex-list .hex {
+    margin-top: 0.3em;
+}
+
+.hex-list strong {
+    color: var(--ink);
+}
+
+.hex-list p {
+    margin: 0;
+}
+
+.credits {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: var(--space-2) var(--space-5);
+    margin: 0;
+}
+
+.credits dt {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+    padding-top: 0.2em;
+}
+
+.credits dd {
+    margin: 0;
+}
+
+/* Onder een lijst: wat je er verder mee kunt */
+/* Geschiedenis: exporteren, importeren en wissen bovenaan */
+.view-footer.history-actions {
+    margin: var(--space-4) 0 var(--space-6);
+    padding: 0 0 var(--space-4);
+    border-top: 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.view-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: var(--space-7);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+}
+
+.view-footer .view-status {
+    margin: 0;
+}
+
+/* Logo van een organisatie; zonder logo de eerste letter */
+.org-logo {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--card);
+    box-shadow: var(--shadow-ring);
+    color: var(--ink);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.org-logo img {
+    width: 100%;
+    height: 100%;
+    padding: 4px;
+    object-fit: contain;
+}
+
+.org-logo-large {
+    width: 72px;
+    height: 72px;
+    font-size: 30px;
+}
+
+/* Melding, bijv. dat een profiel nog een concept is */
+.notice {
+    padding: var(--space-2) var(--space-3);
+    border-left: 2px solid var(--accent);
+    background: var(--accent-subtle);
+    font-size: 15px;
+    color: var(--ink);
+}
+
+/* Profielpagina */
+.profile-page {
+    max-width: calc(var(--page) - var(--sidebar));
+}
+
+.profile-header {
+    max-width: var(--measure);
+    margin-bottom: var(--space-7);
+}
+
+.profile-identity {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.profile-identity h2 {
+    margin: 0;
+    font-size: 36px;
+    letter-spacing: -0.02em;
+}
+
+.profile-category {
+    margin-bottom: var(--space-7);
+}
+
+.profile-own {
+    margin-top: var(--space-6);
+}
+
+/* Profielen: kaarten per organisatie */
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+}
+
+.profile-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color var(--duration-fast);
+}
+
+.profile-card:hover {
+    border-color: var(--accent);
+    color: inherit;
+}
+
+.profile-card h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-1);
+    font-size: 18px;
+}
+
+.profile-card p {
+    margin: 0 0 var(--space-3);
+    font-size: 15px;
+    color: var(--muted);
+}
+
+.profile-card-cats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+}
+
+/* Profielkop boven Diensten, als het profielfilter actief is */
+.profile-filter-header {
+    margin-bottom: var(--space-7);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--line);
+}
+
+.profile-website {
+    margin: var(--space-1) 0 0;
+    font-family: var(--font-mono);
+    font-size: 14px;
+}
+
+.profile-filter-header .profile-header {
+    margin-bottom: 0;
+}
+
+/* Diensten per categorie: kop met anker, daaronder de kaarten */
+.service-category {
+    margin-bottom: var(--space-7);
+    scroll-margin-top: var(--space-5);
+}
+
+/* Geen open dienst: dezelfde kaart, met een zwarte rand */
+.service-card.is-closed {
+    border: 4px solid var(--ink);
+    padding: calc(var(--space-5) - 3px);
+}
+
+a.service-card.is-closed:hover,
+.service-card.is-closed:has(.card-link:hover) {
+    border-color: var(--accent);
+}
+
+.closed-badge {
+    padding: 0 var(--space-2);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-xs);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+}
+
+/* Digitale autonomie: een volle cel per open dienst, een lege cel per dienst die het nog niet is */
+.autonomy-meter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+}
+
+.autonomy-cells {
+    display: inline-flex;
+    gap: 3px;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.autonomy-cells .hex-outline::after {
+    background: var(--paper);
+}
+
+.profile-card .autonomy-cells .hex-outline::after {
+    background: var(--card);
+}
+
+.autonomy-text {
+    font-size: 15px;
+    color: var(--muted);
+}
+
+.autonomy-text strong {
+    color: var(--ink);
+}
+
+.profile-autonomy {
+    margin: var(--space-5) 0;
+}
+
+/* Schakelaar: geschiedenis bijhouden (standaard uit) */
+.history-toggle {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: 15px;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.history-toggle input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+.history-toggle-track {
+    position: relative;
+    flex: none;
+    width: 36px;
+    height: 20px;
+    margin-top: 2px;
+    border-radius: 10px;
+    background: var(--line-strong);
+    transition: background-color var(--duration-fast);
+}
+
+.history-toggle-track::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--card);
+    box-shadow: var(--shadow-ring);
+    transition: transform var(--duration-fast);
+}
+
+.history-toggle input:checked + .history-toggle-track {
+    background: var(--accent);
+}
+
+.history-toggle input:checked + .history-toggle-track::after {
+    transform: translateX(16px);
+}
+
+.history-toggle input:focus-visible + .history-toggle-track {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Geen animatie bij het laden van de pagina, alleen als je zelf schakelt */
+.history-toggle.is-initializing .history-toggle-track,
+.history-toggle.is-initializing .history-toggle-track::after {
+    transition: none;
+}
+
+.history-toggle-text small {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* Geschiedenis staat uit */
+.history-off {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    max-width: var(--measure);
+    padding: var(--space-5);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-md);
+}
+
+.history-off > .hex {
+    font-size: 28px;
+    margin-top: 2px;
+}
+
+.history-off p {
+    margin: 0 0 var(--space-3);
+}
+
+/* Inhoudsopgave op een lange pagina */
+.toc {
+    margin: var(--space-5) 0 var(--space-6);
+    padding: var(--space-4) var(--space-5);
+    border-left: 2px solid var(--accent);
+    background: var(--card);
+}
+
+.toc ol {
+    margin: 0;
+    padding-left: var(--space-5);
+    columns: 2;
+    column-gap: var(--space-6);
+    font-size: 15px;
+}
+
+/* Twee keuzes naast elkaar */
+.choice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-4);
+}
+
+.choice {
+    padding: var(--space-5);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+}
+
+.choice h4 {
+    margin-bottom: var(--space-2);
+}
+
+.choice p:last-child {
+    margin: 0;
+    font-size: 15px;
+}
+
+/* Genummerde stappen, met het nummer in een zeshoek */
+.steps {
+    counter-reset: stap;
+    margin: var(--space-5) 0;
+    padding: 0;
+    list-style: none;
+}
+
+.steps > li {
+    position: relative;
+    counter-increment: stap;
+    padding: 0 0 var(--space-4) 52px;
+}
+
+.steps > li::before {
+    content: counter(stap);
+    position: absolute;
+    top: -2px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 36px;
+    background: var(--accent);
+    color: var(--night);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    font-family: var(--font-mono);
+    font-weight: 600;
+}
+
+.steps p {
+    margin: var(--space-1) 0 var(--space-2);
+}
+
+.steps pre,
+.page-content > pre {
+    margin: var(--space-2) 0 var(--space-4);
+}
+
+/* Tabel met velden of gegevens */
+.data-table {
+    width: 100%;
+    margin: var(--space-2) 0 var(--space-5);
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.data-table th,
+.data-table td {
+    padding: var(--space-2) var(--space-3) var(--space-2) 0;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+}
+
+.data-table th {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+}
+
+.data-table td:nth-child(2) {
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+/* Uitklapbare lijst met ids per categorie */
+.id-list {
+    border-bottom: 1px solid var(--line);
+}
+
+.id-list summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) 0;
+    cursor: pointer;
+}
+
+.id-list summary .filter-count {
+    margin-left: auto;
+}
+
+.id-list .data-table {
+    margin-top: 0;
+}
+
+/* Vragen en antwoorden */
+.faq dt {
+    margin-top: var(--space-4);
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.faq dd {
+    margin: var(--space-1) 0 0;
+}
+
+/* Profielen: oproep om er zelf een te maken */
+.profile-add {
+    max-width: var(--measure);
+    margin-top: var(--space-7);
+    padding: var(--space-5);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-md);
+}
+
+.profile-add h3 {
+    margin-bottom: var(--space-2);
+}
+
+/* Footer */
+.site-footer {
+    padding: var(--space-5) var(--space-4);
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 14px;
+    text-align: center;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+/* ===== Template: app (zijbalk + inhoud) ===== */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.app-container > .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    flex: none;
+}
+
+.content-area {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    padding: var(--space-5) var(--space-6) 0;
+}
+
+/* Footer onderaan, ook als er weinig diensten zijn */
+.content-area > .site-footer {
+    margin: auto calc(-1 * var(--space-6)) 0;
+}
+
+.content-area > .view {
+    padding-bottom: var(--space-8);
+}
+
+/* Lege cel in een raster: nog geen open dienst in deze categorie */
+.grid-empty {
+    align-self: start;
+    margin: 0;
+    padding: var(--space-5);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    color: var(--muted);
+}
+
+/* Dienst met de organisaties die hem gebruiken: een strook onder de kaart, vast eraan.
+   Hij staat naast de kaart in de markup, want een link mag niet in de link van de kaart. */
+.service-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.service-item > .service-card {
+    flex: 1;
+}
+
+.service-item > :not(:last-child) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* Strook onder een kaart: wie hem gebruikt, of de weg naar een open alternatief */
+.card-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    padding: var(--space-2) var(--space-5);
+    border: 1px solid var(--line);
+    border-top: 0;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    background: var(--paper-deep);
+    font-size: 14px;
+}
+
+.card-strip:not(:last-child) {
+    border-radius: 0;
+}
+
+.closed-alternatives span {
+    color: var(--muted);
+}
+
+.service-strip {
+    justify-content: space-between;
+}
+
+.used-by {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+}
+
+.used-by-geen {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* Datamodel: hoe het samenhangt, en tabellen uit de schema's */
+.datamodel-map {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-1);
+    max-width: 560px;
+    margin: var(--space-4) 0;
+}
+
+.dm-box {
+    display: grid;
+    gap: 2px;
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    text-align: center;
+}
+
+.dm-box span {
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.dm-kern {
+    border: 2px solid var(--accent);
+}
+
+.dm-pijl {
+    color: var(--accent);
+    text-align: center;
+}
+
+.dm-twee {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+    width: 100%;
+}
+
+.datamodel-links {
+    font-size: 15px;
+}
+
+.schema-table td:nth-child(2) {
+    white-space: normal;
+    font-size: 14px;
+}
+
+.used-by-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.used-by-org {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.used-by-org {
+    border-radius: var(--radius-xs);
+    transition: transform var(--duration-fast);
+}
+
+.used-by-org:hover,
+.used-by-org:focus-visible {
+    transform: translateY(-2px);
+}
+
+.used-by .org-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-xs);
+    font-size: 11px;
+}
+
+.used-by .org-logo img {
+    padding: 1px;
+}
+
+/* Software: overzicht en een pagina per software */
+.software-group {
+    margin: var(--space-6) 0 var(--space-3);
+}
+
+.software-card.is-closed {
+    border: 4px solid var(--ink);
+}
+
+.software-card .tag,
+.software-meta .tag {
+    margin-right: var(--space-2);
+}
+
+.software-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-4);
+}
+
+.aanbieder-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-3);
+}
+
+.aanbieder-head h2 {
+    margin: 0;
+}
+
+.land {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.broncode {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 14px;
+}
+
+.broncode img {
+    flex: none;
+}
+
+.broncode-teken {
+    font-weight: 700;
+    color: var(--muted);
+}
+
+.managed {
+    margin: 0 0 var(--space-6);
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--card);
+}
+
+.managed h3 {
+    margin-top: 0;
+}
+
+.managed-list {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.managed-list li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.managed-list .org-logo {
+    width: 32px;
+    height: 32px;
+}
+
+.entity-meta {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.entity-meta .software-meta {
+    margin: 0;
+}
+
+.entity-toelichting {
+    margin: calc(-1 * var(--space-2)) 0 var(--space-4);
+    color: var(--muted);
+}
+
+.entity-toelichting:empty {
+    display: none;
+}
+
+.entity-extra {
+    margin-top: var(--space-7);
+}
+
+.software-alternatives {
+    margin-top: var(--space-7);
+}
+
+.software-alt {
+    margin: 0 0 var(--space-2);
+}
+
+.software-back {
+    margin-top: var(--space-6);
+}
+
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    .app-container > .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .app-container > .sidebar {
+        gap: var(--space-4);
+    }
+
+    /* Navigatie als rij links; de filters van Diensten als laatste, over de volle breedte */
+    .main-nav .nav-group {
+        margin-top: 0;
+    }
+
+    .main-nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-1);
+    }
+
+    .main-nav li.has-submenu {
+        display: contents;
+    }
+
+    .main-nav .sub-menu {
+        order: 1;
+        flex-basis: 100%;
+        min-width: 0; /* anders wordt hij zo breed als alle chips samen en valt er niets te scrollen */
+        margin-top: var(--space-2);
+    }
+
+    /* Submenu als één rij die je opzij veegt, zodat de inhoud snel in beeld komt */
+    .sub-links {
+        flex-wrap: nowrap;
+        margin: 0 calc(-1 * var(--space-5));
+        padding: 0 var(--space-5) var(--space-1);
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .nav-link {
+        white-space: nowrap;
+    }
+
+    .page-content h2,
+    .profile-identity h2 {
+        font-size: 28px;
+    }
+
+    .credits {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+    }
+
+    .toc ol {
+        columns: 1;
+    }
+
+    .data-table td:nth-child(2) {
+        white-space: normal;
+    }
+
+    .credits dd {
+        margin-bottom: var(--space-3);
+    }
+
+    .sidebar-footer {
+        display: none;
+    }
+
+    .start-session h2 {
+        font-size: 28px;
+    }
+
+    .start-header {
+        margin-bottom: var(--space-6);
+    }
+
+    .content-area {
+        padding: var(--space-5) var(--space-4) 0;
+    }
+
+    .content-area > .site-footer {
+        margin-left: calc(-1 * var(--space-4));
+        margin-right: calc(-1 * var(--space-4));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}

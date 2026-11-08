@@ -1,0 +1,220 @@
+{
+  "$schema": "https://opendiensten.nl/schemas/organisaties.schema.json",
+  "versie": 1,
+  "organisaties": [
+    {
+      "id": "activityclub",
+      "naam": "Stichting Activityclub",
+      "website": "https://mastodon.nl",
+      "logo": "/assets/images/iconen/organisaties/activityclub.jpg",
+      "land": "NL"
+    },
+    {
+      "id": "alkemio",
+      "naam": "Alkemio",
+      "website": "https://alkem.io",
+      "logo": "/assets/images/iconen/organisaties/alkemio.png"
+    },
+    {
+      "id": "ascensio",
+      "naam": "Ascensio System SIA",
+      "website": "https://www.onlyoffice.com",
+      "land": "LV"
+    },
+    {
+      "id": "bit",
+      "naam": "BIT",
+      "website": "https://www.bit.nl",
+      "logo": "/assets/images/iconen/organisaties/bit.png",
+      "land": "NL"
+    },
+    {
+      "id": "bzk",
+      "naam": "Ministerie van BZK",
+      "website": "https://www.rijksoverheid.nl/ministeries/ministerie-van-binnenlandse-zaken-en-koninkrijksrelaties",
+      "logo": "/assets/images/iconen/organisaties/bzk.png",
+      "land": "NL"
+    },
+    {
+      "id": "codeberg",
+      "naam": "Codeberg e.V.",
+      "website": "https://codeberg.org",
+      "logo": "/assets/images/iconen/organisaties/codeberg.png",
+      "land": "DE"
+    },
+    {
+      "id": "codefornl",
+      "naam": "Code for NL",
+      "website": "https://www.codefor.nl",
+      "logo": "/assets/images/logos/codefornl.png",
+      "land": "NL"
+    },
+    {
+      "id": "disroot",
+      "naam": "Disroot",
+      "website": "https://disroot.org",
+      "logo": "/assets/images/iconen/organisaties/disroot.png",
+      "land": "NL"
+    },
+    {
+      "id": "doodle",
+      "naam": "Doodle",
+      "website": "https://doodle.com",
+      "logo": "/assets/images/iconen/organisaties/doodle.png",
+      "land": "CH"
+    },
+    {
+      "id": "element",
+      "naam": "Element",
+      "website": "https://element.io",
+      "logo": "/assets/images/iconen/organisaties/element.png",
+      "land": "GB"
+    },
+    {
+      "id": "fairkom",
+      "naam": "Fairkom",
+      "website": "https://www.fairkom.eu",
+      "logo": "/assets/images/iconen/organisaties/fairkom.png",
+      "land": "AT"
+    },
+    {
+      "id": "framasoft",
+      "naam": "Framasoft",
+      "website": "https://framasoft.org",
+      "logo": "/assets/images/iconen/organisaties/framasoft.png",
+      "land": "FR"
+    },
+    {
+      "id": "jitsi",
+      "naam": "Jitsi",
+      "website": "https://jitsi.org",
+      "logo": "/assets/images/iconen/organisaties/jitsi.png"
+    },
+    {
+      "id": "laposta",
+      "naam": "Laposta",
+      "website": "https://www.laposta.nl",
+      "logo": "/assets/images/iconen/organisaties/laposta.png",
+      "land": "NL"
+    },
+    {
+      "id": "meetup",
+      "naam": "Meetup",
+      "website": "https://www.meetup.com",
+      "land": "US"
+    },
+    {
+      "id": "merlinux",
+      "naam": "merlinux GmbH",
+      "website": "https://merlinux.eu",
+      "land": "DE"
+    },
+    {
+      "id": "meta",
+      "naam": "Meta",
+      "website": "https://about.meta.com",
+      "land": "US"
+    },
+    {
+      "id": "microsoft",
+      "naam": "Microsoft",
+      "website": "https://www.microsoft.com",
+      "land": "US"
+    },
+    {
+      "id": "mijn-host",
+      "naam": "mijn.host",
+      "website": "https://mijn.host",
+      "logo": "/assets/images/iconen/organisaties/mijn-host.png",
+      "land": "NL"
+    },
+    {
+      "id": "opencommit",
+      "naam": "Stichting OpenCommit",
+      "website": "https://www.opencommit.nl/nl/",
+      "logo": "/assets/images/iconen/organisaties/opencommit.png",
+      "land": "NL"
+    },
+    {
+      "id": "pleio",
+      "naam": "Stichting Pleio",
+      "website": "https://pleio.nl",
+      "logo": "/assets/images/iconen/organisaties/pleio.png",
+      "land": "NL"
+    },
+    {
+      "id": "prikkert",
+      "naam": "Prikkert",
+      "website": "https://prikkert.nl",
+      "logo": "/assets/images/iconen/organisaties/prikkert.png",
+      "land": "NL"
+    },
+    {
+      "id": "procolix",
+      "naam": "ProcoliX",
+      "website": "https://procolix.eu",
+      "logo": "/assets/images/iconen/organisaties/procolix.png",
+      "land": "NL"
+    },
+    {
+      "id": "riseup",
+      "naam": "Riseup",
+      "website": "https://riseup.net",
+      "logo": "/assets/images/iconen/organisaties/riseup.png",
+      "land": "US"
+    },
+    {
+      "id": "rocket-chat",
+      "naam": "Rocket.Chat",
+      "website": "https://rocket.chat"
+    },
+    {
+      "id": "salesforce",
+      "naam": "Salesforce",
+      "website": "https://www.salesforce.com",
+      "land": "US"
+    },
+    {
+      "id": "signal-foundation",
+      "naam": "Signal Foundation",
+      "website": "https://signal.org",
+      "logo": "/assets/images/iconen/organisaties/signal-foundation.png",
+      "land": "US"
+    },
+    {
+      "id": "simplex",
+      "naam": "SimpleX Chat Ltd",
+      "website": "https://simplex.chat",
+      "logo": "/assets/images/iconen/organisaties/simplex.png",
+      "land": "GB"
+    },
+    {
+      "id": "speakup",
+      "naam": "Speakup",
+      "website": "https://www.speakup.nl",
+      "logo": "/assets/images/iconen/organisaties/speakup.svg",
+      "land": "NL"
+    },
+    {
+      "id": "systemli",
+      "naam": "Systemli",
+      "website": "https://www.systemli.org",
+      "logo": "/assets/images/iconen/organisaties/systemli.png",
+      "land": "DE"
+    },
+    {
+      "id": "transip",
+      "naam": "TransIP",
+      "website": "https://www.transip.nl",
+      "logo": "/assets/images/iconen/organisaties/transip.png",
+      "land": "NL"
+    },
+    {
+      "id": "workadventure",
+      "naam": "WorkAdventure",
+      "website": "https://workadventu.re",
+      "logo": "/assets/images/iconen/organisaties/workadventure.png",
+      "land": "FR"
+    }
+  ]
+}

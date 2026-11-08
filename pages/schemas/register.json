@@ -1,0 +1,6 @@
+---
+permalink: /schemas/register.schema.json
+layout: null
+---
+{%- comment -%} Het JSON Schema uit _data/schemas/register.json. Zie ook /gegevensmodel. {%- endcomment -%}
+{{ site.data.schemas.register | jsonify }}

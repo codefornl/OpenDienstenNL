@@ -1,0 +1,522 @@
+---
+layout: default
+title: Design system
+permalink: /design-system/
+noindex: true
+description: De vormgeving van OpenDiensten van klein naar groot, volgens atomic design. Een initiatief van Apitecture, met de tokens en regels van apitecture.nl/design-system.
+stylesheets:
+  - /css/design-system.css
+---
+{%- assign std = site.data.profielregister.standaard -%}
+{%- assign live = site.data.profielen[std].diensten | where: "status", "live" -%}
+{%- assign voorbeeld = live | where: "id", "jitsi-meet-bit" | first -%}
+{%- assign buiten_eu = live | where_exp: "d", "d.eu_hosting == false" | first -%}
+{%- assign categorieen = live | map: "categorie" | uniq -%}
+{%- assign video = live | where: "categorie", "videobellen" | where_exp: "d", "d.random_url" -%}
+{%- assign voorbeeldprofiel = "codefornl" -%}
+{%- assign voorbeeld_slack = site.data.profielen[std].diensten | where: "id", "linkedin" | first -%}
+
+<div class="app-container">
+  {% include organisms/sidebar.html active="ontwikkelaars" %}
+
+  <main class="content-area">
+<div class="ds-layout">
+    <nav class="ds-nav" aria-label="Hoofdstukken">
+        <ol>
+            <li><a href="#merk">Architectuur en merk</a></li>
+            <li><a href="#vormtaal">Vormtaal</a></li>
+            <li><a href="#fundamenten">Fundamenten</a></li>
+            <li><a href="#atomen">Atomen</a></li>
+            <li><a href="#moleculen">Moleculen</a></li>
+            <li><a href="#organismen">Organismen</a></li>
+            <li><a href="#templates">Templates</a></li>
+            <li><a href="#paginas">Pagina's</a></li>
+        </ol>
+    </nav>
+
+    <div class="ds-main">
+        <header class="ds-intro">
+            {% include atoms/kicker.html text="OpenDiensten · design system" hex=true %}
+            <h2>Design system</h2>
+            <p class="ds-lead">OpenDiensten is een overzicht van open en gratis publiek toegankelijke online diensten voor community-organisatie: videobellen, samen schrijven, plannen en meer, bij aanbieders die je kunt vertrouwen. Nu {{ live.size }} diensten in {{ categorieen.size }} categorieën. OpenDiensten is een initiatief van <a href="https://www.apitecture.nl">Apitecture</a>; daarom neemt het design system de tokennamen, ruimteschaal en regels over uit het <a href="https://www.apitecture.nl/design-system/">design system van apitecture.nl</a>. Hieronder staat alles van klein naar groot, volgens atomic design. Elk component is een Jekyll-include in <code>_includes/</code>, met de echte CSS uit <code>css/style.css</code> en de echte data uit <code>_data/profielen/</code>.</p>
+        </header>
+
+        <!-- 0 -->
+        <section class="ds-section" id="merk">
+            <h2 class="ds-title"><span class="ds-step">0</span>Architectuur en merk</h2>
+            <p class="ds-intro-text">Wie erachter zit. OpenDiensten is een initiatief van Apitecture, met een eigen naam en dezelfde beeldtaal.</p>
+
+            <div class="ds-org-scroll">
+            <div class="ds-collab">
+                <div class="ds-collab-parents">
+                    <a href="https://www.apitecture.nl" class="ds-sq" style="--brand: var(--accent)">
+                        <img src="/assets/images/logos/logo-2024.jpeg" alt="" class="ds-sq-logo">
+                        <strong>Apitecture</strong><small>bv · uitgever</small>
+                        <span class="ds-sq-sw"><i style="background:var(--night)"></i><i style="background:#fff"></i><i style="background:var(--accent)"></i></span>
+                    </a>
+                </div>
+                <div class="ds-collab-join" aria-hidden="true"></div>
+                <a href="/" class="ds-sq ds-sq-here" style="--brand: var(--accent)">
+                    <img src="/assets/images/favicon.svg" alt="" class="ds-sq-logo ds-sq-contain">
+                    <strong>OpenDiensten</strong><small>initiatief · hier</small>
+                    <span class="ds-sq-sw"><i style="background:var(--night)"></i><i style="background:var(--paper)"></i><i style="background:var(--accent)"></i></span>
+                </a>
+            </div>
+            </div>
+
+            <h3 class="ds-subtitle">De merken</h3>
+            <div class="ds-brands">
+                <article class="ds-brand-card" style="--brand: var(--accent)">
+                    <p class="ds-brand-kicker">Uitgever · apitecture.nl</p>
+                    <p>Licht en betrouwbaar. Nacht <code>#141416</code> en oranje <code>#ff5900</code> uit het logo, de zeshoek als markering. Levert de tokens, de lettertypen, de regels hieronder en het platform waar het draait.</p>
+                </article>
+                <article class="ds-brand-card" style="--brand: var(--accent)">
+                    <p class="ds-brand-kicker">Initiatief · OpenDiensten · hier</p>
+                    <p>Een rustige catalogus. Voegt alleen toe wat een catalogus nodig heeft: dienstkaarten, labels, filters, waarderingen en een rode kleur voor wissen. Noemt Apitecture in de zijbalk en de footer.</p>
+                </article>
+            </div>
+
+            <h3 class="ds-subtitle">Logo</h3>
+            <div class="ds-specimen">
+                <div class="ds-stage ds-stage-card ds-logo-row">
+                    {% include molecules/brand.html %}
+                    <img src="/assets/images/open-diensten-title-logo.svg" alt="Huidig OpenDiensten-logo">
+                    {% include molecules/partners.html %}
+                </div>
+                <p class="ds-note">Links de nieuwe merkkop (<code>molecules/brand.html</code>): de naam in Helvetica Neue met de zeshoek van Apitecture. In het midden het huidige logo, dat blijft tot er een nieuw is. Rechts de afzender (<code>molecules/partners.html</code>): een initiatief van Apitecture</p>
+            </div>
+        </section>
+
+        <!-- 1 -->
+        <section class="ds-section" id="vormtaal">
+            <h2 class="ds-title"><span class="ds-step">1</span>Vormtaal</h2>
+            <p class="ds-intro-text">De honingraat uit het Apitecture-logo is de vorm. Verder is alles licht, rustig en duidelijk: je komt hier om snel een dienst te vinden, niet om rond te kijken.</p>
+
+            <div class="ds-honeycomb">
+                <svg viewBox="0 0 121 122" aria-hidden="true">
+                    <defs>
+                        <polygon id="ds-cell" points="0.0,-20.0 17.32,-10.0 17.32,10.0 0.0,20.0 -17.32,10.0 -17.32,-10.0"/>
+                        <filter id="ds-goo">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="1.3"/>
+                            <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"/>
+                        </filter>
+                    </defs>
+                    <g fill="var(--ink)" filter="url(#ds-goo)">
+                        <use href="#ds-cell" x="68.0" y="21.0"/>
+                        <use href="#ds-cell" x="102.64" y="41.0"/>
+                        <use href="#ds-cell" x="102.64" y="81.0"/>
+                        <use href="#ds-cell" x="68.0" y="101.0"/>
+                        <use href="#ds-cell" x="33.36" y="41.0"/>
+                        <polygon points="0.0,-17.48 15.14,-8.74 15.14,8.74 0.0,17.48 -15.14,8.74 -15.14,-8.74" transform="translate(68.0 61.0)"/>
+                    </g>
+                    <g fill="var(--accent)" filter="url(#ds-goo)">
+                        <use href="#ds-cell" x="18.38" y="89.94"/>
+                    </g>
+                </svg>
+                <p><strong>De honingraat uit het logo.</strong> Een kern met een ring van cellen; één cel is naar buiten gestapt en oranje. Op OpenDiensten is dat steeds het ene ding dat je zoekt: de actieve categorie, de primaire knop, het stapnummer. Alle cellen staan met een punt naar boven, en zo staat ook de zeshoek {% include atoms/hex.html %} overal op de site.</p>
+            </div>
+
+            <h3 class="ds-subtitle">Regels</h3>
+            <div class="ds-principles">
+                <div class="ds-principle">
+                    <h3>{% include atoms/hex.html %}Eerst de dienst</h3>
+                    <p>De kaarten zijn de inhoud. Geen banners, geen uitleg ervoor. Wie een videogesprek wil, heeft één klik nodig.</p>
+                </div>
+                <div class="ds-principle">
+                    <h3>{% include atoms/hex.html %}Elke kleur betekent iets</h3>
+                    <p>Nacht is de tekst. Oranje markeert. Links in donker oranje (<code>--accent-text</code>). Rood (<code>--danger</code>) alleen voor wissen en voor hosting buiten de EU. Verder geen kleuren; favicons van diensten brengen al genoeg kleur mee.</p>
+                </div>
+                <div class="ds-principle">
+                    <h3>{% include atoms/hex.html %}De zeshoek markeert</h3>
+                    <p>Geen bolletjes of vinkjes, maar de oranje cel. Eén per item, nooit als decoratie. Een lege cel (<code>.hex-outline</code>) betekent: hier is nog niets, zoals een lege lijst met sessies.</p>
+                </div>
+                <div class="ds-principle">
+                    <h3>{% include atoms/hex.html %}Sans voor tekst, mono voor labels</h3>
+                    <p>Tekst en koppen in Helvetica Neue. Atkinson Hyperlegible Mono voor categorieën, aantallen, cijfers en code.</p>
+                </div>
+                <div class="ds-principle">
+                    <h3>{% include atoms/hex.html %}Rustig</h3>
+                    <p>Niets beweegt uit zichzelf. Bij hover kleurt een rand oranje; kaarten springen niet omhoog. Bij <code>prefers-reduced-motion</code> valt ook dat weg.</p>
+                </div>
+                <div class="ds-principle">
+                    <h3>{% include atoms/hex.html %}Open en lokaal</h3>
+                    <p>Geen trackers. Het lettertype staat op de site zelf. Je sessies en beoordelingen blijven in je eigen browser. Alleen de favicons van de diensten komen van buiten.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2 -->
+        <section class="ds-section" id="fundamenten">
+            <h2 class="ds-title"><span class="ds-step">2</span>Fundamenten</h2>
+            <p class="ds-intro-text">De design tokens: CSS custom properties in <code>css/style.css</code>, met dezelfde namen en waarden als apitecture.nl. Componenten gebruiken alleen deze tokens, nooit losse waarden. De waarden hieronder worden live uit de CSS gelezen.</p>
+
+            <h3 class="ds-subtitle">Kleur</h3>
+            <p class="ds-label">merk · uit Apitecture</p>
+            <div class="ds-swatches">
+                {% assign tokens = "--night,--accent,--accent-strong,--accent-text,--accent-subtle" | split: "," %}
+                {% for t in tokens %}<div class="ds-swatch"><i class="ds-swatch-color" style="background: var({{ t }})"></i><code>{{ t }}</code><span data-token="{{ t }}"></span></div>{% endfor %}
+            </div>
+            <p class="ds-label">kern · uit Apitecture</p>
+            <div class="ds-swatches">
+                {% assign tokens = "--paper,--paper-deep,--card,--ink,--text,--muted,--line,--line-strong" | split: "," %}
+                {% for t in tokens %}<div class="ds-swatch"><i class="ds-swatch-color" style="background: var({{ t }})"></i><code>{{ t }}</code><span data-token="{{ t }}"></span></div>{% endfor %}
+            </div>
+            <p class="ds-label">betekenis · OpenDiensten</p>
+            <div class="ds-swatches">
+                {% assign tokens = "--danger,--danger-subtle,--overlay" | split: "," %}
+                {% for t in tokens %}<div class="ds-swatch"><i class="ds-swatch-color" style="background: var({{ t }})"></i><code>{{ t }}</code><span data-token="{{ t }}"></span></div>{% endfor %}
+            </div>
+
+            <h3 class="ds-subtitle">Typografie</h3>
+            <div class="ds-type-row"><code>--font-sans · 30 / 700</code><div style="font: 700 30px/1.2 var(--font-sans)">Geschiedenis</div></div>
+            <div class="ds-type-row"><code>--font-sans · 28 / 700</code><div style="font: 700 28px/1.2 var(--font-sans); letter-spacing: -0.02em">OpenDiensten</div></div>
+            <div class="ds-type-row"><code>--font-sans · 21 / 700</code><div style="font: 700 21px/1.3 var(--font-sans)">Hoe was de kwaliteit?</div></div>
+            <div class="ds-type-row"><code>--font-sans · 18 / 700</code><div style="font: 700 18px/1.3 var(--font-sans)">{{ voorbeeld.naam }}</div></div>
+            <div class="ds-type-row"><code>--font-sans · 17 / 400</code><div style="font: 400 17px/1.6 var(--font-sans)">Lopende tekst. {{ site.description }}.</div></div>
+            <div class="ds-type-row"><code>--font-sans · 15 / 400</code><div style="font: 400 15px/1.45 var(--font-sans); color: var(--muted)">{{ voorbeeld.beschrijving }}</div></div>
+            <div class="ds-type-row"><code>--font-mono · 13 / 600</code><div class="kicker" style="margin: 0">Kicker · categorieën</div></div>
+            <div class="ds-type-row"><code>--font-mono · 12 / 400</code><div>{% include atoms/category-badge.html categorie="samen-schrijven" %}</div></div>
+
+            <h3 class="ds-subtitle">Ruimte</h3>
+            <div class="ds-space">
+                {% for i in (1..8) %}<div class="ds-space-row"><code>--space-{{ i }}</code><span class="ds-space-bar" style="width: var(--space-{{ i }})"></span><span data-token="--space-{{ i }}"></span></div>{% endfor %}
+            </div>
+
+            <h3 class="ds-subtitle">Afronding en schaduw</h3>
+            <div class="ds-boxes">
+                {% assign tokens = "--radius-xs,--radius-sm,--radius-md,--radius-lg" | split: "," %}
+                {% for t in tokens %}<div class="ds-box" style="border-radius: var({{ t }})"><code>{{ t }}</code></div>{% endfor %}
+                {% assign tokens = "--shadow-ring,--card-shadow,--dialog-shadow" | split: "," %}
+                {% for t in tokens %}<div class="ds-box" style="border: 0; box-shadow: var({{ t }}); border-radius: var(--radius-sm)"><code>{{ t }}</code></div>{% endfor %}
+            </div>
+
+            <h3 class="ds-subtitle">Beweging</h3>
+            <p>Bij hover kleurt een rand oranje of wordt een onderstreping voller: <code>--duration-fast</code> <span data-token="--duration-fast"></span>. Kaarten en knoppen bewegen niet. Bij <code>prefers-reduced-motion</code> valt alles weg.</p>
+        </section>
+
+        <!-- 3 -->
+        <section class="ds-section" id="atomen">
+            <h2 class="ds-title"><span class="ds-step">3</span>Atomen</h2>
+            <p class="ds-intro-text">De kleinste bouwstenen, in <code>_includes/atoms/</code>. Ze hebben geen context nodig.</p>
+
+            <div class="ds-specimen">
+                <div class="ds-stage" style="font-size: 32px">{% include atoms/hex.html %}{% include atoms/hex.html outline=true %}</div>
+                <p class="ds-note">Zeshoek <code>atoms/hex.html</code> · <code>outline=true</code> voor een lege cel · schaalt mee met de lettergrootte</p>
+<pre><code>{% raw %}{% include atoms/hex.html %}
+{% include atoms/hex.html outline=true %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage">{% include atoms/kicker.html text="Videobellen" hex=true %}{% include atoms/kicker.html text="Categorieën" %}</div>
+                <p class="ds-note">Kicker <code>atoms/kicker.html</code> · met of zonder zeshoek</p>
+<pre><code>{% raw %}{% include atoms/kicker.html text="Videobellen" hex=true %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage">{% include atoms/text-beep.html text="door Apitecture" %}</div>
+                <p class="ds-note">Ondertitel <code>atoms/text-beep.html</code> · in mono, onder de merknaam</p>
+<pre><code>{% raw %}{% include atoms/text-beep.html text="door Apitecture" %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage"><a href="#atomen">Gewone link</a><a href="#atomen" class="link-more">Alle diensten</a></div>
+                <p class="ds-note">Link en verder-link <code>.link-more</code> · in <code>--accent-text</code></p>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage">
+                    {% include atoms/button.html text="Start videogesprek" href="#atomen" %}
+                    {% include atoms/button.html text="Start samen schrijven" href="#atomen" variant="secondary" %}
+                    {% include atoms/button.html text="Exporteer" variant="secondary" size="small" %}
+                    {% include atoms/button.html text="Wis alles" variant="danger" size="small" %}
+                </div>
+                <p class="ds-note">Knop <code>atoms/button.html</code> · met <code>href</code> een link, zonder een <code>&lt;button&gt;</code> · één primaire knop per scherm</p>
+                <table class="ds-props">
+                    <tr><th>parameter</th><th>waarden</th></tr>
+                    <tr><td><code>text</code></td><td>tekst op de knop</td></tr>
+                    <tr><td><code>href</code>, <code>target</code></td><td>maakt er een link van</td></tr>
+                    <tr><td><code>variant</code></td><td><code>primary</code> (standaard) · <code>secondary</code> · <code>danger</code></td></tr>
+                    <tr><td><code>size</code></td><td><code>small</code></td></tr>
+                    <tr><td><code>id</code>, <code>class</code></td><td>haakjes voor JavaScript</td></tr>
+                    <tr><td><code>hidden</code></td><td><code>true</code> = verborgen tot JavaScript hem toont</td></tr>
+                </table>
+<pre><code>{% raw %}{% include atoms/button.html text="Start videogesprek" href="/start-videogesprek" target="_blank" %}
+{% include atoms/button.html text="Wis alles" variant="danger" size="small" id="clear-history-btn" %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage">{% for c in categorieen limit: 6 %}{% include atoms/category-badge.html categorie=c %}{% endfor %}</div>
+                <p class="ds-note">Categorielabel <code>atoms/category-badge.html</code> · de slug uit <code>categorie</code>, met spaties</p>
+<pre><code>{% raw %}{% include atoms/category-badge.html categorie=dienst.categorie %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage">{% include atoms/favicon.html dienst=voorbeeld %}</div>
+                <p class="ds-note">Favicon <code>atoms/favicon.html</code> · de software groot, de aanbieder klein rechtsonder ({{ voorbeeld.software }} bij {{ voorbeeld.aanbieder }})</p>
+<pre><code>{% raw %}{% include atoms/favicon.html dienst=dienst %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                {%- assign voorbeeld_li = site.data.profielen[std].diensten | where: "id", "linkedin" | first %}
+                <div class="ds-stage"><span class="service-badges">{% include molecules/dienst-tags.html dienst=voorbeeld %}</span><span class="service-badges">{% include molecules/dienst-tags.html dienst=voorbeeld_li %}</span></div>
+                <p class="ds-note">Labels <code>molecules/dienst-tags.html</code> · drie per dienst, elk goed (<code>.tag-goed</code>, groen met een vinkje) of niet (<code>.tag-niet</code>, grijze rand): open source / closed source (van de software, of de reden <code>gesloten</code>), europees / niet europees (<code>eu_hosting</code>), open dienst / login vereist (en niet gratis, uit de <code>redenen</code>) · in plaats van een vlaggetje · dezelfde labels als <code>dienstTags()</code> in <code>js/ServicesManager.mjs</code></p>
+<pre><code>{% raw %}{% include molecules/dienst-tags.html dienst=dienst %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage">{% include atoms/rating-stars.html rating=4 %}{% include atoms/rating-stars.html rating=2.5 %}</div>
+                <p class="ds-note">Sterren <code>atoms/rating-stars.html</code> · alleen weergave, afgerond naar beneden zoals in <code>ServicesManager</code></p>
+<pre><code>{% raw %}{% include atoms/rating-stars.html rating=4 %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage">{% include atoms/github-link.html %}<code>_config.yml</code></div>
+                <p class="ds-note">GitHub-link <code>atoms/github-link.html</code> en inline <code>code</code></p>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage">{% include atoms/org-logo.html naam="Code for NL" logo="/assets/images/logos/codefornl.png" %}{% include atoms/org-logo.html naam="Dorpshuis Zwammerdam" %}{% include atoms/org-logo.html naam="Code for NL" logo="/assets/images/logos/codefornl.png" size="large" %}</div>
+                <p class="ds-note">Organisatielogo <code>atoms/org-logo.html</code> · zonder <code>logo</code> de eerste letter · <code>size="large"</code> voor de profielkop</p>
+<pre><code>{% raw %}{% include atoms/org-logo.html naam=profiel.naam logo=profiel.logo %}{% endraw %}</code></pre>
+            </div>
+        </section>
+
+        <!-- 4 -->
+        <section class="ds-section" id="moleculen">
+            <h2 class="ds-title"><span class="ds-step">4</span>Moleculen</h2>
+            <p class="ds-intro-text">Atomen die samen één ding doen, in <code>_includes/molecules/</code>.</p>
+
+            <div class="ds-specimen">
+                <div class="ds-stage">{% include molecules/brand.html %}</div>
+                <p class="ds-note">Merkkop <code>molecules/brand.html</code> · zeshoek, naam en 'door Apitecture' in mono</p>
+<pre><code>{% raw %}{% include molecules/brand.html %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage ds-stage-card">{% include molecules/partners.html %}</div>
+                <p class="ds-note">Afzender <code>molecules/partners.html</code> · een initiatief van Apitecture · <code>label</code> voor een andere tekst</p>
+<pre><code>{% raw %}{% include molecules/partners.html %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage"><div style="width: 260px">{% include molecules/history-toggle.html %}</div></div>
+                <p class="ds-note">Geschiedenis bijhouden <code>molecules/history-toggle.html</code> · standaard uit, voor privacy en security: de unieke links zijn geheim · <code>js/nav.js</code> zet de stand en toont Geschiedenis in het menu alleen als hij aan staat · uitzetten wist de geschiedenis, na bevestiging; beoordelingen blijven als telling per dienst</p>
+<pre><code>{% raw %}{% include molecules/history-toggle.html %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                {%- include data/gebruik.html -%}
+                {%- assign voorbeeld_gebruikt = site.data.profielen[site.data.profielregister.standaard].diensten | where: "id", "codeberg" | first %}
+                <div class="ds-stage"><div style="flex: 1; max-width: 460px">{% include molecules/service-strip.html dienst=voorbeeld_gebruikt %}</div></div>
+                <p class="ds-note">Strook onder een kaart <code>molecules/service-strip.html</code> · altijd, voor de rust · "Gebruikt door" (<code>molecules/used-by.html</code>) met de logo's van de organisaties die de dienst in hun profiel hebben (naam in de tooltip), elk een link naar <code>/?profiel=…</code> · naast de kaart in <code>.service-item</code> · include eerst <code>data/gebruik.html</code> · hier Codeberg</p>
+<pre><code>{% raw %}{% include data/gebruik.html %}
+{% include molecules/service-strip.html dienst=dienst %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage">{% include molecules/autonomy-meter.html profiel=voorbeeldprofiel %}</div>
+                <p class="ds-note">Digitale autonomie <code>molecules/autonomy-meter.html</code> · één zeshoek per dienst die een organisatie gebruikt: een volle cel is een open dienst, een lege cel (nog) niet · zo lees je de roadmap van een profiel in één oogopslag · in de profielkop en op de profieltegels</p>
+<pre><code>{% raw %}{% include molecules/autonomy-meter.html profiel="codefornl" %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage">{% include molecules/service-rating.html rating=4.3 count=7 %}</div>
+                <p class="ds-note">Waardering <code>molecules/service-rating.html</code> · sterren, gemiddelde en aantal; alleen als er beoordelingen zijn</p>
+<pre><code>{% raw %}{% include molecules/service-rating.html rating=4.3 count=7 %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage">{% include molecules/star-rating.html value=3 %}</div>
+                <p class="ds-note">Sterren kiezen <code>molecules/star-rating.html</code> · vijf knoppen met <code>data-rating</code>, op de startpagina (<code>js/start.js</code>)</p>
+<pre><code>{% raw %}{% include molecules/star-rating.html %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage"><div style="flex: 1">{% include molecules/empty-state.html text="Je hebt nog geen diensten gestart. Klik op 'Start videogesprek' of 'Start samen schrijven' om te beginnen." %}</div></div>
+                <p class="ds-note">Lege staat <code>molecules/empty-state.html</code> · met een lege cel</p>
+<pre><code>{% raw %}{% include molecules/empty-state.html text="Je hebt nog geen diensten gestart." %}{% endraw %}</code></pre>
+            </div>
+        </section>
+
+        <!-- 5 -->
+        <section class="ds-section" id="organismen">
+            <h2 class="ds-title"><span class="ds-step">5</span>Organismen</h2>
+            <p class="ds-intro-text">Zelfstandige onderdelen van een pagina, in <code>_includes/organisms/</code>. Ze lezen hun inhoud uit de profielen in <code>_data/profielen/</code>, via <code>_includes/data/profiel.html</code>.</p>
+
+            <div class="ds-specimen">
+                <div class="ds-stage ds-stage-col">
+                    {% include organisms/service-card.html dienst=voorbeeld rating=4.3 count=7 %}
+                    {% if buiten_eu %}{% include organisms/service-card.html dienst=buiten_eu %}{% endif %}
+                </div>
+                <p class="ds-note">Dienstkaart <code>organisms/service-card.html</code> · een dienst, geen software: groot het logo van de software en klein dat van de aanbieder (<code>atoms/favicon.html</code>), naam (de plek, bv. <code>meetme.bit.nl</code>), eronder "Nextcloud door Disroot" (links naar <code>/software/&lt;id&gt;/</code> en <code>/aanbieders/&lt;id&gt;/</code>), de categorie oranje rechtsboven, beschrijving, categorie, aanbieder en waardering · software en aanbieder komen uit <code>_data/software.json</code> en <code>_data/organisaties.json</code>; de aanbieder linkt naar <code>/aanbieders/&lt;id&gt;/</code> · de titel is de link naar de dienst (<code>a.card-link</code>) en ligt over de hele kaart, zodat software en aanbieder eigen links kunnen zijn · dezelfde markup als <code>createServiceCard()</code> in <code>js/ServicesManager.mjs</code> · met <code>random_url</code> het label <em>eigen link</em>: een klik maakt een unieke link (<code>js/opendienstenapp.js</code>)</p>
+                <table class="ds-props">
+                    <tr><th>parameter</th><th>waarden</th></tr>
+                    <tr><td><code>dienst</code></td><td>een dienst volgens <code>schemas/dienst.schema.json</code></td></tr>
+                    <tr><td><code>rating</code>, <code>count</code></td><td>optioneel; zonder geen waardering</td></tr>
+                    <tr><td><code>link</code></td><td><code>false</code> = een <code>&lt;div&gt;</code> in plaats van een link</td></tr>
+                </table>
+<pre><code>{% raw %}{% for dienst in diensten %}
+  {% include organisms/service-card.html dienst=dienst %}
+{% endfor %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage"><div class="profile-grid" style="flex: 1; margin: 0">{% include organisms/software-card.html id="jitsi-meet" %}{% include organisms/software-card.html id="etherpad" %}</div></div>
+                <p class="ds-note">Softwaretegel <code>organisms/software-card.html</code> · software, of hij open source is, op hoeveel diensten hij draait en waarvoor · een gesloten product (bv. Word) met een dikke zwarte rand; wat alleen als dienst bestaat (Slack) is geen software · op <code>/software/</code>, en verwijst naar <code>/software/&lt;id&gt;/</code> (<code>_layouts/software.html</code>, met de diensten en bij gesloten software de open alternatieven)</p>
+<pre><code>{% raw %}{% include organisms/software-card.html id="jitsi-meet" %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage"><div class="profile-grid" style="flex: 1; margin: 0">{% include organisms/aanbieder-card.html id="framasoft" %}{% include organisms/aanbieder-card.html id="microsoft" %}</div></div>
+                <p class="ds-note">Aanbiedertegel <code>organisms/aanbieder-card.html</code> · organisatie, land (<code>atoms/land.html</code>, met het label europees of niet europees) en hoeveel diensten ze aanbiedt en waarvoor · alleen diensten die geen open dienst zijn: dikke zwarte rand · op <code>/aanbieders/</code>, en verwijst naar <code>/aanbieders/&lt;id&gt;/</code> (<code>_layouts/aanbieder.html</code>, met de diensten en een link naar haar profiel als ze er een heeft)</p>
+<pre><code>{% raw %}{% include organisms/aanbieder-card.html id="framasoft" %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage"><div style="flex: 1; max-width: 460px">{% include organisms/closed-service-card.html dienst=voorbeeld_slack %}</div></div>
+                <p class="ds-note">Geen open dienst <code>organisms/closed-service-card.html</code> · iets wat een organisatie (nog) gebruikt dat geen open dienst is (<code>"open": false</code> in een profiel) · dezelfde dienstkaart met een dikke zwarte rand (<code>.is-closed</code>) en het label, met de redenen (<code>account</code>, <code>gesloten</code>, <code>buiten-eu</code>) in de tooltip; de kaart linkt gewoon door, want leden moeten er wel naartoe · daaronder een strook (<code>.card-strip</code>) naar open alternatieven, of de vraag of iemand er een kent · staat na de open diensten, op Diensten en in het profiel · met <code>naast=true</code> geen strook, want de alternatieven staan erbij · Start kiest hem nooit</p>
+<pre><code>{% raw %}{% include organisms/closed-service-card.html dienst=dienst %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage"><div style="flex: 1">{% include organisms/services-grid.html categorie="samen-schrijven" limit=4 id="ds-grid" %}</div></div>
+                <p class="ds-note">Raster <code>organisms/services-grid.html</code> · alle live diensten, die van één <code>categorie</code>, of precies de diensten in <code>ids</code> in die volgorde (voor profielen) · hier samen schrijven, de eerste vier</p>
+<pre><code>{% raw %}{% include organisms/services-grid.html categorie="samen-schrijven" limit=4 %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage"><div style="flex: 1">{% include organisms/services-by-category.html profiel=voorbeeldprofiel heading="h3" %}</div></div>
+                <p class="ds-note">Diensten per categorie <code>organisms/services-by-category.html</code> · per categorie een kop met anker (<code>id</code> = de categorie) en daaronder één raster (<code>organisms/category-services.html</code>): eerst de open diensten, dan wat nog geen open dienst is (zwarte rand); zonder open dienst een cel die vraagt of iemand er een kent · bij elke kaart wie hem gebruikt · zonder <code>profiel</code> alles uit alle profielen samen (de pagina Diensten, via <code>data/overzicht.html</code>), met <code>profiel</code> alleen de keuze van die organisatie, in hun volgorde · op de site filtert <code>js/opendienstenapp.js</code> dezelfde weergave bij <code>/?profiel=…</code> · met een profiel ook de kaarten van wat geen open dienst is · hier gefilterd op Code for NL</p>
+<pre><code>{% raw %}{% include organisms/services-by-category.html %}
+{% include organisms/services-by-category.html profiel="codefornl" heading="h3" %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage ds-stage-card"><div style="flex: 1">{% include organisms/profile-header.html profiel=voorbeeldprofiel %}</div></div>
+                <p class="ds-note">Profielkop <code>organisms/profile-header.html</code> · boven Diensten als het profielfilter actief is: zelfde stramien als software en aanbieders (<code>organisms/entity-header.html</code>): logo, naam, website, beschrijving en de autonomiemeter</p>
+<pre><code>{% raw %}{% include organisms/profile-header.html profiel="codefornl" %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage"><div class="profile-grid" style="flex: 1; margin: 0">{% for r in site.data.profielregister.profielen %}{% unless r.id == std %}{% include organisms/profile-card.html profiel=r.id %}{% endunless %}{% endfor %}</div></div>
+                <p class="ds-note">Profielkaart <code>organisms/profile-card.html</code> · een organisatie, de categorieën waarvoor ze gekozen heeft en het aantal diensten · op <code>/profielen/</code>, en verwijst naar <code>/?profiel=…</code></p>
+<pre><code>{% raw %}{% for r in site.data.profielregister.profielen %}
+  {% include organisms/profile-card.html profiel=r.id %}
+{% endfor %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage"><div style="width: 260px">{% include organisms/main-nav.html active="diensten" %}</div><div style="width: 260px">{% include organisms/main-nav.html active="geschiedenis" %}</div><div style="width: 260px">{% include organisms/main-nav.html active="profielen" %}</div></div>
+                <p class="ds-note">Hoofdnavigatie <code>organisms/main-nav.html</code> · de plekken met echte URL's: Diensten <code>/</code>, Profielen <code>/profielen/</code>, Geschiedenis <code>/geschiedenis</code> en Wat is een open dienst? <code>/over</code> · als Diensten actief is, staan de categorieën eronder (<code>organisms/category-menu.html</code>): ankers naar de koppen op de pagina, en <code>js/nav.js</code> markeert de kop die in beeld is · Profielen heeft geen submenu: een profiel is een filter op Diensten (<code>/?profiel=…</code>) · <code>active</code> is <code>diensten</code>, <code>profielen</code>, <code>geschiedenis</code> of <code>over</code> · bij Geschiedenis zet <code>js/nav.js</code> hoeveel sessies nog beoordeeld moeten worden</p>
+<pre><code>{% raw %}{% include organisms/main-nav.html active="diensten" %}
+{% include organisms/main-nav.html active="geschiedenis" %}
+{% include organisms/main-nav.html active="profielen" %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage"><div style="flex: 1">{% include organisms/quick-actions.html %}</div></div>
+                <p class="ds-note">Snelle acties <code>organisms/quick-actions.html</code> · gewone links naar <code>/start-videogesprek</code> en <code>/start-samen-schrijven</code>; daar gebeurt de rest · staat in de zijbalk, direct onder de merkkop, en daar onder elkaar</p>
+<pre><code>{% raw %}{% include organisms/quick-actions.html %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage ds-stage-card">{% include organisms/start-session.html categorie="videobellen" wat="videogesprek" open_label="Open videogesprek" state="klaar" dienst=video.first aantal=video.size %}</div>
+                <p class="ds-note">Startsessie <code>organisms/start-session.html</code>, stap <code>klaar</code> · de browser hield het nieuwe tabblad tegen: we laten zien wat we gekozen hebben en waarom, en de gebruiker opent het zelf · een klik wordt nooit tegengehouden</p>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage ds-stage-card">{% include organisms/start-session.html categorie="videobellen" wat="videogesprek" open_label="Open videogesprek" state="geopend" dienst=video.first aantal=video.size %}</div>
+                <p class="ds-note">Dezelfde startsessie, stap <code>geopend</code> · de dienst staat in een ander tabblad; hier blijven de link om te delen en de sterren · daarna <code>beoordeeld</code>, of bij een probleem <code>fout</code></p>
+                <table class="ds-props">
+                    <tr><th>parameter</th><th>waarden</th></tr>
+                    <tr><td><code>categorie</code></td><td>slug, bv. <code>videobellen</code></td></tr>
+                    <tr><td><code>wat</code></td><td>wat je start, bv. <code>videogesprek</code> · standaard <code>dienst</code></td></tr>
+                    <tr><td><code>open_label</code></td><td>tekst op de knop · standaard <code>Ga naar de dienst</code></td></tr>
+                    <tr><td><code>state</code>, <code>dienst</code>, <code>aantal</code></td><td>alleen voor voorbeelden zoals hier; op de site zet <code>js/start.js</code> de stap en vult de dienst in</td></tr>
+                </table>
+<pre><code>{% raw %}{% include organisms/start-session.html categorie="videobellen" wat="videogesprek" open_label="Open videogesprek" %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage"><div style="flex: 1">{% include organisms/history.html %}</div></div>
+                <p class="ds-note">Geschiedenis <code>organisms/history.html</code> · alleen als de gebruiker de geschiedenis bijhoudt; anders een uitleg en een knop om hem aan te zetten · de privacyregel, de lijst en onderaan exporteren, importeren en wissen; hier leeg · de kaarten maakt <code>HistoryManager</code>: eerst <em>Nog beoordelen</em>, daarna per dag, met dezelfde dienstkaart plus tijd, link, hernoemen en verwijderen</p>
+<pre><code>{% raw %}{% include organisms/history.html %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage">{% include organisms/sidebar.html active="diensten" %}</div>
+                <p class="ds-note">Zijbalk <code>organisms/sidebar.html</code> · de vaste plek voor waar je bent en wat je kunt doen: merk, twee zinnen waar het om gaat, startknoppen, hoofdnavigatie met de filters onder Diensten, en de partners · op mobiel boven de inhoud, met de filters als chips en zonder partners (die staan dan in de footer)</p>
+<pre><code>{% raw %}{% include organisms/sidebar.html active="diensten" %}{% endraw %}</code></pre>
+            </div>
+
+            <div class="ds-specimen">
+                <div class="ds-stage"><div style="flex: 1">{% include organisms/site-footer.html %}</div></div>
+                <p class="ds-note">Footer <code>organisms/site-footer.html</code> · beide partners; staat ook onderaan deze pagina</p>
+            </div>
+        </section>
+
+        <!-- 6 -->
+        <section class="ds-section" id="templates">
+            <h2 class="ds-title"><span class="ds-step">6</span>Templates</h2>
+            <p class="ds-intro-text">De opbouw van een pagina, zonder inhoud. Alle pagina's op de nieuwe stijl gebruiken <code>_layouts/default.html</code>: de head met <code>css/style.css</code>, extra stylesheets uit <code>stylesheets</code> in de front matter, en met <code>footer: true</code> de footer.</p>
+
+            <div class="ds-templates">
+                <div class="ds-template">
+                    <ol><li>Zijbalk · merk, twee zinnen, startknoppen, navigatie met categorieën, geschiedenis-schakelaar, partners</li><li class="ds-fill">Per categorie een kop (anker) met de dienstkaarten</li><li>Footer</li></ol>
+                    <p class="ds-note">App, Diensten · <code>.app-container</code> met <code>organisms/sidebar.html</code> en <code>.content-area</code> · <code>index.md</code></p>
+                </div>
+                <div class="ds-template">
+                    <ol><li>Zijbalk</li><li class="ds-fill">Geschiedenis · nog beoordelen, dan per dag</li><li>Exporteren, importeren, wissen</li><li>Footer</li></ol>
+                    <p class="ds-note">App, Geschiedenis · <code>pages/geschiedenis.md</code></p>
+                </div>
+                <div class="ds-template">
+                    <ol><li>Zijbalk · startknoppen kiezen uit dit profiel</li><li class="ds-fill">Profielkop · digitale autonomie</li><li class="ds-fill">Diensten per categorie, gefilterd op dit profiel, met wat geen open dienst is</li><li>Footer</li></ol>
+                    <p class="ds-note">App, Diensten met profielfilter · <code>/?profiel=…</code>, met de profielen uit <code>_profielen/</code></p>
+                </div>
+                <div class="ds-template">
+                    <ol><li>Zijbalk</li><li class="ds-fill">Tekst · <code>.page-content</code> met <code>.hex-list</code></li><li>Footer</li></ol>
+                    <p class="ds-note">App, tekstpagina · <code>pages/over.md</code></p>
+                </div>
+                <div class="ds-template">
+                    <ol><li>Merkkop</li><li class="ds-fill">Startsessie · kiezen, openen, delen, beoordelen</li><li>Footer</li></ol>
+                    <p class="ds-note">Start · <code>_layouts/start.html</code>, voor de twee startpagina's</p>
+                </div>
+                <div class="ds-template">
+                    <ol><li>Navigatie</li><li class="ds-fill">Hoofdstukken 0 tot 7</li><li>Footer</li></ol>
+                    <p class="ds-note">Design system · <code>_layouts/default.html</code> met <code>footer: true</code></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7 -->
+        <section class="ds-section" id="paginas">
+            <h2 class="ds-title"><span class="ds-step">7</span>Pagina's</h2>
+            <p class="ds-intro-text">De templates gevuld met echte inhoud. Een volle zeshoek gebruikt dit design system al; een lege cel nog niet.</p>
+
+            <ul class="ds-pages">
+                <li>{% include atoms/hex.html %} <a href="/design-system/">Design system</a> · <code>pages/design-system.html</code></li>
+                <li>{% include atoms/hex.html %} <a href="/">Homepage</a> · <code>index.md</code></li>
+                <li>{% include atoms/hex.html %} <a href="/start-videogesprek">Start videogesprek</a> en <a href="/start-samen-schrijven">samen schrijven</a> · <code>pages/start-*.md</code></li>
+                <li>{% include atoms/hex.html %} <a href="/profielen/">Profielen</a> · <code>pages/profielen.md</code>, met een tegel per profiel uit <code>_profielen/*.md</code> die naar <code>/?profiel=…</code> verwijst</li>
+                <li>{% include atoms/hex.html %} <a href="/profielen/toevoegen">Profiel toevoegen</a> · <code>pages/profiel-toevoegen.html</code>, met de ids van alle open diensten uit de data</li>
+                <li>{% include atoms/hex.html %} <a href="/geschiedenis">Geschiedenis</a> · <code>pages/geschiedenis.md</code></li>
+                <li>{% include atoms/hex.html %} <a href="/over">Wat is een open dienst?</a> · <code>pages/over.md</code>; <code>/credits</code> verwijst hierheen</li>
+                <li>{% include atoms/hex.html %} Doorverwijzingen · <code>pages/doorverwijzingen/</code>: oude categoriepagina's (<code>/videobellen</code>) gaan naar het anker op Diensten (<code>/#videobellen</code>)</li>
+            </ul>
+        </section>
+    </div>
+</div>
+
+    {% include organisms/site-footer.html %}
+  </main>
+</div>
+
+<script>
+    // Toon de echte waarde van elke token, gelezen uit de CSS
+    (function () {
+        var root = getComputedStyle(document.documentElement);
+        document.querySelectorAll('[data-token]').forEach(function (el) {
+            el.textContent = root.getPropertyValue(el.dataset.token).trim();
+        });
+    })();
+</script>

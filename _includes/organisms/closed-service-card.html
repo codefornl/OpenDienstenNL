@@ -1,0 +1,22 @@
+{%- comment -%}
+  Dienst die een organisatie gebruikt maar geen open dienst is (open: false in een profiel).
+  Dezelfde dienstkaart (organisms/service-card.html), met een zwarte rand, het label en de redenen;
+  leden kunnen er wel naartoe. Daaronder een strook met de weg naar open alternatieven in het
+  standaardprofiel, of de vraag of iemand er een kent.
+  Parameters: dienst (volgens schemas/dienst.schema.json, met open: false),
+              naast (true = de open alternatieven staan ernaast; dan geen strook),
+              eigen (de eigen url's van de organisatie, zie organisms/service-card.html)
+{%- endcomment -%}
+{%- assign cd = include.dienst -%}
+{%- assign cd_std = site.data.profielregister.standaard -%}
+{%- assign cd_alternatieven = site.data.profielen[cd_std].diensten | where: "status", "live" | where: "categorie", cd.categorie | where_exp: "x", "x.open != false" | where_exp: "x", "x.soort != 'infrastructuur'" | size -%}
+{% include organisms/service-card.html dienst=cd eigen=include.eigen %}
+{%- unless include.naast %}
+<div class="card-strip closed-alternatives">
+    {%- if cd_alternatieven > 0 %}
+    <a href="/#{{ cd.categorie }}" class="link-more">Bekijk {{ cd_alternatieven }} open {% if cd_alternatieven == 1 %}alternatief{% else %}alternatieven{% endif %}</a>
+    {%- else %}
+    <span>Nog geen open alternatief. Ken je er een? <a href="mailto:{{ site.email }}?subject=Open%20alternatief%20voor%20{{ cd.categorie }}">Mail ons</a></span>
+    {%- endif %}
+</div>
+{%- endunless %}

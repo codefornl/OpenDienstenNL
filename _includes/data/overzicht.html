@@ -1,0 +1,54 @@
+{%- comment -%}
+  Alles wat in één categorie in een profiel staat, van alle profielen samen: voor de pagina Diensten.
+  Geeft geen uitvoer; zet deze variabelen:
+
+    ov_al    de open diensten: eerst die uit het standaardprofiel, dan die alleen in een ander profiel staan
+    ov_infra infrastructuur (soort: infrastructuur), zoals domeinnamen; geen oordeel open of niet
+    ov_nog   wat geen open dienst is (open: false). Foute opties komen uit profielen: closed source uit
+             Alle diensten (Slack, GitHub) alleen als een profiel het gebruikt; open source (Signal, Element) altijd
+
+  Een dienst die in meer profielen staat (zelfde url), komt er één keer in. Variabelen zijn globaal in Liquid
+  (en data/profiel.html zet rp_* opnieuw): lees ze direct na de include.
+  Parameters: categorie
+{%- endcomment -%}
+{%- unless gebruik_paren -%}{%- include data/gebruik.html -%}{%- endunless -%}
+{%- assign ov_std = site.data.profielregister.standaard -%}
+{%- assign ov_ids = "" | split: "" | push: ov_std -%}
+{%- for ov_r in site.data.profielregister.profielen -%}
+  {%- if ov_r.id != ov_std -%}{%- assign ov_ids = ov_ids | push: ov_r.id -%}{%- endif -%}
+{%- endfor -%}
+{%- assign ov_al = "" | split: "" -%}
+{%- assign ov_nog = "" | split: "" -%}
+{%- assign ov_infra = "" | split: "" -%}
+{%- assign ov_urls = "" | split: "" -%}
+{%- for ov_id in ov_ids -%}
+  {%- include data/profiel.html id=ov_id -%}
+  {%- assign ov_cat = rp_shown | where: "categorie", include.categorie -%}
+  {%- for ov_d in ov_cat -%}
+    {%- unless ov_urls contains ov_d.url -%}
+      {%- assign ov_urls = ov_urls | push: ov_d.url -%}
+      {%- if ov_d.soort == "infrastructuur" -%}
+        {%- assign ov_infra = ov_infra | push: ov_d -%}
+      {%- elsif ov_d.open == false -%}
+        {%- assign ov_gebruikt = true -%}
+        {%- if ov_id == ov_std and ov_d.redenen contains "gesloten" -%}
+          {%- assign ov_gebruikt = false -%}
+          {%- for ov_p in gebruik_paren -%}
+            {%- assign ov_pu = ov_p | split: " " | last -%}
+            {%- if ov_pu == ov_d.url -%}{%- assign ov_gebruikt = true -%}{%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+        {%- if ov_gebruikt -%}{%- assign ov_nog = ov_nog | push: ov_d -%}{%- endif -%}
+      {%- else -%}
+        {%- assign ov_al = ov_al | push: ov_d -%}
+      {%- endif -%}
+    {%- endunless -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- comment -%} Wat niet open is maar wel open source (Signal, Element), eerst: dat zit dichter bij open {%- endcomment -%}
+{%- assign ov_nog_os = "" | split: "" -%}
+{%- assign ov_nog_cs = "" | split: "" -%}
+{%- for ov_x in ov_nog -%}
+  {%- if ov_x.redenen contains "gesloten" -%}{%- assign ov_nog_cs = ov_nog_cs | push: ov_x -%}{%- else -%}{%- assign ov_nog_os = ov_nog_os | push: ov_x -%}{%- endif -%}
+{%- endfor -%}
+{%- assign ov_nog = ov_nog_os | concat: ov_nog_cs -%}

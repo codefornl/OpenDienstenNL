@@ -1,0 +1,13 @@
+{%- comment -%}
+  Schakelaar "Geschiedenis bijhouden". Standaard uit: dan bewaren we geen sessies (links zijn geheim),
+  alleen beoordelingen als telling per dienst. js/nav.js zet de stand en toont of verbergt Geschiedenis.
+  Uitzetten wist de geschiedenis, na bevestiging. is-initializing: geen animatie tot js/nav.js de beginstand heeft gezet.
+{%- endcomment -%}
+<label class="history-toggle is-initializing">
+    <input type="checkbox" role="switch" data-history-toggle>
+    <span class="history-toggle-track" aria-hidden="true"></span>
+    <span class="history-toggle-text">
+        Geschiedenis bijhouden
+        <small>Alleen op dit apparaat. <a href="/over#privacy">Wat betekent dat?</a></small>
+    </span>
+</label>

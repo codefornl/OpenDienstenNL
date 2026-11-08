@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opendiensten.nl/schemas/register.schema.json",
+  "title": "Profielregister",
+  "description": "De profielen die OpenDiensten inlaadt, met de URL waar elk profiel staat.",
+  "type": "object",
+  "required": ["versie", "standaard", "profielen"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "versie": { "const": 1 },
+    "standaard": { "description": "Id van het profiel dat de pagina Diensten toont, en waarnaar verwijzingen zonder bron gaan.", "type": "string" },
+    "profielen": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "url"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+          "url": { "description": "Waar het profiel staat (profiel.schema.json).", "type": "string", "format": "uri", "pattern": "^https://" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{%- comment -%}
+  Doorverwijzing van een oude url naar een nieuwe plek. Front matter: naar (de nieuwe url), title.
+  Voor oude links die we niet willen breken, zoals /credits en de oude categoriepagina's (/videobellen → /#videobellen).
+{%- endcomment -%}
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page.title }} · OpenDiensten</title>
+    <meta http-equiv="refresh" content="0; url={{ page.naar }}">
+    <link rel="canonical" href="{{ page.naar }}">
+    <meta name="robots" content="noindex">
+</head>
+<body>
+    <p>Dit staat nu op <a href="{{ page.naar }}">{{ page.title }}</a>.</p>
+</body>
+</html>

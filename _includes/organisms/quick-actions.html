@@ -1,0 +1,13 @@
+{%- comment -%}
+  Snelle acties: meteen een gesprek of document starten bij een goed beoordeelde open dienst.
+  Gewone links naar de startpagina's (_layouts/start.html); daar gebeurt de rest.
+  Parameters: profiel (slug; dan kiest de startpagina uit de diensten van dat profiel).
+  Op Diensten met ?profiel= zet js/opendienstenapp.js het profiel in de links.
+{%- endcomment -%}
+{%- if include.profiel -%}{%- capture profiel_query -%}?profiel={{ include.profiel }}{%- endcapture -%}{%- else -%}{%- assign profiel_query = "" -%}{%- endif -%}
+{%- capture href_video -%}/start-videogesprek{{ profiel_query }}{%- endcapture -%}
+{%- capture href_schrijven -%}/start-samen-schrijven{{ profiel_query }}{%- endcapture -%}
+<div class="quick-actions">
+    {% include atoms/button.html text="Start videogesprek" href=href_video %}
+    {% include atoms/button.html text="Start samen schrijven" href=href_schrijven variant="secondary" %}
+</div>

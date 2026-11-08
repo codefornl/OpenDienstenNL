@@ -1,0 +1,22 @@
+{%- comment -%}
+  "Gebruikt door" met het logo van elke organisatie (naam in de tooltip) die de dienst gebruikt,
+  elk een link naar hun profiel (/?profiel=…). Altijd, voor de rust: zonder profiel 'nog geen profiel'.
+  Staat in de strook onder een kaart (molecules/service-strip.html).
+  Leest gebruik_paren: include eerst data/gebruik.html.
+  Parameters: dienst
+{%- endcomment -%}
+{%- assign ub_ids = "" | split: "" -%}
+{%- for ub_r in site.data.profielregister.profielen -%}
+  {%- capture ub_key -%}{{ ub_r.id }} {{ include.dienst.url }}{%- endcapture -%}
+  {%- if gebruik_paren contains ub_key -%}{%- assign ub_ids = ub_ids | push: ub_r.id -%}{%- endif -%}
+{%- endfor -%}
+<span class="used-by">
+    <span class="used-by-label">Gebruikt door</span>
+    {%- if ub_ids.size == 0 %}
+    <span class="used-by-geen">nog geen profiel</span>
+    {%- endif %}
+    {%- for ub_id in ub_ids %}
+    {%- assign ub_p = site.data.profielen[ub_id] %}
+    <a href="/?profiel={{ ub_id }}" class="used-by-org" title="{{ ub_p.naam | escape }}" aria-label="{{ ub_p.naam | escape }}">{% include atoms/org-logo.html naam=ub_p.naam logo=ub_p.logo %}</a>
+    {%- endfor %}
+</span>

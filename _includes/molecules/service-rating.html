@@ -1,0 +1,8 @@
+{%- comment -%}
+  Gemiddelde waardering: sterren met cijfer en aantal.
+  Parameters: rating (1 tot 5), count (aantal beoordelingen)
+{%- endcomment -%}
+<div class="service-rating">
+    {% include atoms/rating-stars.html rating=include.rating %}
+    <span class="rating-text">{{ include.rating | plus: 0.0 | round: 1 }} ({{ include.count | default: 0 }})</span>
+</div>

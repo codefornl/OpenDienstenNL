@@ -1,0 +1,6 @@
+---
+permalink: /schemas/organisaties.schema.json
+layout: null
+---
+{%- comment -%} Het JSON Schema uit _data/schemas/organisaties.json. Zie ook /gegevensmodel. {%- endcomment -%}
+{{ site.data.schemas.organisaties | jsonify }}

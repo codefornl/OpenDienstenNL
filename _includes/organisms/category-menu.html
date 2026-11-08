@@ -1,0 +1,20 @@
+{%- comment -%}
+  Categoriemenu: ankerlinks naar de categoriekoppen op de pagina (organisms/services-by-category.html),
+  met het aantal open diensten (van alle profielen samen, zie data/overzicht.html). Staat in de zijbalk
+  onder Diensten; op mobiel een rij chips die je opzij veegt. js/nav.js markeert de categorie die in beeld is;
+  met ?profiel=… zet js/opendienstenapp.js de aantallen van dat profiel erin en verbergt de rest.
+{%- endcomment -%}
+{%- assign menu_cats = "" | split: "" -%}
+{%- for menu_r in site.data.profielregister.profielen -%}
+  {%- include data/profiel.html id=menu_r.id -%}
+  {%- assign menu_cats = menu_cats | concat: rp_cats -%}
+{%- endfor -%}
+{%- assign menu_cats = menu_cats | uniq | sort -%}
+<nav class="sub-menu" aria-label="Categorieën">
+    <div class="sub-links">
+        {%- for cat in menu_cats %}
+        {%- include data/overzicht.html categorie=cat %}
+        <a href="#{{ cat }}" class="sub-link" data-anchor="{{ cat }}">{{ cat | replace: "-", " " | capitalize }}<span class="filter-count">{{ ov_al.size | plus: ov_infra.size }}</span></a>
+        {%- endfor %}
+    </div>
+</nav>

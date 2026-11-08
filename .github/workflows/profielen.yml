@@ -1,0 +1,47 @@
+# Profielen: bij elke wijziging controleren; elke nacht de externe profielen uit het register ophalen.
+# Zie scripts/profielen.rb en docs/ARCHITECTURE.md.
+name: Profielen
+
+on:
+  push:
+    paths: ['_data/**', '_software/**', '_aanbieders/**', 'scripts/profielen.rb']
+  pull_request:
+    paths: ['_data/**', '_software/**', '_aanbieders/**', 'scripts/profielen.rb']
+  schedule:
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  profielen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Externe profielen ophalen
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: ruby scripts/profielen.rb ophalen
+
+      - name: Logo's van opgehaalde profielen lokaal maken
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: ruby scripts/profielen.rb iconen
+
+      - name: Profielen controleren
+        run: ruby scripts/profielen.rb controleer
+
+      - name: Opgehaalde profielen opslaan
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          if [ -n "$(git status --porcelain _data/profielen assets/images/iconen)" ]; then
+            git config user.name "OpenDiensten"
+            git config user.email "opendiensten@users.noreply.github.com"
+            git add _data/profielen assets/images/iconen
+            git commit -m "Externe profielen bijgewerkt"
+            git push
+          fi

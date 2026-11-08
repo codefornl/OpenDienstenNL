@@ -1,0 +1,44 @@
+---
+permalink: /ontwikkelaars
+layout: default
+title: Voor ontwikkelaars
+description: "Alles om met OpenDiensten verder te bouwen: het design system en het gegevensmodel, met open data in JSON."
+---
+<div class="app-container">
+  {% include organisms/sidebar.html active="ontwikkelaars" %}
+
+  <main class="content-area">
+    <section class="view" aria-labelledby="ontwikkelaars-title">
+      <div class="page-content">
+        {% include atoms/kicker.html text="Voor ontwikkelaars" hex=true %}
+        <h2 id="ontwikkelaars-title">Verder bouwen met OpenDiensten</h2>
+        <p class="page-lead">OpenDiensten is open: de vormgeving, de code en de gegevens. Gebruik ze, verbeter ze, of bouw er iets eigens mee. De gegevens zijn <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.nl">CC0</a>, zonder garantie dat ze kloppen.</p>
+      </div>
+
+      <div class="profile-grid">
+        <a href="/design-system/" class="profile-card">
+          {% include atoms/org-logo.html naam="1" %}
+          <div class="profile-card-body">
+            <h3>Design system</h3>
+            <p>De vormgeving van klein naar groot, volgens atomic design: tokens, atomen, moleculen en organismen, elk als Jekyll-include, met de regels van Apitecture.</p>
+          </div>
+        </a>
+        <a href="/gegevensmodel" class="profile-card">
+          {% include atoms/org-logo.html naam="2" %}
+          <div class="profile-card-body">
+            <h3>Gegevensmodel</h3>
+            <p>Welke informatie er is over diensten, software, organisaties en profielen, met alle velden uit de JSON Schema's en de bestanden om zelf te gebruiken.</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="profile-add">
+        <h3>De broncode</h3>
+        <p>Alles staat op GitHub, ook de gegevens in <code>_data/</code>. Een dienst toevoegen of verbeteren kan met een pull request; controleer daarna met <code>ruby scripts/profielen.rb controleer</code>.</p>
+        {% include atoms/button.html text="Naar GitHub" href="https://github.com/Apitecture/OpenDienstenNL" variant="secondary" %}
+      </div>
+    </section>
+
+    {% include organisms/site-footer.html %}
+  </main>
+</div>

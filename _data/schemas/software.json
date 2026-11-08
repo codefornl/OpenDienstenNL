@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opendiensten.nl/schemas/software.schema.json",
+  "title": "Software",
+  "description": "De software waar diensten op draaien: software die je zelf kunt draaien of installeren, zoals Mastodon of Jitsi Meet (open source), of een gesloten product zoals Word. Een dienst verwijst hiernaar met software: <id>. Wat alleen als dienst bestaat (Slack, LinkedIn), staat hier niet in: dat is geen software die je ergens anders kunt draaien. Software is geen dienst: Mastodon is software, social.codefor.nl is een dienst die erop draait.",
+  "type": "object",
+  "required": [
+    "versie",
+    "software"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "versie": {
+      "const": 1
+    },
+    "software": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "naam"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "Vaste sleutel, bv. mastodon. Diensten verwijzen hiernaar; verander een bestaande id nooit.",
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "naam": {
+            "description": "Naam van de software, bv. Mastodon.",
+            "type": "string",
+            "minLength": 1
+          },
+          "beschrijving": {
+            "description": "Wat de software doet, in één of twee zinnen.",
+            "type": "string"
+          },
+          "logo": {
+            "description": "Logo van de software: een pad op opendiensten.nl of een https-URL. Het grote logo op het kaartje van elke dienst die erop draait.",
+            "type": "string",
+            "pattern": "^(/|https://)"
+          },
+          "website": {
+            "description": "Website of broncode van de software.",
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https?://"
+          },
+          "broncode": {
+            "description": "Waar de broncode staat, bv. een repository op GitHub, GitLab, Codeberg of Framagit.",
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://"
+          },
+          "open_source": {
+            "description": "true als de software open source is.",
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

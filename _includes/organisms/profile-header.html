@@ -1,0 +1,15 @@
+{%- comment -%}
+  Profielkop: wie deze diensten gebruikt en hoe ver ze zijn met digitale autonomie. Zelfde stramien als
+  software en aanbieders (organisms/entity-header.html). De link om mensen hierheen te sturen staat gewoon
+  in de adresbalk (/?profiel=…).
+  Parameters: profiel (id uit _data/profielregister.json)
+{%- endcomment -%}
+{%- include data/profiel.html id=include.profiel -%}
+{%- assign ph = rp -%}
+{%- capture ph_meta -%}
+    <div class="profile-autonomy">
+        <p class="kicker">Digitale autonomie zelfscan</p>
+        {% include molecules/autonomy-meter.html profiel=include.profiel %}
+    </div>
+{%- endcapture -%}
+{% include organisms/entity-header.html soort="Profiel" naam=ph.naam logo=ph.logo website=ph.website beschrijving=ph.beschrijving meta=ph_meta %}

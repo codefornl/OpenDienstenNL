@@ -1,0 +1,27 @@
+{%- comment -%}
+  Hoofdnavigatie: de plekken van de site, met echte URL's.
+  Als Diensten actief is, staan de categorieën eronder (ankers naar de koppen op de pagina);
+  een profiel is een filter op Diensten (/?profiel=…), dus Profielen heeft geen submenu.
+  Geschiedenis staat alleen in het menu als de gebruiker die bijhoudt (standaard uit); js/nav.js toont het item
+  dan, met het aantal sessies dat nog beoordeeld moet worden.
+  Drie groepen: Diensten en Geschiedenis (wat je gebruikt); Profielen, Software en Aanbieders (wie wat gebruikt,
+  waarop het draait en wie het aanbiedt); en Wat is een open dienst? met Voor ontwikkelaars (design system en gegevensmodel). Een groep begint met li.nav-group.
+  Parameters: active (diensten | geschiedenis | profielen | software | aanbieders | over | ontwikkelaars)
+{%- endcomment -%}
+{%- assign active = include.active -%}
+<nav class="main-nav" aria-label="Hoofdmenu">
+    <ul>
+        <li{% if active == 'diensten' %} class="has-submenu"{% endif %}>
+            <a href="/" class="nav-link{% if active == 'diensten' %} active{% endif %}"{% if active == 'diensten' %} aria-current="page"{% endif %}>Diensten</a>
+            {%- if active == 'diensten' %}
+            {% include organisms/category-menu.html %}
+            {%- endif %}
+        </li>
+        <li data-history-nav{% unless active == 'geschiedenis' %} hidden{% endunless %}><a href="/geschiedenis" class="nav-link{% if active == 'geschiedenis' %} active{% endif %}"{% if active == 'geschiedenis' %} aria-current="page"{% endif %}>Geschiedenis<span class="nav-badge" data-unrated-count hidden></span></a></li>
+        <li class="nav-group"><a href="/profielen/" class="nav-link{% if active == 'profielen' %} active{% endif %}"{% if active == 'profielen' %} aria-current="page"{% endif %}>Profielen</a></li>
+        <li><a href="/software/" class="nav-link{% if active == 'software' %} active{% endif %}"{% if active == 'software' %} aria-current="page"{% endif %}>Software</a></li>
+        <li><a href="/aanbieders/" class="nav-link{% if active == 'aanbieders' %} active{% endif %}"{% if active == 'aanbieders' %} aria-current="page"{% endif %}>Aanbieders</a></li>
+        <li class="nav-group"><a href="/over" class="nav-link{% if active == 'over' %} active{% endif %}"{% if active == 'over' %} aria-current="page"{% endif %}>Wat is een open dienst?</a></li>
+        <li><a href="/ontwikkelaars" class="nav-link{% if active == 'ontwikkelaars' %} active{% endif %}"{% if active == 'ontwikkelaars' %} aria-current="page"{% endif %}>Voor ontwikkelaars</a></li>
+    </ul>
+</nav>

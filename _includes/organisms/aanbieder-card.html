@@ -1,0 +1,25 @@
+{%- comment -%}
+  Aanbiedertegel: de organisatie, haar land en hoeveel diensten ze aanbiedt (en waarvoor).
+  Op /aanbieders/. Verwijst naar de pagina van de aanbieder: /aanbieders/<id>/.
+  Biedt ze alleen diensten aan die geen open dienst zijn, dan een dikke zwarte rand.
+  Parameters: id (id uit _data/organisaties.json)
+{%- endcomment -%}
+{%- assign ac_org = site.data.organisaties.organisaties | where: "id", include.id | first -%}
+{%- include data/diensten-met.html veld="aanbieder" id=include.id -%}
+{%- assign ac_open = sd_diensten | where_exp: "d", "d.open != false" -%}
+{%- assign ac_n = sd_diensten.size -%}
+{%- assign ac_cats = sd_cats -%}
+{%- include data/diensten-met.html veld="beheer" id=include.id -%}
+{%- assign ac_beheer = sd_diensten -%}
+{%- if ac_n == 0 and ac_beheer.size > 0 -%}{%- assign ac_open = ac_beheer -%}{%- assign ac_cats = sd_cats -%}{%- endif -%}
+{%- comment -%} infrastructuur telt hier als niet dicht: geen zwarte rand {%- endcomment -%}
+<a href="/aanbieders/{{ ac_org.id }}/" class="profile-card software-card{% if ac_open.size == 0 %} is-closed{% endif %}">
+    {% include atoms/org-logo.html naam=ac_org.naam logo=ac_org.logo %}
+    <div class="profile-card-body">
+        <h3>{{ ac_org.naam | escape }}</h3>
+        <p>{% include atoms/land.html land=ac_org.land %}{% if ac_org.land %} · {% endif %}{% if ac_n > 0 %}{{ ac_n }} {% if ac_n == 1 %}dienst{% else %}diensten{% endif %}{% else %}beheert {{ ac_beheer.size }} {% if ac_beheer.size == 1 %}dienst{% else %}diensten{% endif %}{% endif %}</p>
+        <p class="profile-card-cats">
+            {%- for cat_slug in ac_cats %}{% include atoms/category-badge.html categorie=cat_slug %} {% endfor -%}
+        </p>
+    </div>
+</a>

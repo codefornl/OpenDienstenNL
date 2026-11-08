@@ -1,0 +1,59 @@
+---
+permalink: /software/
+layout: default
+title: Software
+description: De software waar open diensten op draaien, zoals Jitsi Meet, Etherpad en Forgejo, met per software de diensten die erop draaien. En de gesloten software die organisaties nog gebruiken.
+---
+{%- assign sw_alle = site.data.software.software | sort: "naam" -%}
+{%- comment -%} Open source (en onbekend) met diensten, gesloten software, en software waar we nog geen dienst van kennen {%- endcomment -%}
+{%- assign sw_open = "" | split: "" -%}
+{%- assign sw_dicht = "" | split: "" -%}
+{%- assign sw_leeg = "" | split: "" -%}
+{%- for sw in sw_alle -%}
+  {%- include data/diensten-met.html id=sw.id -%}
+  {%- if sd_diensten.size == 0 -%}{%- assign sw_leeg = sw_leeg | push: sw -%}
+  {%- elsif sw.open_source == false -%}{%- assign sw_dicht = sw_dicht | push: sw -%}
+  {%- else -%}{%- assign sw_open = sw_open | push: sw -%}{%- endif -%}
+{%- endfor -%}
+<div class="app-container">
+  {% include organisms/sidebar.html active="software" %}
+
+  <main class="content-area">
+    <section class="view" aria-labelledby="software-title">
+      <div class="page-content">
+        {% include atoms/kicker.html text="Software" hex=true %}
+        <h2 id="software-title">Waar draaien de diensten op?</h2>
+        <p class="page-lead">Een dienst is de plek waar je iets gebruikt, zoals <code>meetme.bit.nl</code>. Daaronder draait software, zoals Jitsi Meet. Open source software kan iedereen draaien: stopt een aanbieder, dan ga je met dezelfde software naar een ander, of je host hem zelf. Per software zie je welke diensten erop draaien.</p>
+      </div>
+
+      <h3 class="software-group">Open source</h3>
+      <div class="profile-grid">
+        {%- for sw in sw_open %}
+        {% include organisms/software-card.html id=sw.id %}
+        {%- endfor %}
+      </div>
+
+      {%- if sw_dicht.size > 0 %}
+      <h3 class="software-group">Gesloten software</h3>
+      <p class="page-lead">Gesloten producten die organisaties nog gebruiken, met de open alternatieven. Wat alleen als dienst bestaat, zoals Slack of LinkedIn, staat hier niet: dat vind je bij de <a href="/">diensten</a>.</p>
+      <div class="profile-grid">
+        {%- for sw in sw_dicht %}
+        {% include organisms/software-card.html id=sw.id %}
+        {%- endfor %}
+      </div>
+      {%- endif %}
+
+      {%- if sw_leeg.size > 0 %}
+      <h3 class="software-group">Nog zonder dienst</h3>
+      <p class="page-lead">Open source software waar we nog geen open dienst van kennen. Ken je er een? <a href="mailto:{{ site.email }}?subject=Open%20dienst">Mail ons</a>.</p>
+      <div class="profile-grid">
+        {%- for sw in sw_leeg %}
+        {% include organisms/software-card.html id=sw.id %}
+        {%- endfor %}
+      </div>
+      {%- endif %}
+    </section>
+
+    {% include organisms/site-footer.html %}
+  </main>
+</div>

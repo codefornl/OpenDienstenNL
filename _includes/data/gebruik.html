@@ -1,0 +1,16 @@
+{%- comment -%}
+  Welke organisatie gebruikt welke dienst: voor molecules/used-by.html. Geeft geen uitvoer; zet
+  gebruik_paren, een lijst met "<profiel-id> <url van de dienst>" voor elke dienst in elk profiel
+  behalve het standaardprofiel. Eén keer per pagina includen, vóór de kaarten.
+  Zet ook rp_* (via data/profiel.html).
+{%- endcomment -%}
+{%- assign gebruik_paren = "" | split: "" -%}
+{%- for g_r in site.data.profielregister.profielen -%}
+  {%- if g_r.id != site.data.profielregister.standaard -%}
+    {%- include data/profiel.html id=g_r.id -%}
+    {%- for g_d in rp_shown -%}
+      {%- capture g_key -%}{{ g_r.id }} {{ g_d.url }}{%- endcapture -%}
+      {%- assign gebruik_paren = gebruik_paren | push: g_key -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}

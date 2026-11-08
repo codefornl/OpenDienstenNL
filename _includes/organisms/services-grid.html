@@ -1,0 +1,30 @@
+{%- comment -%}
+  Raster van dienstkaarten.
+  Parameters:
+    diensten   lijst met diensten (objecten volgens schemas/dienst.schema.json), in deze volgorde
+    categorie  zonder diensten: de live open diensten in die categorie uit het standaardprofiel (Alle diensten)
+    limit      maximaal aantal
+    id         id van het raster (optioneel)
+    gebruik    true = bij elke kaart de organisaties die hem gebruiken en de software, in een strook (molecules/service-strip.html; include eerst data/gebruik.html)
+  Met categorie krijgt het raster data-categorie, zodat js/opendienstenapp.js het op beoordeling kan sorteren.
+{%- endcomment -%}
+{%- if include.diensten -%}
+  {%- assign grid_diensten = include.diensten -%}
+{%- else -%}
+  {%- assign grid_std = site.data.profielregister.standaard -%}
+  {%- assign grid_diensten = site.data.profielen[grid_std].diensten | where: "status", "live" | where_exp: "d", "d.open != false" | where_exp: "d", "d.soort != 'infrastructuur'" -%}
+  {%- if include.categorie -%}{%- assign grid_diensten = grid_diensten | where: "categorie", include.categorie -%}{%- endif -%}
+{%- endif -%}
+{%- assign grid_limit = include.limit | default: grid_diensten.size -%}
+<div class="services-grid"{% if include.id %} id="{{ include.id }}"{% endif %}{% if include.categorie %} data-categorie="{{ include.categorie }}"{% endif %}>
+    {%- for dienst in grid_diensten limit: grid_limit %}
+    {%- if include.gebruik %}
+    <div class="service-item">
+        {% include organisms/service-card.html dienst=dienst %}
+        {% include molecules/service-strip.html dienst=dienst %}
+    </div>
+    {%- else %}
+    {% include organisms/service-card.html dienst=dienst %}
+    {%- endif %}
+    {%- endfor %}
+</div>

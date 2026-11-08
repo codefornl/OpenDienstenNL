@@ -1,0 +1,21 @@
+{%- comment -%}
+  Land van een organisatie, met het label europees of niet europees. Niets zonder land.
+  Parameters: land (ISO 3166-1 alpha-2, bv. NL)
+{%- endcomment -%}
+{%- assign la_eu = "AT BE BG CY CZ DE DK EE ES FI FR GR HR HU IE IT LT LU LV MT NL PL PT RO SE SI SK" | split: " " -%}
+{%- if include.land -%}
+{%- case include.land -%}
+{%- when "NL" -%}{%- assign la_naam = "Nederland" -%}
+{%- when "BE" -%}{%- assign la_naam = "België" -%}
+{%- when "DE" -%}{%- assign la_naam = "Duitsland" -%}
+{%- when "FR" -%}{%- assign la_naam = "Frankrijk" -%}
+{%- when "AT" -%}{%- assign la_naam = "Oostenrijk" -%}
+{%- when "LV" -%}{%- assign la_naam = "Letland" -%}
+{%- when "CH" -%}{%- assign la_naam = "Zwitserland" -%}
+{%- when "GB" -%}{%- assign la_naam = "Verenigd Koninkrijk" -%}
+{%- when "US" -%}{%- assign la_naam = "Verenigde Staten" -%}
+{%- else -%}{%- assign la_naam = include.land -%}
+{%- endcase -%}
+{%- if la_eu contains include.land %}{% assign la_in_eu = true %}{% else %}{% assign la_in_eu = false %}{% endif -%}
+<span class="land">{{ la_naam }} {% if la_in_eu %}<span class="tag tag-goed">europees</span>{% else %}<span class="tag tag-niet">niet europees</span>{% endif %}</span>
+{%- endif -%}

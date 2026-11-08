@@ -1,0 +1,24 @@
+{%- comment -%}
+  Softwaretegel: de software, of hij open source is, en op hoeveel diensten hij draait (en waarvoor).
+  Op /software/. Verwijst naar de pagina van de software: /software/<id>/.
+  Parameters: id (id uit _data/software.json)
+{%- endcomment -%}
+{%- assign sc_sw = site.data.software.software | where: "id", include.id | first -%}
+{%- include data/diensten-met.html id=include.id -%}
+{%- assign sc_logo = sc_sw.logo -%}
+<a href="/software/{{ sc_sw.id }}/" class="profile-card software-card{% if sc_sw.open_source == false %} is-closed{% endif %}">
+    {% include atoms/org-logo.html naam=sc_sw.naam logo=sc_logo %}
+    <div class="profile-card-body">
+        <h3>{{ sc_sw.naam | escape }}</h3>
+        {%- if sc_sw.beschrijving %}
+        <p>{{ sc_sw.beschrijving | escape }}</p>
+        {%- endif %}
+        <p>
+            {%- if sc_sw.open_source == true %}<span class="tag tag-goed">open source</span>{% elsif sc_sw.open_source == false %}<span class="tag tag-niet">closed source</span>{% endif %}
+            {{ sd_diensten.size }} {% if sd_diensten.size == 1 %}dienst{% else %}diensten{% endif %}
+        </p>
+        <p class="profile-card-cats">
+            {%- for cat_slug in sd_cats %}{% include atoms/category-badge.html categorie=cat_slug %} {% endfor -%}
+        </p>
+    </div>
+</a>

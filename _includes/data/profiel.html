@@ -1,0 +1,41 @@
+{%- comment -%}
+  Een profiel uit het register lezen en de verwijzingen oplossen. Geeft geen uitvoer; zet deze variabelen:
+
+    rp          het profiel (naam, beschrijving, website, logo, …)
+    rp_shown    alle diensten die getoond worden, in volgorde: verwijzingen opgelost, disabled en discontinued weggelaten
+    rp_open     daarvan de open diensten
+    rp_closed   daarvan wat geen open dienst is (open: false)
+    rp_infra    daarvan de infrastructuur (soort: infrastructuur: domeinnamen, nieuwsbrieven, …), niet open of dicht
+    rp_cats     de categorieën, in volgorde van eerste voorkomen
+    rp_eigen    de eigen url's van deze organisatie bij verwijzingen naar diensten die geen open dienst zijn,
+                als lijst van "<dienst-id> <url>"; geef hem als eigen= door aan de kaarten
+
+  Een verwijzing {"ref": id} gaat naar het standaardprofiel (Alle diensten), of naar het profiel
+  in het register met die url als "bron". Variabelen zijn globaal in Liquid: lees ze direct na de include.
+  Parameters: id (id van het profiel in _data/profielregister.json)
+{%- endcomment -%}
+{%- assign rp = site.data.profielen[include.id] -%}
+{%- assign rp_entries = "" | split: "" -%}
+{%- assign rp_eigen = "" | split: "" -%}
+{%- for rp_e in rp.diensten -%}
+  {%- if rp_e.ref -%}
+    {%- assign rp_bron = site.data.profielregister.standaard -%}
+    {%- if rp_e.bron -%}
+      {%- assign rp_reg = site.data.profielregister.profielen | where: "url", rp_e.bron | first -%}
+      {%- if rp_reg -%}{%- assign rp_bron = rp_reg.id -%}{%- endif -%}
+    {%- endif -%}
+    {%- assign rp_d = site.data.profielen[rp_bron].diensten | where: "id", rp_e.ref | first -%}
+    {%- if rp_e.url and rp_d.open == false or rp_e.url and rp_d.soort == "infrastructuur" -%}
+      {%- capture rp_eigen_e -%}{{ rp_e.ref }} {{ rp_e.url }}{%- endcapture -%}
+      {%- assign rp_eigen = rp_eigen | push: rp_eigen_e -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- assign rp_d = rp_e -%}
+  {%- endif -%}
+  {%- if rp_d -%}{%- assign rp_entries = rp_entries | push: rp_d -%}{%- endif -%}
+{%- endfor -%}
+{%- assign rp_shown = rp_entries | where_exp: "d", "d.status != 'disabled'" | where_exp: "d", "d.status != 'discontinued'" -%}
+{%- assign rp_infra = rp_shown | where: "soort", "infrastructuur" -%}
+{%- assign rp_open = rp_shown | where_exp: "d", "d.open != false" | where_exp: "d", "d.soort != 'infrastructuur'" -%}
+{%- assign rp_closed = rp_shown | where_exp: "d", "d.open == false" | where_exp: "d", "d.soort != 'infrastructuur'" -%}
+{%- assign rp_cats = rp_shown | map: "categorie" | uniq -%}

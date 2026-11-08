@@ -1,0 +1,300 @@
+{
+  "$schema": "https://opendiensten.nl/schemas/software.schema.json",
+  "versie": 1,
+  "software": [
+    {
+      "id": "alkemio",
+      "naam": "Alkemio",
+      "beschrijving": "Platform om met communities samen te werken aan maatschappelijke uitdagingen.",
+      "logo": "/assets/images/iconen/software/alkemio.png",
+      "website": "https://alkem.io",
+      "broncode": "https://github.com/alkem-io/server",
+      "open_source": true
+    },
+    {
+      "id": "bigbluebutton",
+      "naam": "BigBlueButton",
+      "beschrijving": "Videovergaderen voor online lessen en webinars, met whiteboard, breakout-rooms en opnames.",
+      "logo": "/assets/images/iconen/software/bigbluebutton.png",
+      "website": "https://bigbluebutton.org",
+      "broncode": "https://github.com/bigbluebutton/bigbluebutton",
+      "open_source": true
+    },
+    {
+      "id": "cryptpad",
+      "naam": "CryptPad",
+      "beschrijving": "Samen werken aan documenten, spreadsheets en presentaties, met end-to-end-versleuteling.",
+      "logo": "/assets/images/iconen/software/cryptpad.png",
+      "website": "https://cryptpad.org",
+      "broncode": "https://github.com/cryptpad/cryptpad",
+      "open_source": true
+    },
+    {
+      "id": "deltachat",
+      "naam": "Delta Chat",
+      "beschrijving": "Chat-app die werkt via e-mail of chatmail-servers, zonder telefoonnummer.",
+      "logo": "/assets/images/iconen/software/deltachat.jpg",
+      "website": "https://delta.chat",
+      "broncode": "https://github.com/deltachat",
+      "open_source": true
+    },
+    {
+      "id": "element",
+      "naam": "Element",
+      "beschrijving": "App voor Matrix, de open standaard voor chatten en bellen; werkt met elke Matrix-server.",
+      "logo": "/assets/images/iconen/software/element.png",
+      "website": "https://element.io",
+      "broncode": "https://github.com/element-hq/element-web",
+      "open_source": true
+    },
+    {
+      "id": "ethercalc",
+      "naam": "EtherCalc",
+      "beschrijving": "Spreadsheet in de browser, waar je met meerdere mensen tegelijk in werkt.",
+      "logo": "/assets/images/iconen/software/ethercalc.png",
+      "website": "https://ethercalc.net",
+      "broncode": "https://github.com/audreyt/ethercalc",
+      "open_source": true
+    },
+    {
+      "id": "etherpad",
+      "naam": "Etherpad",
+      "beschrijving": "Samen tegelijk tekst schrijven in de browser, met een eigen kleur per schrijver.",
+      "logo": "/assets/images/iconen/software/etherpad.png",
+      "website": "https://etherpad.org",
+      "broncode": "https://github.com/ether/etherpad-lite",
+      "open_source": true
+    },
+    {
+      "id": "excalidraw",
+      "naam": "Excalidraw",
+      "beschrijving": "Online whiteboard om samen schetsen en diagrammen te tekenen, in een handgetekende stijl.",
+      "logo": "/assets/images/iconen/software/excalidraw.png",
+      "website": "https://excalidraw.com",
+      "broncode": "https://github.com/excalidraw/excalidraw",
+      "open_source": true
+    },
+    {
+      "id": "forgejo",
+      "naam": "Forgejo",
+      "beschrijving": "Platform om code te delen en samen aan software te werken, met issues en pull requests. Een community-fork van Gitea.",
+      "logo": "/assets/images/iconen/software/forgejo.png",
+      "website": "https://forgejo.org",
+      "broncode": "https://codeberg.org/forgejo/forgejo",
+      "open_source": true
+    },
+    {
+      "id": "framadate",
+      "naam": "Framadate",
+      "beschrijving": "Een datum prikken of een peiling houden, zonder account.",
+      "logo": "/assets/images/iconen/software/framadate.png",
+      "website": "https://framagit.org/framasoft/framadate/framadate",
+      "broncode": "https://framagit.org/framasoft/framadate/framadate",
+      "open_source": true
+    },
+    {
+      "id": "gitea",
+      "naam": "Gitea",
+      "beschrijving": "Lichtgewicht platform om code te delen, met issues en pull requests.",
+      "logo": "/assets/images/iconen/software/gitea.png",
+      "website": "https://about.gitea.com",
+      "broncode": "https://github.com/go-gitea/gitea",
+      "open_source": true
+    },
+    {
+      "id": "gitlab",
+      "naam": "GitLab",
+      "beschrijving": "Uitgebreid platform voor code, issues en CI/CD. De community-editie is open source.",
+      "logo": "/assets/images/iconen/software/gitlab.png",
+      "website": "https://about.gitlab.com",
+      "broncode": "https://gitlab.com/gitlab-org/gitlab",
+      "open_source": true
+    },
+    {
+      "id": "jitsi-meet",
+      "naam": "Jitsi Meet",
+      "beschrijving": "Videobellen in de browser, zonder account: je deelt gewoon een link.",
+      "logo": "/assets/images/iconen/software/jitsi-meet.png",
+      "website": "https://jitsi.org/jitsi-meet/",
+      "broncode": "https://github.com/jitsi/jitsi-meet",
+      "open_source": true
+    },
+    {
+      "id": "listmonk",
+      "naam": "Listmonk",
+      "beschrijving": "Nieuwsbrieven en mailinglijsten beheren en versturen, op je eigen server.",
+      "logo": "/assets/images/iconen/software/listmonk.png",
+      "website": "https://listmonk.app",
+      "broncode": "https://github.com/knadh/listmonk",
+      "open_source": true
+    },
+    {
+      "id": "lufi",
+      "naam": "Lufi",
+      "beschrijving": "Bestanden delen via een link, versleuteld in je browser.",
+      "website": "https://framagit.org/fiat-tux/hat-softwares/lufi",
+      "broncode": "https://framagit.org/fiat-tux/hat-softwares/lufi",
+      "open_source": true
+    },
+    {
+      "id": "mastodon",
+      "naam": "Mastodon",
+      "beschrijving": "Sociaal netwerk zonder centrale eigenaar: servers praten met elkaar via de fediverse.",
+      "logo": "/assets/images/iconen/software/mastodon.png",
+      "website": "https://joinmastodon.org",
+      "broncode": "https://github.com/mastodon/mastodon",
+      "open_source": true
+    },
+    {
+      "id": "mobilizon",
+      "naam": "Mobilizon",
+      "beschrijving": "Evenementen en groepen organiseren, als alternatief voor Facebook-evenementen en Meetup.",
+      "logo": "/assets/images/iconen/software/mobilizon.png",
+      "website": "https://joinmobilizon.org",
+      "broncode": "https://framagit.org/framasoft/mobilizon",
+      "open_source": true
+    },
+    {
+      "id": "nextcloud",
+      "naam": "Nextcloud",
+      "beschrijving": "Bestanden delen en samenwerken, met agenda, contacten en kantoortoepassingen. Een alternatief voor Google Drive.",
+      "logo": "/assets/images/iconen/software/nextcloud.png",
+      "website": "https://nextcloud.com",
+      "broncode": "https://github.com/nextcloud/server",
+      "open_source": true
+    },
+    {
+      "id": "onlyoffice",
+      "naam": "ONLYOFFICE",
+      "beschrijving": "Kantoortoepassingen voor documenten, spreadsheets en presentaties, die goed overweg kunnen met Microsoft-bestanden.",
+      "logo": "/assets/images/iconen/software/onlyoffice.png",
+      "website": "https://www.onlyoffice.com",
+      "broncode": "https://github.com/ONLYOFFICE/DocumentServer",
+      "open_source": true
+    },
+    {
+      "id": "openboard",
+      "naam": "OpenBoard",
+      "beschrijving": "Digitaal schoolbord om les te geven en te presenteren.",
+      "logo": "/assets/images/iconen/software/openboard.png",
+      "website": "https://openboard.ch",
+      "broncode": "https://github.com/OpenBoard-org/OpenBoard",
+      "open_source": true
+    },
+    {
+      "id": "peertube",
+      "naam": "PeerTube",
+      "beschrijving": "Video's delen zonder centrale eigenaar: servers zijn met elkaar verbonden via de fediverse.",
+      "logo": "/assets/images/iconen/software/peertube.png",
+      "website": "https://joinpeertube.org",
+      "broncode": "https://github.com/Chocobozzz/PeerTube",
+      "open_source": true
+    },
+    {
+      "id": "pleio",
+      "naam": "Pleio",
+      "beschrijving": "Online samenwerkingsplatform voor Nederlandse overheidsorganisaties: intranet, samenwerkomgeving en website in één.",
+      "logo": "/assets/images/iconen/software/pleio.png",
+      "website": "https://pleio.nl",
+      "broncode": "https://gitlab.com/pleio/platform",
+      "open_source": true
+    },
+    {
+      "id": "plone",
+      "naam": "Plone",
+      "beschrijving": "Systeem om websites en intranetten te bouwen en te beheren.",
+      "logo": "/assets/images/iconen/software/plone.png",
+      "website": "https://plone.org",
+      "broncode": "https://github.com/plone/Products.CMFPlone",
+      "open_source": true
+    },
+    {
+      "id": "prikkert",
+      "naam": "Prikkert",
+      "beschrijving": "Afspraken en bijeenkomsten plannen, als alternatief voor Doodle en Meetup.",
+      "logo": "/assets/images/iconen/software/prikkert.png",
+      "website": "https://prikkert.nl",
+      "broncode": "https://codeberg.org/qcoret/prikkert",
+      "open_source": true
+    },
+    {
+      "id": "rocket-chat",
+      "naam": "Rocket.Chat",
+      "beschrijving": "Teamchat met kanalen, zoals Slack, om zelf te draaien.",
+      "logo": "/assets/images/iconen/software/rocket-chat.png",
+      "website": "https://rocket.chat",
+      "broncode": "https://github.com/RocketChat/Rocket.Chat",
+      "open_source": true
+    },
+    {
+      "id": "signal",
+      "naam": "Signal",
+      "beschrijving": "Versleutelde berichten en bellen. De app en de server zijn open source.",
+      "logo": "/assets/images/iconen/software/signal.png",
+      "website": "https://signal.org",
+      "broncode": "https://github.com/signalapp",
+      "open_source": true
+    },
+    {
+      "id": "simplex-chat",
+      "naam": "SimpleX Chat",
+      "beschrijving": "Chatten zonder gebruikers-id's: je maakt contact via een link of QR-code.",
+      "logo": "/assets/images/iconen/software/simplex-chat.png",
+      "website": "https://simplex.chat",
+      "broncode": "https://github.com/simplex-chat/simplex-chat",
+      "open_source": true
+    },
+    {
+      "id": "strut",
+      "naam": "Strut",
+      "beschrijving": "Presentaties maken in de browser, voor impress.js.",
+      "website": "https://github.com/tantaman/Strut",
+      "broncode": "https://github.com/tantaman/Strut",
+      "open_source": true
+    },
+    {
+      "id": "taiga",
+      "naam": "Taiga",
+      "beschrijving": "Projectbeheer voor teams, met scrum- en kanbanborden.",
+      "logo": "/assets/images/iconen/software/taiga.png",
+      "website": "https://taiga.io",
+      "broncode": "https://github.com/kaleidos-ventures/taiga",
+      "open_source": true
+    },
+    {
+      "id": "tldraw",
+      "naam": "tldraw",
+      "beschrijving": "Online whiteboard om samen te tekenen. De broncode is openbaar, maar de licentie is geen open source-licentie.",
+      "logo": "/assets/images/iconen/software/tldraw.png",
+      "website": "https://tldraw.dev",
+      "broncode": "https://github.com/tldraw/tldraw"
+    },
+    {
+      "id": "wekan",
+      "naam": "Wekan",
+      "beschrijving": "Kanbanborden om taken te organiseren, als alternatief voor Trello.",
+      "logo": "/assets/images/iconen/software/wekan.png",
+      "website": "https://wekan.github.io",
+      "broncode": "https://github.com/wekan/wekan",
+      "open_source": true
+    },
+    {
+      "id": "workadventure",
+      "naam": "WorkAdventure",
+      "beschrijving": "Virtuele kantoor- en evenementruimtes in pixelstijl, waar je rondloopt en videobelt met wie je tegenkomt.",
+      "logo": "/assets/images/iconen/software/workadventure.png",
+      "website": "https://workadventu.re",
+      "broncode": "https://github.com/workadventure/workadventure",
+      "open_source": true
+    },
+    {
+      "id": "yakforms",
+      "naam": "Yakforms",
+      "beschrijving": "Formulieren en enquêtes maken. De software achter Framaforms.",
+      "logo": "/assets/images/iconen/software/yakforms.png",
+      "website": "https://yakforms.org",
+      "broncode": "https://framagit.org/yakforms/yakforms",
+      "open_source": true
+    }
+  ]
+}

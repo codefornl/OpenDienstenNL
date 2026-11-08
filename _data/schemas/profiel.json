@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opendiensten.nl/schemas/profiel.schema.json",
+  "title": "Profiel",
+  "description": "De diensten die een organisatie gebruikt, met informatie over die organisatie. Een organisatie kan dit bestand zelf publiceren, bijvoorbeeld op https://<domein>/.well-known/opendiensten.json; het register van OpenDiensten laadt het dan in. Diensten kunnen volledig worden opgenomen, of met een verwijzing naar een dienst in een ander profiel, standaard Alle diensten (https://opendiensten.nl/profielen/open-diensten.json). Met een profiel stel je de gegevens erin beschikbaar onder CC0 (https://creativecommons.org/publicdomain/zero/1.0/).",
+  "type": "object",
+  "required": [
+    "versie",
+    "id",
+    "naam",
+    "diensten"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "versie": {
+      "description": "Versie van dit formaat.",
+      "const": 1
+    },
+    "id": {
+      "description": "Korte naam van het profiel, gebruikt in de link: https://opendiensten.nl/?profiel=<id>.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "naam": {
+      "description": "Naam van de organisatie.",
+      "type": "string",
+      "minLength": 1
+    },
+    "beschrijving": {
+      "description": "Wie de organisatie is en waarvoor ze deze diensten gebruikt; één of twee zinnen.",
+      "type": "string"
+    },
+    "website": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "logo": {
+      "description": "Vierkant logo; een volledige URL, of een pad op opendiensten.nl.",
+      "type": "string"
+    },
+    "diensten": {
+      "description": "De diensten die de organisatie gebruikt, per categorie in volgorde van voorkeur. Elk item is een volledige dienst, of een verwijzing naar een dienst in een ander profiel.",
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "https://opendiensten.nl/schemas/dienst.schema.json"
+          },
+          {
+            "$ref": "#/$defs/verwijzing"
+          }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "verwijzing": {
+      "description": "Verwijzing naar een dienst in een ander profiel (standaard Alle diensten), zodat je die niet opnieuw hoeft in te voeren; eventueel met jullie eigen url.",
+      "type": "object",
+      "required": [
+        "ref"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "ref": {
+          "description": "De id van de dienst.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "bron": {
+          "description": "URL van het profiel waarin de dienst staat. Standaard Alle diensten.",
+          "type": "string",
+          "format": "uri",
+          "default": "https://opendiensten.nl/profielen/open-diensten.json"
+        },
+        "url": {
+          "description": "Alleen bij een dienst die geen open dienst is (open: false), of bij infrastructuur: waar jullie hem gebruiken, bv. jullie pagina op LinkedIn of jullie Slack-werkruimte. Het kaartje in jullie profiel gaat hierheen in plaats van naar de algemene dienst. Een open dienst heeft geen eigen url per organisatie: je maakt er steeds een nieuwe, unieke link mee.",
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        }
+      }
+    }
+  }
+}

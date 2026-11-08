@@ -1,0 +1,54 @@
+{%- comment -%}
+  Dienstkaart: logo's (groot de software, klein de aanbieder), naam (de plek van de dienst, bv. social.codefor.nl),
+  daaronder "Nextcloud door Disroot" (software en aanbieder, elk een link), beschrijving, labels en (optioneel) waardering. Software en aanbieder komen uit _data/software.json
+  en _data/organisaties.json.
+  Dezelfde markup als ServicesManager.createServiceCard() in js/ServicesManager.mjs.
+  De titel is de link naar de dienst (a.card-link) en ligt over de hele kaart; de software en de aanbieder
+  zijn eigen links erbovenop (naar /software/<id>/ en /aanbieders/<id>/). Zo mag dat: geen link in een link.
+  Kan de dienst een eigen ruimte of document maken (random_url), dan staat er 'eigen link' bij, en maakt
+  js/opendienstenapp.js bij een klik een unieke link in plaats van naar de algemene link te gaan.
+  Labels (molecules/dienst-tags.html): open source / closed source, europees / niet europees,
+  open dienst / login vereist. Is de dienst geen open dienst (open: false), dan ook een dikke zwarte rand.
+  In een profiel kan een organisatie bij een dienst die geen open dienst is haar eigen url geven
+  (bv. haar pagina op LinkedIn); dan gaat de kaart daarheen en staat die url erop.
+  Parameters: dienst (volgens schemas/dienst.schema.json), rating, count, link (false = geen link),
+              eigen (lijst "<dienst-id> <url>", rp_eigen uit data/profiel.html)
+{%- endcomment -%}
+{%- assign d = include.dienst -%}
+{%- assign card_url = d.url -%}
+{%- assign card_eigen = nil -%}
+{%- for ce in include.eigen -%}
+  {%- assign ce_parts = ce | split: " " -%}
+  {%- if ce_parts[0] == d.id -%}{%- assign card_url = ce_parts[1] -%}{%- assign card_eigen = ce_parts[1] -%}{%- endif -%}
+{%- endfor -%}
+<div class="service-card{% if d.open == false %} is-closed{% endif %}" data-id="{{ d.id }}" data-category="{{ d.categorie }}">
+    {% include atoms/favicon.html dienst=d %}
+    <div class="service-info">
+        <h4>{% if include.link == false %}{{ d.naam | escape }}{% else %}<a href="{{ card_url | escape }}" target="_blank" rel="noopener" class="card-link">{{ d.naam | escape }}</a>{% endif %}</h4>
+        {%- include data/dienst.html dienst=d %}
+        {%- if card_eigen %}
+        <p class="service-software service-eigen">{{ card_eigen | remove: "https://" | remove: "http://" | remove: "www." | split: "?" | first | append: "#" | remove: "/#" | remove: "#" | escape }}</p>
+        {%- endif %}
+        {%- assign card_sw = false -%}
+        {%- if dn_sw -%}{%- if dn_sw.naam != d.naam -%}{%- assign card_sw = true -%}{%- endif -%}{%- endif -%}
+        {%- if card_sw or dn_org %}
+        <p class="service-software">
+            {%- if card_sw %}<a href="/software/{{ dn_sw.id }}/" class="card-sublink" title="Meer over {{ dn_sw.naam | escape }} en andere diensten die erop draaien">{{ dn_sw.naam | escape }}</a> {% endif -%}
+            {%- if dn_org %}door <a href="/aanbieders/{{ dn_org.id }}/" class="card-sublink" title="Meer over {{ dn_org.naam | escape }} en hun andere diensten">{{ dn_org.naam | escape }}</a>{% endif -%}
+        </p>
+        {%- endif %}
+        <p class="service-description">{{ d.beschrijving | escape }}</p>
+        <div class="service-meta">
+            <div class="service-meta-row">
+                <span class="service-badges">
+                    {% include atoms/category-badge.html categorie=d.categorie %}
+                    {% include molecules/dienst-tags.html dienst=d %}
+                    {%- if d.random_url and d.open != false %}<span class="unique-badge" title="Elke klik maakt een nieuwe, eigen link">eigen link</span>{% endif %}
+                </span>
+            </div>
+            {%- if include.rating %}
+            {% include molecules/service-rating.html rating=include.rating count=include.count %}
+            {%- endif %}
+        </div>
+    </div>
+</div>

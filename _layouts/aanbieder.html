@@ -1,0 +1,67 @@
+---
+layout: default
+---
+{%- comment -%}
+  Pagina van één aanbieder (_aanbieders/<id>.md, met aanbieder: <id> in de front matter; de gegevens staan in
+  _data/organisaties.json). Zelfde stramien als software: kop (organisms/entity-header.html), de diensten,
+  en wat er per soort bij hoort: wat ze als managed service beheert, en een link naar haar profiel als ze er een heeft.
+{%- endcomment -%}
+{%- assign org = site.data.organisaties.organisaties | where: "id", page.aanbieder | first -%}
+{%- include data/diensten-met.html veld="aanbieder" id=org.id -%}
+{%- assign abp_diensten = sd_diensten -%}
+{%- assign abp_infra = abp_diensten | where: "soort", "infrastructuur" -%}
+{%- assign abp_open = abp_diensten | where_exp: "d", "d.open != false" | where_exp: "d", "d.soort != 'infrastructuur'" -%}
+{%- assign abp_dicht = abp_diensten | where_exp: "d", "d.open == false" | where_exp: "d", "d.soort != 'infrastructuur'" -%}
+{%- include data/diensten-met.html veld="beheer" id=org.id -%}
+{%- assign abp_beheer = sd_diensten -%}
+{%- assign abp_profiel = site.data.profielregister.profielen | where: "id", org.id | first -%}
+{%- include data/gebruik.html -%}
+{%- capture abp_meta -%}
+  {%- if org.land %}
+  <p class="software-meta">{% include atoms/land.html land=org.land %}</p>
+  {%- endif %}
+  {%- if abp_profiel and org.id != site.data.profielregister.standaard %}
+  <p class="software-meta"><span class="used-by-label">Profiel</span> <a href="/?profiel={{ org.id }}">welke diensten {{ org.naam | escape }} zelf gebruikt</a></p>
+  {%- endif %}
+{%- endcapture -%}
+<div class="app-container">
+  {% include organisms/sidebar.html active="aanbieders" %}
+
+  <main class="content-area">
+    <section class="view" aria-labelledby="entity-title">
+      <div class="page-content">
+        {% include organisms/entity-header.html soort="Aanbieder" id="entity-title" naam=org.naam logo=org.logo website=org.website beschrijving=org.beschrijving meta=abp_meta %}
+      </div>
+
+      <div class="view-header">
+        <h3>{% if abp_diensten.size == 1 %}1 dienst{% else %}{{ abp_diensten.size }} diensten{% endif %} van {{ org.naam | escape }}</h3>
+      </div>
+      <p class="entity-toelichting">
+        {%- if abp_diensten.size == 0 -%}
+        We kennen nu geen live dienst van {{ org.naam | escape }}.
+        {%- elsif abp_infra.size > 0 and abp_open.size == 0 and abp_dicht.size == 0 -%}
+        Infrastructuur, zoals domeinnamen of nieuwsbrieven. Daar betaal je meestal voor; wat telt, is waar het staat en onder welke wetgeving.
+        {%- elsif abp_open.size > 0 and abp_dicht.size == 0 -%}
+        {% if abp_open.size == 1 %}Een open dienst{% else %}Open diensten{% endif %}: gratis en zonder verplichte login.
+        {%- elsif abp_open.size == 0 and abp_dicht.size > 0 -%}
+        Diensten die geen open dienst zijn. Organisaties gebruiken ze nog; hieronder wie, en waarom ze niet open zijn.
+        {%- endif -%}
+      </p>
+      {%- if abp_diensten.size > 0 %}
+      {% include organisms/category-services.html al=abp_open infra=abp_infra nog=abp_dicht naast=true %}
+      {%- endif %}
+
+      {%- if abp_beheer.size > 0 %}
+      <div class="view-header entity-extra">
+        <h3>Beheert als managed service</h3>
+      </div>
+      <p class="entity-toelichting">{{ org.naam | escape }} beheert deze diensten technisch, ook voor anderen.</p>
+      {% include organisms/category-services.html al=abp_beheer naast=true %}
+      {%- endif %}
+
+      <p class="software-back"><a href="/aanbieders/" class="link-more">Alle aanbieders</a></p>
+    </section>
+
+    {% include organisms/site-footer.html %}
+  </main>
+</div>

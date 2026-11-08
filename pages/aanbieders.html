@@ -1,0 +1,65 @@
+---
+permalink: /aanbieders/
+layout: default
+title: Aanbieders
+description: De organisaties die de diensten aanbieden, zoals Framasoft, Disroot en Stichting Pleio, met hun land en per aanbieder de diensten.
+---
+{%- comment -%} Aanbieders van open diensten, en aanbieders van alleen diensten die geen open dienst zijn; zonder live dienst niet {%- endcomment -%}
+{%- assign ab_alle = site.data.organisaties.organisaties | sort: "naam" -%}
+{%- assign ab_open = "" | split: "" -%}
+{%- assign ab_dicht = "" | split: "" -%}
+{%- assign ab_infra = "" | split: "" -%}
+{%- for org in ab_alle -%}
+  {%- include data/diensten-met.html veld="aanbieder" id=org.id -%}
+  {%- assign ab_o = sd_diensten | where_exp: "d", "d.open != false" | where_exp: "d", "d.soort != 'infrastructuur'" -%}
+  {%- assign ab_i = sd_diensten | where: "soort", "infrastructuur" -%}
+  {%- assign ab_n = sd_diensten.size -%}
+  {%- include data/diensten-met.html veld="beheer" id=org.id -%}
+  {%- assign ab_b = sd_diensten | where_exp: "d", "d.open != false" -%}
+  {%- if ab_o.size == 0 and ab_b.size > 0 -%}{%- assign ab_o = ab_b -%}{%- endif -%}
+  {%- if ab_o.size > 0 -%}{%- assign ab_open = ab_open | push: org -%}
+  {%- elsif ab_i.size > 0 -%}{%- assign ab_infra = ab_infra | push: org -%}
+  {%- elsif ab_n > 0 -%}{%- assign ab_dicht = ab_dicht | push: org -%}{%- endif -%}
+{%- endfor -%}
+<div class="app-container">
+  {% include organisms/sidebar.html active="aanbieders" %}
+
+  <main class="content-area">
+    <section class="view" aria-labelledby="aanbieders-title">
+      <div class="page-content">
+        {% include atoms/kicker.html text="Aanbieders" hex=true %}
+        <h2 id="aanbieders-title">Wie biedt de diensten aan?</h2>
+        <p class="page-lead">Achter elke dienst zit een organisatie die hem host: een stichting, een coöperatie, een bedrijf of een community. Waar die gevestigd is, bepaalt onder welke wetgeving je gegevens vallen. Per aanbieder zie je welke diensten ze aanbiedt.</p>
+      </div>
+
+      <h3 class="software-group">Aanbieders van open diensten</h3>
+      <div class="profile-grid">
+        {%- for org in ab_open %}
+        {% include organisms/aanbieder-card.html id=org.id %}
+        {%- endfor %}
+      </div>
+
+      {%- if ab_infra.size > 0 %}
+      <h3 class="software-group">Aanbieders van infrastructuur</h3>
+      <p class="page-lead">Domeinnamen, nieuwsbrieven en dergelijke: daar betaal je meestal voor. Wat telt, is waar het staat.</p>
+      <div class="profile-grid">
+        {%- for org in ab_infra %}
+        {% include organisms/aanbieder-card.html id=org.id %}
+        {%- endfor %}
+      </div>
+      {%- endif %}
+
+      {%- if ab_dicht.size > 0 %}
+      <h3 class="software-group">Aanbieders van diensten die niet open zijn</h3>
+      <p class="page-lead">Big tech en andere aanbieders van diensten die organisaties nog gebruiken, maar die geen open dienst zijn.</p>
+      <div class="profile-grid">
+        {%- for org in ab_dicht %}
+        {% include organisms/aanbieder-card.html id=org.id %}
+        {%- endfor %}
+      </div>
+      {%- endif %}
+    </section>
+
+    {% include organisms/site-footer.html %}
+  </main>
+</div>

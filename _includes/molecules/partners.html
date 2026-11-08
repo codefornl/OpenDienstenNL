@@ -1,0 +1,10 @@
+{%- comment -%}
+  Afzender: Apitecture, die OpenDiensten aanbiedt, met het logo.
+  Parameters: label (standaard 'een initiatief van')
+{%- endcomment -%}
+<div class="partners">
+    <span class="partners-label">{{ include.label | default: "een initiatief van" }}</span>
+    <div class="partners-logos">
+        <a href="https://www.apitecture.nl" target="_blank" rel="noopener"><img src="/assets/images/logos/apitecture-logo-dark.png" alt="Apitecture" class="partners-apitecture"></a>
+    </div>
+</div>

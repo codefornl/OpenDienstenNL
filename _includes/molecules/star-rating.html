@@ -1,0 +1,10 @@
+{%- comment -%}
+  Sterren kiezen: de invoer in de waarderingsdialoog.
+  Parameters: value (voorgeselecteerd, 0 tot 5)
+{%- endcomment -%}
+{%- assign v = include.value | default: 0 -%}
+<div class="star-rating" role="group" aria-label="Geef een waardering">
+    {%- for i in (1..5) %}
+    <button type="button" class="star{% if i <= v %} filled{% endif %}" data-rating="{{ i }}" aria-label="{{ i }} van 5">{% if i <= v %}★{% else %}☆{% endif %}</button>
+    {%- endfor %}
+</div>

@@ -1,0 +1,6 @@
+---
+permalink: /organisaties.json
+layout: null
+---
+{%- comment -%} De lijst uit _data/organisaties.json, volgens _data/schemas/organisaties.json. {%- endcomment -%}
+{{ site.data.organisaties | jsonify }}

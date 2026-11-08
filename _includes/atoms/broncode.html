@@ -1,0 +1,17 @@
+{%- comment -%}
+  Link naar de broncode, met het logo van de plek waar die staat (GitHub, GitLab, Codeberg, Framagit;
+  de logo's staan in assets/images/forges/). Elders een algemeen teken.
+  Parameters: url
+{%- endcomment -%}
+{%- assign bc_host = include.url | remove: "https://" | split: "/" | first -%}
+{%- case bc_host -%}
+{%- when "github.com" -%}{%- assign bc_logo = "/assets/images/forges/github.svg" -%}{%- assign bc_naam = "GitHub" -%}
+{%- when "gitlab.com" -%}{%- assign bc_logo = "/assets/images/forges/gitlab.png" -%}{%- assign bc_naam = "GitLab" -%}
+{%- when "codeberg.org" -%}{%- assign bc_logo = "/assets/images/forges/codeberg.svg" -%}{%- assign bc_naam = "Codeberg" -%}
+{%- when "framagit.org" -%}{%- assign bc_logo = "/assets/images/forges/framagit.png" -%}{%- assign bc_naam = "Framagit" -%}
+{%- else -%}{%- assign bc_logo = nil -%}{%- assign bc_naam = bc_host -%}
+{%- endcase -%}
+<a href="{{ include.url | escape }}" class="broncode" rel="noopener" title="De broncode op {{ bc_naam | escape }}">
+    {%- if bc_logo %}<img src="{{ bc_logo }}" alt="" width="18" height="18">{% else %}<span class="broncode-teken" aria-hidden="true">&lt;/&gt;</span>{% endif -%}
+    <span>{{ include.url | remove: "https://" | escape }}</span>
+</a>

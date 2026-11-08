@@ -1,0 +1,11 @@
+{%- comment -%}
+  Knop. Met href een link, zonder href een <button>.
+  Parameters: text, href, variant (primary | secondary | danger), size (small),
+              id, target, class (extra klassen, bv. voor JavaScript), hidden (true = verborgen tot JavaScript hem toont)
+{%- endcomment -%}
+{%- capture classes -%}button{% if include.variant and include.variant != "primary" %} button-{{ include.variant }}{% endif %}{% if include.size == "small" %} button-small{% endif %}{% if include.class %} {{ include.class }}{% endif %}{%- endcapture -%}
+{%- if include.href -%}
+<a href="{{ include.href }}" class="{{ classes }}"{% if include.id %} id="{{ include.id }}"{% endif %}{% if include.target %} target="{{ include.target }}"{% endif %}{% if include.hidden %} hidden{% endif %}>{{ include.text }}</a>
+{%- else -%}
+<button type="button" class="{{ classes }}"{% if include.id %} id="{{ include.id }}"{% endif %}{% if include.hidden %} hidden{% endif %}>{{ include.text }}</button>
+{%- endif -%}

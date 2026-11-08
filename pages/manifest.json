@@ -1,0 +1,23 @@
+---
+permalink: /manifest.json
+---
+{
+  "name": "{{ site.title | escape }}",
+  "short_name": "{{ site.title | escape }}",
+  "description": "{{ site.description | escape }}",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f6f3",
+  "theme_color": "#f7f6f3",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/images/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "lang": "nl-NL"
+}

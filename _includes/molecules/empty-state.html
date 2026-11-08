@@ -1,0 +1,8 @@
+{%- comment -%}
+  Lege staat: nog niets te tonen. Met een lege cel.
+  Parameters: text
+{%- endcomment -%}
+<div class="empty-state">
+    {% include atoms/hex.html outline=true %}
+    <p>{{ include.text }}</p>
+</div>

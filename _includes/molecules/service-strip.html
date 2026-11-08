@@ -1,0 +1,8 @@
+{%- comment -%}
+  Strook onder een dienstkaart: wie de dienst gebruikt (molecules/used-by.html). Software en aanbieder staan
+  in de kaart zelf. Altijd, ook als nog geen organisatie de dienst gebruikt: dat is rustiger. Include eerst data/gebruik.html.
+  Parameters: dienst
+{%- endcomment -%}
+<div class="card-strip service-strip">
+    {% include molecules/used-by.html dienst=include.dienst %}
+</div>

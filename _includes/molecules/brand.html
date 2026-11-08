@@ -1,0 +1,9 @@
+{%- comment -%}
+  Merkkop: OpenDiensten, met de zeshoek en 'door Apitecture'.
+  Parameters: href (standaard /), subtitle (standaard 'door Apitecture')
+{%- endcomment -%}
+{%- assign brand_subtitle = include.subtitle | default: "door Apitecture" -%}
+<a href="{{ include.href | default: '/' }}" class="brand">
+    <h1 class="brand-name">{% include atoms/hex.html %}OpenDiensten</h1>
+    {% include atoms/text-beep.html text=brand_subtitle %}
+</a>

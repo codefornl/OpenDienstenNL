@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opendiensten.nl/schemas/dienst.schema.json",
+  "title": "Dienst",
+  "description": "Een online dienst: iets wat je gebruikt, op een bepaalde plek, aangeboden door een organisatie (de aanbieder) en draaiend op bepaalde software. Een open dienst is gratis en zonder verplichte login toegankelijk; zie https://opendiensten.nl/over. Een dienst die dat niet is, heeft open: false en redenen.",
+  "type": "object",
+  "required": [
+    "id",
+    "naam",
+    "categorie",
+    "url"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Vaste sleutel, uniek binnen het profiel, bv. jitsi-meet-pleio. Profielen verwijzen hiernaar; verander een bestaande id nooit.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "naam": {
+      "description": "Naam van de dienst: de plek waar je hem gebruikt, bv. social.codefor.nl of meetme.bit.nl (host, eventueel met pad), of de eigen naam van de dienst. Niet de naam van de software.",
+      "type": "string",
+      "minLength": 1
+    },
+    "software": {
+      "description": "Id van de software waar de dienst op draait, uit https://opendiensten.nl/software.json (schemas/software.schema.json), bv. mastodon of jitsi-meet. Leeg bij een dienst die alleen als dienst bestaat, zoals Slack of LinkedIn.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "beschrijving": {
+      "description": "Korte beschrijving, één zin.",
+      "type": "string"
+    },
+    "categorie": {
+      "description": "Soort dienst, als slug, bv. videobellen of samen-schrijven.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "url": {
+      "description": "De dienst zelf.",
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "random_url": {
+      "description": "Basis-URL waarachter een unieke, moeilijk te raden code een eigen ruimte of document maakt. Alleen als de dienst dat kan.",
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "favicon": {
+      "description": "Icoon van de dienst, alleen voor een dienst zonder software (zoals Slack): een pad op opendiensten.nl of een URL. Een URL maakt ruby scripts/profielen.rb iconen lokaal, zodat bezoekers geen verzoeken naar derden doen.",
+      "type": "string",
+      "pattern": "^(/|https?://)"
+    },
+    "aanbieder": {
+      "description": "Id van de organisatie die de dienst aanbiedt (host), uit https://opendiensten.nl/organisaties.json (schemas/organisaties.schema.json), bv. framasoft of codefornl.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "beheer": {
+      "description": "Id van de organisatie die de dienst als managed service technisch beheert, uit https://opendiensten.nl/organisaties.json, bv. procolix (Mastodon as a Service). Alleen als iemand anders dan de aanbieder het beheer doet, of om te laten zien wie de software als dienst levert.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "spoelkeuken_url": {
+      "description": "Pagina over de software in de Spoelkeuken van PublicSpaces.",
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "eu_hosting": {
+      "description": "true als de dienst in de EU wordt gehost, bij een Europese partij.",
+      "type": "boolean"
+    },
+    "doelgroep": {
+      "description": "Alleen als de dienst niet voor iedereen is: voor wie wel, bv. overheden. Zonder doelgroep is de dienst voor iedereen. Start kiest nooit een dienst met een doelgroep.",
+      "type": "string",
+      "minLength": 1
+    },
+    "soort": {
+      "description": "dienst (standaard): beoordeeld als open dienst of niet. infrastructuur: domeinnamen, nieuwsbrieven en dergelijke, waar je meestal voor betaalt; daar geldt de vraag of het een open dienst is niet, wel of het Europees en open source is. Start kiest nooit infrastructuur.",
+      "enum": [
+        "dienst",
+        "infrastructuur"
+      ],
+      "default": "dienst"
+    },
+    "status": {
+      "description": "live wordt getoond; disabled en discontinued niet.",
+      "enum": [
+        "live",
+        "disabled",
+        "discontinued"
+      ],
+      "default": "live"
+    },
+    "open": {
+      "description": "true (standaard) voor een open dienst: gratis en zonder verplichte login. false voor iets wat een organisatie gebruikt dat geen open dienst is.",
+      "type": "boolean",
+      "default": true
+    },
+    "redenen": {
+      "description": "Waarom dit geen open dienst is. Bij infrastructuur alleen wat er speelt, bv. gesloten (closed source).",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "account",
+          "betaald",
+          "gesloten",
+          "buiten-eu"
+        ]
+      }
+    }
+  }
+}

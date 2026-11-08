@@ -1,0 +1,19 @@
+---
+layout: default
+---
+{%- comment -%}
+  Startpagina: kiest een open dienst, opent hem en vraagt na afloop om een beoordeling.
+  Front matter: categorie, wat (bv. "videogesprek"), open_label (bv. "Open videogesprek").
+  Gebruikt door pages/start-*.md (Start videogesprek, Start samen schrijven).
+{%- endcomment -%}
+{%- assign start_cat = page.categorie -%}
+<div class="start-page">
+    <header class="start-header">
+        {% include molecules/brand.html %}
+    </header>
+    <main class="start-main">
+        {% include organisms/start-session.html categorie=start_cat wat=page.wat open_label=page.open_label %}
+    </main>
+</div>
+{% include organisms/site-footer.html %}
+<script type="module" src="/js/start.js"></script>

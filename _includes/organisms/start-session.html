@@ -1,0 +1,74 @@
+{%- comment -%}
+  Startsessie: kiest een open dienst, opent hem, en vraagt na afloop hoe het ging.
+  js/start.js zet de stap in data-state en vult [data-fill] in; elk blok met
+  data-show is alleen zichtbaar in de genoemde stappen.
+
+  Stappen: kiezen → klaar (browser hield het tabblad tegen) → geopend → beoordeeld, of fout.
+
+  Parameters:
+    categorie   slug, bv. videobellen
+    wat         wat je start, bv. "videogesprek" (standaard "dienst")
+    open_label  tekst op de knop (standaard "Ga naar de dienst")
+    state       stap om te tonen zonder JavaScript, voor het design system (standaard kiezen)
+    dienst      voorbeelddienst, voor het design system
+{%- endcomment -%}
+{%- assign wat = include.wat | default: "dienst" -%}
+{%- assign open_label = include.open_label | default: "Ga naar de dienst" -%}
+{%- assign state = include.state | default: "kiezen" -%}
+{%- assign cat_label = include.categorie | replace: "-", " " -%}
+{%- assign demo = include.dienst -%}
+{%- if demo -%}{%- include data/dienst.html dienst=demo -%}{%- assign demo_aanbieder = dn_org.naam -%}{%- endif -%}
+{%- capture demo_url -%}{% if demo.random_url %}{{ demo.random_url }}k7m2q9xw4hr8tn3v{% else %}{{ demo.url }}{% endif %}{%- endcapture -%}
+<section class="start-session" data-categorie="{{ include.categorie }}" data-state="{{ state }}" aria-live="polite">
+    {% capture kicker %}Start {{ wat }}{% endcapture %}
+    {% include atoms/kicker.html text=kicker hex=true %}
+
+    <h2 data-show="kiezen"{% unless state == "kiezen" %} hidden{% endunless %}>Even een open dienst kiezen</h2>
+    <h2 data-show="klaar"{% unless state == "klaar" %} hidden{% endunless %}>Je {{ wat }} staat klaar</h2>
+    <h2 data-show="geopend"{% unless state == "geopend" %} hidden{% endunless %}>Je {{ wat }} is geopend</h2>
+    <h2 data-show="beoordeeld"{% unless state == "beoordeeld" %} hidden{% endunless %}>Bedankt!</h2>
+    <h2 data-show="fout"{% unless state == "fout" %} hidden{% endunless %}>Dat lukte niet</h2>
+
+    <p class="start-lead" data-show="kiezen"{% unless state == "kiezen" %} hidden{% endunless %}>We kiezen een {{ wat }} bij een van de open diensten voor {{ cat_label }}, op basis van beoordelingen.</p>
+    <p class="start-lead" data-show="klaar"{% unless state == "klaar" %} hidden{% endunless %}>Je browser hield het nieuwe tabblad tegen. Dat is netjes van je browser: een site mag niet zomaar tabbladen openen. Open het daarom zelf met de knop hieronder. Deze pagina blijft open, zodat je na afloop kunt laten weten hoe het ging.</p>
+    <p class="start-lead" data-show="geopend"{% unless state == "geopend" %} hidden{% endunless %}>Het staat in een nieuw tabblad, bij <span data-fill="naam">{{ demo.naam }}</span> van <span data-fill="aanbieder">{{ demo_aanbieder }}</span>. Kom hier terug als je klaar bent en laat weten hoe het ging; zo komen de beste diensten vaker aan de beurt.</p>
+    <p class="start-lead" data-show="beoordeeld"{% unless state == "beoordeeld" %} hidden{% endunless %}>Je beoordeling telt mee: de volgende keer kiezen we met jouw ervaring erbij. Je beoordelingen blijven in deze browser.</p>
+    <p class="start-lead" data-show="fout"{% unless state == "fout" %} hidden{% endunless %}>We konden geen open dienst voor je kiezen. Kies er zelf een bij de diensten.</p>
+
+    <div class="start-dienst" data-show="klaar geopend beoordeeld"{% if state == "kiezen" or state == "fout" %} hidden{% endif %}>
+        <div data-card>{% if demo %}{% include organisms/service-card.html dienst=demo %}{% endif %}</div>
+        <p class="start-reason">Gekozen uit <span data-fill="aantal">{{ include.aantal | default: 1 }}</span> open diensten voor {{ cat_label }}, op basis van beoordelingen. <span data-fill="aanbieder">{{ demo_aanbieder }}</span> is <span data-fill="herkomst">{% if demo.eu_hosting %}een Europese aanbieder{% else %}een niet-Europese aanbieder{% endif %}</span>.</p>
+    </div>
+
+    <div class="start-actions" data-show="klaar geopend"{% unless state == "klaar" or state == "geopend" %} hidden{% endunless %}>
+        <a href="{{ demo_url }}" target="_blank" rel="noopener" class="button" data-href="url" data-open>
+            <span data-show="klaar"{% unless state == "klaar" %} hidden{% endunless %}>{{ open_label }}</span>
+            <span data-show="geopend"{% unless state == "geopend" %} hidden{% endunless %}>Open opnieuw</span>
+        </a>
+        {% include atoms/button.html text="Kies een andere dienst" variant="secondary" class="start-other" %}
+    </div>
+
+    <div class="start-share" data-show="klaar geopend beoordeeld"{% if state == "kiezen" or state == "fout" %} hidden{% endif %}>
+        <p class="kicker">Nodig anderen uit met deze link</p>
+        <div class="share-link">
+            <code data-fill="url">{{ demo_url }}</code>
+            {% include atoms/button.html text="Kopieer" variant="secondary" size="small" class="share-copy" %}
+        </div>
+    </div>
+
+    <div class="start-rating" data-show="geopend beoordeeld"{% unless state == "geopend" or state == "beoordeeld" %} hidden{% endunless %}>
+        <h3>Hoe was het?</h3>
+        {% include molecules/star-rating.html %}
+    </div>
+
+    <div class="start-actions" data-show="beoordeeld fout"{% unless state == "beoordeeld" or state == "fout" %} hidden{% endunless %}>
+        {% capture terug_href %}/#{{ include.categorie }}{% endcapture %}
+        {% include atoms/button.html text="Naar alle diensten" href=terug_href variant="secondary" %}
+        {% capture nog_een %}Start nog een {{ wat }}{% endcapture %}
+        <span data-show="beoordeeld"{% unless state == "beoordeeld" %} hidden{% endunless %}>{% include atoms/button.html text=nog_een href=page.url %}</span>
+    </div>
+
+    <noscript>
+        <p class="start-lead">Zonder JavaScript kunnen we geen dienst voor je kiezen. Kies er zelf een bij de <a href="/#{{ include.categorie }}">diensten</a>.</p>
+    </noscript>
+</section>

@@ -1,0 +1,33 @@
+{%- comment -%}
+  Tabel met de velden van een JSON Schema (uit _data/schemas/), voor /gegevensmodel: veld, soort, verplicht en betekenis.
+  Zo loopt de uitleg nooit achter op de schema's.
+  Parameters: schema (een object-schema met properties en required)
+{%- endcomment -%}
+{%- assign st = include.schema -%}
+{%- assign st_slug = "^[a-z0-9]+(-[a-z0-9]+)*$" -%}
+<table class="data-table schema-table">
+    <tr><th>veld</th><th>soort</th><th></th><th>betekenis</th></tr>
+    {%- for prop in st.properties %}
+    {%- assign veld = prop[0] %}
+    {%- assign v = prop[1] %}
+    {%- unless veld == "$schema" %}
+    <tr>
+        <td><code>{{ veld }}</code></td>
+        <td class="schema-soort">
+            {%- if v.enum -%}een van: {% for e in v.enum %}<code>{{ e }}</code>{% unless forloop.last %}, {% endunless %}{% endfor %}
+            {%- elsif v.const -%}altijd <code>{{ v.const }}</code>
+            {%- elsif v.type == "array" -%}lijst{% if v.items.enum %} met: {% for e in v.items.enum %}<code>{{ e }}</code>{% unless forloop.last %}, {% endunless %}{% endfor %}{% elsif v.items.oneOf %} van diensten en verwijzingen{% elsif v.items.properties %} van objecten{% endif %}
+            {%- elsif v.type == "boolean" -%}<code>true</code> of <code>false</code>
+            {%- elsif v.pattern == st_slug -%}id
+            {%- elsif v.pattern contains "/|https" -%}pad of URL
+            {%- elsif v.format == "uri" or v.pattern contains "http" -%}URL
+            {%- elsif v.type == "string" -%}tekst
+            {%- elsif v.type -%}{{ v.type }}
+            {%- endif -%}
+        </td>
+        <td>{% if st.required contains veld %}<span class="tag tag-niet">verplicht</span>{% endif %}</td>
+        <td>{{ v.description | escape }}{% if v.default != nil %} Standaard <code>{{ v.default }}</code>.{% endif %}</td>
+    </tr>
+    {%- endunless %}
+    {%- endfor %}
+</table>

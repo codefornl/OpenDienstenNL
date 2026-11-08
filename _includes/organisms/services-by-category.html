@@ -1,0 +1,82 @@
+{%- comment -%}
+  Diensten per categorie: per categorie een kop (met anker) en daaronder de diensten in één raster
+  (organisms/category-services.html): eerst de open diensten, dan wat (nog) geen open dienst is.
+  Onder elke dienst de software en de logo's van wie hem gebruikt (molecules/service-strip.html).
+
+  Zonder profiel (de pagina Diensten): alles uit alle profielen samen (data/overzicht.html), categorieën
+  op alfabet; open diensten uit het standaardprofiel eerst, op beoordeling gesorteerd door js/opendienstenapp.js.
+  Per categorie staat voor elk ander profiel een verborgen blok klaar met alleen wat dat profiel gebruikt,
+  in hun volgorde; met ?profiel=… zet js/opendienstenapp.js dat blok aan en de rest uit.
+
+  Met profiel (bv. in het design system): alleen dat profiel, zichtbaar.
+
+  Parameters:
+    profiel   id van een profiel uit _data/profielregister.json (optioneel)
+    heading   kopniveau (standaard h2)
+{%- endcomment -%}
+{%- include data/gebruik.html -%}
+{%- assign sbc_std = site.data.profielregister.standaard -%}
+{%- assign sbc_heading = include.heading | default: "h2" -%}
+{%- if include.profiel and include.profiel != sbc_std -%}{%- assign sbc_mode = "profiel" -%}{%- else -%}{%- assign sbc_mode = "alle" -%}{%- endif -%}
+
+{%- assign sbc_profielen = "" | split: "" -%}
+{%- if sbc_mode == "profiel" -%}
+  {%- include data/profiel.html id=include.profiel -%}
+  {%- assign sbc_cats = rp_cats -%}
+  {%- assign sbc_profielen = sbc_profielen | push: include.profiel -%}
+{%- else -%}
+  {%- assign sbc_cats = "" | split: "" -%}
+  {%- for sbc_r in site.data.profielregister.profielen -%}
+    {%- include data/profiel.html id=sbc_r.id -%}
+    {%- assign sbc_cats = sbc_cats | concat: rp_cats -%}
+    {%- if sbc_r.id != sbc_std -%}{%- assign sbc_profielen = sbc_profielen | push: sbc_r.id -%}{%- endif -%}
+  {%- endfor -%}
+  {%- assign sbc_cats = sbc_cats | uniq | sort -%}
+{%- endif -%}
+<div class="services-by-category">
+    {%- for sbc_cat in sbc_cats %}
+    {%- capture sbc_blocks -%}
+      {%- for sbc_pid in sbc_profielen -%}
+        {%- include data/profiel.html id=sbc_pid -%}
+        {%- assign pc_open = rp_open | where: "categorie", sbc_cat -%}
+        {%- assign pc_closed = rp_closed | where: "categorie", sbc_cat -%}
+        {%- assign pc_infra = rp_infra | where: "categorie", sbc_cat -%}
+        {%- assign pc_eigen = rp_eigen -%}
+        {%- assign pc_total = pc_open.size | plus: pc_closed.size | plus: pc_infra.size -%}
+        {%- if pc_total > 0 -%}
+          {%- capture pc_status -%}
+            {%- if pc_open.size == 1 %}1 open dienst{% elsif pc_open.size > 1 %}{{ pc_open.size }} open diensten, op volgorde van voorkeur{% endif -%}
+            {%- if pc_infra.size > 0 %}{% if pc_open.size > 0 %} · {% endif %}{{ pc_infra.size }} infrastructuur{% endif -%}
+            {%- if pc_closed.size > 0 %}{% if pc_open.size > 0 or pc_infra.size > 0 %} · {% endif %}{{ pc_closed.size }} geen open dienst{% endif -%}
+          {%- endcapture %}
+        <div class="profile-services" data-profiel="{{ sbc_pid }}" data-count="{{ pc_total }}" data-status="{{ pc_status | strip }}"{% if sbc_mode == "alle" %} hidden{% endif %}>
+            {%- if pc_open.size > 0 %}{% assign pc_naast = true %}{% else %}{% assign pc_naast = false %}{% endif %}
+            {% include organisms/category-services.html al=pc_open infra=pc_infra nog=pc_closed categorie=sbc_cat eigen=pc_eigen naast=pc_naast %}
+        </div>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- if sbc_mode == "profiel" -%}
+      {%- assign sbc_status = pc_status | strip -%}
+    {%- else -%}
+      {%- include data/overzicht.html categorie=sbc_cat -%}
+      {%- capture sbc_status -%}
+        {%- if ov_al.size > 0 or ov_infra.size == 0 %}{{ ov_al.size }} {% if ov_al.size == 1 %}open dienst{% else %}open diensten{% endif %}{% endif -%}
+        {%- if ov_infra.size > 0 %}{% if ov_al.size > 0 %} · {% endif %}{{ ov_infra.size }} infrastructuur{% endif -%}
+        {%- if ov_nog.size > 0 %} · {{ ov_nog.size }} niet open{% endif -%}
+      {%- endcapture -%}
+    {%- endif %}
+    <section class="service-category" id="{{ sbc_cat }}" aria-labelledby="{{ sbc_cat }}-title">
+        <div class="view-header">
+            <{{ sbc_heading }} id="{{ sbc_cat }}-title">{{ sbc_cat | replace: "-", " " | capitalize }}</{{ sbc_heading }}>
+            <p class="view-status">{{ sbc_status | strip }}</p>
+        </div>
+        {%- if sbc_mode == "alle" %}
+        <div class="catalog-services">
+            {% include organisms/category-services.html al=ov_al infra=ov_infra nog=ov_nog categorie=sbc_cat sorteer=true naast=true %}
+        </div>
+        {%- endif %}
+        {{ sbc_blocks }}
+    </section>
+    {%- endfor %}
+</div>

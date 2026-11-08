@@ -1,0 +1,7 @@
+{%- comment -%}
+  Logo van een organisatie; zonder logo de eerste letter in een vierkant.
+  Parameters: naam, logo (pad, optioneel), size (large)
+{%- endcomment -%}
+<span class="org-logo{% if include.size == 'large' %} org-logo-large{% endif %}" aria-hidden="true">
+    {%- if include.logo -%}<img src="{{ include.logo | escape }}" alt="">{%- else -%}{{ include.naam | slice: 0 | escape }}{%- endif -%}
+</span>

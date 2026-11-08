@@ -1,0 +1,43 @@
+{%- comment -%}
+  De diensten van één categorie in één raster: eerst de open diensten, dan infrastructuur, dan wat (nog) geen open dienst is
+  (dezelfde kaart met een dikke zwarte rand). Onder elke kaart de software en wie hem gebruikt (molecules/service-strip.html).
+  Is er op Diensten nog geen open dienst, dan een cel die vraagt of iemand er een kent
+  (in een profiel doet de strook onder de kaart dat).
+
+  Parameters:
+    al         open diensten
+    infra      infrastructuur (soort: infrastructuur), na de open diensten, zonder oordeel open of niet
+    nog        wat geen open dienst is (open: false)
+    categorie  slug
+    sorteer    true = data-categorie op het raster, zodat js/opendienstenapp.js de open diensten op
+               beoordeling sorteert (de keuze van een profiel heeft een eigen volgorde)
+    eigen      de eigen url's van een organisatie bij diensten die geen open dienst zijn (rp_eigen)
+    naast      true = de open alternatieven staan erbij (Diensten); dan geen strook naar alternatieven
+               onder een kaart, wel de vraag of iemand er een kent
+{%- endcomment -%}
+{%- assign cs_al = include.al -%}
+{%- assign cs_nog = include.nog -%}
+{%- assign cs_cat = include.categorie -%}
+<div class="services-grid"{% if include.sorteer %} data-categorie="{{ cs_cat }}"{% endif %}>
+    {%- for dienst in cs_al %}
+    <div class="service-item">
+        {% include organisms/service-card.html dienst=dienst %}
+        {% include molecules/service-strip.html dienst=dienst %}
+    </div>
+    {%- endfor %}
+    {%- for dienst in include.infra %}
+    <div class="service-item">
+        {% include organisms/service-card.html dienst=dienst eigen=include.eigen %}
+        {% include molecules/service-strip.html dienst=dienst %}
+    </div>
+    {%- endfor %}
+    {%- for dienst in cs_nog %}
+    <div class="service-item">
+        {% include organisms/closed-service-card.html dienst=dienst naast=include.naast eigen=include.eigen %}
+        {% include molecules/service-strip.html dienst=dienst %}
+    </div>
+    {%- endfor %}
+    {%- if cs_al.size == 0 and include.infra.size == 0 and include.naast and cs_cat %}
+    <p class="grid-empty">Nog geen open dienst voor {{ cs_cat | replace: "-", " " }}. Ken je er een? <a href="mailto:{{ site.email }}?subject=Open%20dienst%20voor%20{{ cs_cat }}">Mail ons</a></p>
+    {%- endif %}
+</div>

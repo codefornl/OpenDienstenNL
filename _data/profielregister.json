@@ -1,0 +1,15 @@
+{
+  "$schema": "https://opendiensten.nl/schemas/register.schema.json",
+  "versie": 1,
+  "standaard": "open-diensten",
+  "profielen": [
+    {
+      "id": "open-diensten",
+      "url": "https://opendiensten.nl/profielen/open-diensten.json"
+    },
+    {
+      "id": "codefornl",
+      "url": "https://opendiensten.nl/profielen/codefornl.json"
+    }
+  ]
+}

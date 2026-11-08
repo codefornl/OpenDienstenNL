@@ -1,0 +1,105 @@
+---
+permalink: /gegevensmodel
+layout: default
+title: Gegevensmodel
+description: Welke informatie OpenDiensten bijhoudt over diensten, software, organisaties en profielen, met alle velden en de bestanden om zelf te bekijken.
+---
+{%- assign sc = site.data.schemas -%}
+<div class="app-container">
+  {% include organisms/sidebar.html active="ontwikkelaars" %}
+
+  <main class="content-area">
+    <section class="view" aria-labelledby="gegevensmodel-title">
+      <div class="page-content">
+        {% include atoms/kicker.html text="Gegevensmodel" hex=true %}
+        <h2 id="gegevensmodel-title">Welke informatie is er?</h2>
+        <p class="page-lead">Alles wat OpenDiensten weet, is open data in JSON onder <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.nl">CC0</a>, met een JSON Schema per soort. Vrij te gebruiken, zonder garantie dat het klopt. Hieronder wat er is, hoe het samenhangt, alle velden, en de bestanden om zelf te bekijken of te gebruiken.</p>
+
+        <nav class="toc" aria-label="Op deze pagina">
+          <ol>
+            <li><a href="#samenhang">Hoe het samenhangt</a></li>
+            <li><a href="#dienst">Dienst</a></li>
+            <li><a href="#software">Software</a></li>
+            <li><a href="#organisatie">Organisatie</a></li>
+            <li><a href="#profiel">Profiel</a></li>
+            <li><a href="#register">Register</a></li>
+            <li><a href="#bestanden">Alle bestanden</a></li>
+          </ol>
+        </nav>
+
+        <h3 id="samenhang">Hoe het samenhangt</h3>
+        <div class="datamodel-map">
+          <div class="dm-box"><strong>Register</strong><span>welke profielen er zijn, en waar</span></div>
+          <div class="dm-pijl" aria-hidden="true">↓</div>
+          <div class="dm-box"><strong>Profiel</strong><span>een organisatie en de diensten die ze gebruikt; <em>Alle diensten</em> is ook een profiel</span></div>
+          <div class="dm-pijl" aria-hidden="true">↓</div>
+          <div class="dm-box dm-kern"><strong>Dienst</strong><span>wat je gebruikt, op een plek: <code>meetme.bit.nl</code></span></div>
+          <div class="dm-twee">
+            <div><div class="dm-pijl" aria-hidden="true">↓</div><div class="dm-box"><strong>Software</strong><span>waar de dienst op draait: Jitsi Meet</span></div></div>
+            <div><div class="dm-pijl" aria-hidden="true">↓</div><div class="dm-box"><strong>Organisatie</strong><span>wie hem aanbiedt: BIT</span></div></div>
+          </div>
+        </div>
+        <ul class="datamodel-uitleg">
+          <li>Een <strong>profiel</strong> noemt diensten volledig, of verwijst naar een dienst in een ander profiel met <code>{"ref": "&lt;id&gt;"}</code>; meestal naar <em>Alle diensten</em>.</li>
+          <li>Een <strong>dienst</strong> verwijst met een id naar zijn <strong>software</strong> en naar zijn <strong>aanbieder</strong>. Een dienst die alleen als dienst bestaat (Slack), heeft geen software.</li>
+          <li>Een <strong>open dienst</strong> is gratis en werkt zonder verplichte login. Wat dat niet is, heeft <code>"open": false</code> en de <code>redenen</code>.</li>
+        </ul>
+
+        <h3 id="dienst">Dienst</h3>
+        <p>{{ sc.dienst.description | escape }}</p>
+        {% include organisms/schema-table.html schema=sc.dienst %}
+        <p class="datamodel-links">Bekijk: <a href="/profielen/open-diensten.json">alle diensten</a> (in <em>Alle diensten</em>) · <a href="/diensten.json">diensten met de namen van software en aanbieder ingevuld</a> · <a href="/schemas/dienst.schema.json">schema</a></p>
+
+        <h3 id="software">Software</h3>
+        <p>{{ sc.software.description | escape }}</p>
+        {% include organisms/schema-table.html schema=sc.software.properties.software.items %}
+        <p class="datamodel-links">Bekijk: <a href="/software.json">alle software</a> · <a href="/software/">de pagina's per software</a> · <a href="/schemas/software.schema.json">schema</a></p>
+
+        <h3 id="organisatie">Organisatie</h3>
+        <p>{{ sc.organisaties.description | escape }}</p>
+        {% include organisms/schema-table.html schema=sc.organisaties.properties.organisaties.items %}
+        <p class="datamodel-links">Bekijk: <a href="/organisaties.json">alle organisaties</a> · <a href="/aanbieders/">de pagina's per aanbieder</a> · <a href="/schemas/organisaties.schema.json">schema</a></p>
+
+        <h3 id="profiel">Profiel</h3>
+        <p>{{ sc.profiel.description | escape }}</p>
+        {% include organisms/schema-table.html schema=sc.profiel %}
+        {%- assign dm_defs = sc.profiel["$defs"] %}
+        {%- assign dm_verwijzing = dm_defs.verwijzing %}
+        <h4>Een verwijzing</h4>
+        <p>{{ dm_verwijzing.description | escape }}</p>
+        {% include organisms/schema-table.html schema=dm_verwijzing %}
+        <p class="datamodel-links">Bekijk:
+          {%- for r in site.data.profielregister.profielen %} <a href="{{ r.url | remove: 'https://opendiensten.nl' }}">{{ site.data.profielen[r.id].naam | escape }}</a> ·{% endfor %}
+          <a href="/schemas/profiel.schema.json">schema</a> · <a href="/profielen/toevoegen">profiel toevoegen</a></p>
+
+        <h3 id="register">Register</h3>
+        <p>{{ sc.register.description | escape }}</p>
+        {% include organisms/schema-table.html schema=sc.register %}
+        <h4>Een profiel in het register</h4>
+        {% include organisms/schema-table.html schema=sc.register.properties.profielen.items %}
+        <p class="datamodel-links">Bekijk: <a href="/profielen/register.json">het register</a> · <a href="/schemas/register.schema.json">schema</a></p>
+
+        <h3 id="bestanden">Alle bestanden</h3>
+        <table class="data-table">
+          <tr><th>bestand</th><th>wat</th></tr>
+          <tr><td><a href="/profielen/register.json"><code>/profielen/register.json</code></a></td><td>het register: welke profielen er zijn, en waar</td></tr>
+          {%- for r in site.data.profielregister.profielen %}
+          {%- assign r_pad = r.url | remove: 'https://opendiensten.nl' %}
+          <tr><td><a href="{{ r_pad }}"><code>{{ r_pad }}</code></a></td><td>profiel: {{ site.data.profielen[r.id].naam | escape }}</td></tr>
+          {%- endfor %}
+          <tr><td><a href="/software.json"><code>/software.json</code></a></td><td>alle software</td></tr>
+          <tr><td><a href="/organisaties.json"><code>/organisaties.json</code></a></td><td>alle organisaties</td></tr>
+          <tr><td><a href="/diensten.json"><code>/diensten.json</code></a></td><td>alle diensten uit <em>Alle diensten</em>, met de namen en logo's van software en aanbieder ingevuld</td></tr>
+          <tr><td><a href="/api.json"><code>/api.json</code></a></td><td>de live open diensten, met categorieën en metadata</td></tr>
+          <tr><td><a href="/profielen.json"><code>/profielen.json</code></a></td><td>per profiel de gekozen open diensten per categorie (voor de startknoppen)</td></tr>
+          {%- for s in sc %}
+          <tr><td><a href="/schemas/{{ s[0] }}.schema.json"><code>/schemas/{{ s[0] }}.schema.json</code></a></td><td>JSON Schema: {{ s[1].title | escape }}</td></tr>
+          {%- endfor %}
+        </table>
+        <p>De bron staat op <a href="https://github.com/Apitecture/OpenDienstenNL">GitHub</a>, in <code>_data/</code>. Controleren doe je met <code>ruby scripts/profielen.rb controleer</code>.</p>
+      </div>
+    </section>
+
+    {% include organisms/site-footer.html %}
+  </main>
+</div>

@@ -1,0 +1,93 @@
+---
+layout: default
+---
+{%- comment -%}
+  Pagina van één software (_software/<id>.md, met software: <id> in de front matter; de gegevens staan in
+  _data/software.json). Zelfde stramien als een aanbieder: kop (organisms/entity-header.html), de diensten,
+  en wat er per soort bij hoort: wie hem als managed service levert, en bij gesloten software de open alternatieven.
+{%- endcomment -%}
+{%- assign sw = site.data.software.software | where: "id", page.software | first -%}
+{%- include data/diensten-met.html id=sw.id -%}
+{%- assign swp_diensten = sd_diensten -%}
+{%- assign swp_cats = sd_cats -%}
+{%- assign swp_infra = swp_diensten | where: "soort", "infrastructuur" -%}
+{%- assign swp_open = swp_diensten | where_exp: "d", "d.open != false" | where_exp: "d", "d.soort != 'infrastructuur'" -%}
+{%- assign swp_dicht = swp_diensten | where_exp: "d", "d.open == false" | where_exp: "d", "d.soort != 'infrastructuur'" -%}
+{%- assign swp_beheer = swp_diensten | map: "beheer" | compact | uniq -%}
+{%- include data/gebruik.html -%}
+{%- capture swp_meta -%}
+  {%- if sw.open_source == true or sw.open_source == false %}
+  <p class="software-meta">{% if sw.open_source == true %}<span class="tag tag-goed">open source</span>{% else %}<span class="tag tag-niet">closed source</span>{% endif %}</p>
+  {%- endif %}
+  {%- if sw.broncode %}
+  <p class="software-meta"><span class="used-by-label">Broncode</span> {% include atoms/broncode.html url=sw.broncode %}</p>
+  {%- endif %}
+{%- endcapture -%}
+<div class="app-container">
+  {% include organisms/sidebar.html active="software" %}
+
+  <main class="content-area">
+    <section class="view" aria-labelledby="entity-title">
+      <div class="page-content">
+        {% include organisms/entity-header.html soort="Software" id="entity-title" naam=sw.naam logo=sw.logo website=sw.website beschrijving=sw.beschrijving meta=swp_meta %}
+      </div>
+
+      <div class="view-header">
+        <h3>{% if swp_diensten.size == 1 %}1 dienst{% else %}{{ swp_diensten.size }} diensten{% endif %} met {{ sw.naam | escape }}</h3>
+      </div>
+      <p class="entity-toelichting">
+        {%- if swp_diensten.size == 0 -%}
+        We kennen nog geen dienst met {{ sw.naam | escape }}.
+        {%- elsif sw.open_source == true -%}
+        {% if swp_diensten.size > 1 %}Verschillende aanbieders: bevalt de een niet, dan ga je met dezelfde software naar een ander. {% endif %}Je kunt {{ sw.naam | escape }} ook zelf hosten.
+        {%- elsif sw.open_source == false -%}
+        Gesloten software: je bent afhankelijk van één leverancier. Onderaan de open alternatieven.
+        {%- endif -%}
+      </p>
+      {%- if swp_diensten.size > 0 %}
+      {% include organisms/category-services.html al=swp_open infra=swp_infra nog=swp_dicht naast=true %}
+      {%- else %}
+      <p class="grid-empty">Ken je een dienst met {{ sw.naam | escape }}? <a href="mailto:{{ site.email }}?subject=Dienst%20met%20{{ sw.naam | uri_escape }}">Mail ons</a></p>
+      {%- endif %}
+
+      {%- if swp_beheer.size > 0 %}
+      <div class="view-header entity-extra">
+        <h3>{{ sw.naam | escape }} als managed service</h3>
+      </div>
+      <p class="entity-toelichting">Geen eigen beheer? Deze partijen leveren {{ sw.naam | escape }} als dienst, voor anderen:</p>
+      <ul class="managed-list">
+        {%- for b in swp_beheer %}
+        {%- assign b_org = site.data.organisaties.organisaties | where: "id", b | first %}
+        {%- assign b_diensten = swp_diensten | where: "beheer", b %}
+        <li>
+          {% include atoms/org-logo.html naam=b_org.naam logo=b_org.logo %}
+          <span><a href="/aanbieders/{{ b }}/"><strong>{{ b_org.naam | escape }}</strong></a>, voor {% for bd in b_diensten %}<a href="{{ bd.url | escape }}" rel="noopener">{{ bd.naam | escape }}</a>{% unless forloop.last %}{% if forloop.rindex == 2 %} en {% else %}, {% endif %}{% endunless %}{% endfor %}</span>
+        </li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+
+      {%- if sw.open_source == false %}
+      <div class="view-header entity-extra">
+        <h3>Open alternatieven</h3>
+      </div>
+      {%- for cat in swp_cats %}
+      {%- include data/overzicht.html categorie=cat %}
+      {%- assign alt_sw = ov_al | map: "software" | compact | uniq %}
+      <p class="software-alt">
+        <strong>{{ cat | replace: "-", " " | capitalize }}:</strong>
+        {%- if ov_al.size > 0 %}
+        <a href="/#{{ cat }}">{{ ov_al.size }} open {% if ov_al.size == 1 %}dienst{% else %}diensten{% endif %}</a>{% if alt_sw.size > 0 %}, met{% for a in alt_sw %}{% assign a_sw = site.data.software.software | where: "id", a | first %} <a href="/software/{{ a }}/">{{ a_sw.naam | escape }}</a>{% unless forloop.last %},{% endunless %}{% endfor %}{% endif %}
+        {%- else %}
+        nog geen open dienst. Ken je er een? <a href="mailto:{{ site.email }}?subject=Open%20alternatief%20voor%20{{ sw.naam | uri_escape }}">Mail ons</a>
+        {%- endif %}
+      </p>
+      {%- endfor %}
+      {%- endif %}
+
+      <p class="software-back"><a href="/software/" class="link-more">Alle software</a></p>
+    </section>
+
+    {% include organisms/site-footer.html %}
+  </main>
+</div>

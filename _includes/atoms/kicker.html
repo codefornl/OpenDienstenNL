@@ -1,0 +1,5 @@
+{%- comment -%}
+  Kicker: klein label in mono boven een kop.
+  Parameters: text, hex (true = met zeshoek)
+{%- endcomment -%}
+<p class="kicker">{% if include.hex %}{% include atoms/hex.html %}{% endif %}{{ include.text }}</p>

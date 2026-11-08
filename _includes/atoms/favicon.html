@@ -1,0 +1,20 @@
+{%- comment -%}
+  De twee logo's op een dienstkaart: groot het logo van de software (_data/software.json), klein rechtsonder
+  dat van de aanbieder (_data/organisaties.json). Een dienst zonder software (zoals Slack) heeft zijn eigen
+  favicon; zonder logo de eerste letter.
+  Parameters: dienst (volgens schemas/dienst.schema.json)
+{%- endcomment -%}
+{%- assign d = include.dienst -%}
+{%- include data/dienst.html dienst=d -%}
+{%- assign fv_logo = dn_sw.logo | default: d.favicon -%}
+{%- assign fv_naam = dn_sw.naam | default: d.naam -%}
+<div class="favicon-container">
+    {%- if fv_logo %}
+    <img src="{{ fv_logo | escape }}" alt="" class="service-favicon" loading="lazy" width="48" height="48">
+    {%- else %}
+    {% include atoms/org-logo.html naam=fv_naam %}
+    {%- endif %}
+    {%- if dn_org.logo %}
+    <img src="{{ dn_org.logo | escape }}" alt="" class="provider-favicon" loading="lazy" width="22" height="22">
+    {%- endif %}
+</div>

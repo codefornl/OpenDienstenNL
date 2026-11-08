@@ -1,0 +1,45 @@
+{
+  "$schema": "https://opendiensten.nl/schemas/profiel.schema.json",
+  "versie": 1,
+  "id": "codefornl",
+  "naam": "Code for NL",
+  "beschrijving": "De civic-tech-community van Nederland. Met deze diensten werken we samen aan projecten, meetups en hackathons.",
+  "website": "https://www.codefor.nl",
+  "logo": "/assets/images/logos/codefornl.png",
+  "diensten": [
+    {
+      "ref": "slack",
+      "url": "https://codefornl.slack.com/"
+    },
+    {
+      "ref": "signal"
+    },
+    {
+      "ref": "meetup",
+      "url": "https://www.meetup.com/Code-For-NL"
+    },
+    {
+      "ref": "github",
+      "url": "https://github.com/codefornl"
+    },
+    {
+      "ref": "github-pages",
+      "url": "https://codefor.nl"
+    },
+    {
+      "id": "mastodon",
+      "naam": "social.codefor.nl",
+      "software": "mastodon",
+      "beschrijving": "De eigen Mastodon-server van Code for NL, met #publictech-nieuws uit de community.",
+      "categorie": "sociale-media",
+      "url": "https://social.codefor.nl",
+      "aanbieder": "codefornl",
+      "beheer": "procolix",
+      "eu_hosting": true
+    },
+    {
+      "ref": "linkedin",
+      "url": "https://www.linkedin.com/company/codefornl/"
+    }
+  ]
+}

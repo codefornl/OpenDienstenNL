@@ -1,0 +1,31 @@
+{%- comment -%}
+  Kop van een profiel, een software of een aanbieder: overal hetzelfde stramien.
+  Logo, soort (kicker), naam, website eronder, beschrijving, en een regel met wat per soort verschilt
+  (de autonomiemeter bij een profiel, labels en broncode bij software, het land bij een aanbieder).
+  Parameters:
+    soort        Profiel, Software, Aanbieder
+    naam, logo, website, beschrijving
+    id           id van de kop (voor aria-labelledby)
+    meta         html met wat per soort verschilt (capture)
+{%- endcomment -%}
+<header class="profile-header entity-header">
+    <div class="profile-identity">
+        {% include atoms/org-logo.html naam=include.naam logo=include.logo size="large" %}
+        <div>
+            {% include atoms/kicker.html text=include.soort hex=true %}
+            <h2{% if include.id %} id="{{ include.id }}"{% endif %}>{{ include.naam | escape }}</h2>
+            {%- if include.website %}
+            <p class="profile-website"><a href="{{ include.website | escape }}" rel="noopener">{{ include.website | remove: "https://" | remove: "http://" | remove: "www." | append: "#" | remove: "/#" | remove: "#" | escape }}</a></p>
+            {%- endif %}
+        </div>
+    </div>
+    {%- if include.beschrijving %}
+    <p class="page-lead">{{ include.beschrijving | escape }}</p>
+    {%- endif %}
+    {%- assign eh_meta = include.meta | strip %}
+    {%- if eh_meta != "" %}
+    <div class="entity-meta">
+        {{ eh_meta }}
+    </div>
+    {%- endif %}
+</header>

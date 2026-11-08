@@ -1,0 +1,6 @@
+---
+permalink: /schemas/software.schema.json
+layout: null
+---
+{%- comment -%} Het JSON Schema uit _data/schemas/software.json. Zie ook /gegevensmodel. {%- endcomment -%}
+{{ site.data.schemas.software | jsonify }}

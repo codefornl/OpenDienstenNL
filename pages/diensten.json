@@ -1,0 +1,17 @@
+---
+permalink: /diensten.json
+layout: null
+---
+{%- comment -%}
+  Alle diensten uit het standaardprofiel (Alle diensten), voor js/ServicesManager.mjs. Software en aanbieder
+  staan er al ingevuld: aanbieder en software zijn hier namen (met aanbieder_id en software_id ernaast),
+  favicon is het logo van de software (of het eigen favicon van een dienst zonder software),
+  aanbieder_favicon is het logo van de aanbieder. De bron is _data/profielen, _data/software.json en _data/organisaties.json.
+{%- endcomment -%}
+{%- assign std = site.data.profielregister.standaard -%}
+[
+{%- for d in site.data.profielen[std].diensten -%}
+{%- include data/dienst.html dienst=d %}
+  {"id": {{ d.id | jsonify }}, "naam": {{ d.naam | jsonify }}, "software": {{ dn_sw.naam | jsonify }}, "software_id": {{ d.software | jsonify }}, "open_source": {{ dn_sw.open_source | jsonify }}, "beschrijving": {{ d.beschrijving | jsonify }}, "categorie": {{ d.categorie | jsonify }}, "url": {{ d.url | jsonify }}, "random_url": {{ d.random_url | jsonify }}, "favicon": {{ dn_sw.logo | default: d.favicon | jsonify }}, "aanbieder": {{ dn_org.naam | jsonify }}, "aanbieder_id": {{ d.aanbieder | jsonify }}, "aanbieder_favicon": {{ dn_org.logo | jsonify }}, "spoelkeuken_url": {{ d.spoelkeuken_url | jsonify }}, "eu_hosting": {{ d.eu_hosting | jsonify }}, "status": {{ d.status | jsonify }}, "open": {% if d.open == false %}false{% else %}true{% endif %}, "redenen": {{ d.redenen | jsonify }}, "doelgroep": {{ d.doelgroep | jsonify }}, "soort": {{ d.soort | default: "dienst" | jsonify }}}{% unless forloop.last %},{% endunless %}
+{%- endfor %}
+]

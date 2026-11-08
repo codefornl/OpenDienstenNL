@@ -1,0 +1,8 @@
+{%- comment -%}
+  Sterren als weergave van een gemiddelde (1 tot 5), zelfde afronding als ServicesManager.
+  Parameters: rating (getal, bv. 4.5)
+{%- endcomment -%}
+{%- assign r = include.rating | default: 0 | plus: 0.0 -%}
+{%- assign full = r | floor -%}
+{%- capture stars -%}{% for i in (1..5) %}{% if i <= full %}★{% else %}☆{% endif %}{% endfor %}{%- endcapture -%}
+<span class="rating-stars" role="img" aria-label="{{ r }} van 5 sterren">{{ stars }}</span>

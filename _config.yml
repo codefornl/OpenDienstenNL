@@ -1,8 +1,46 @@
 title: Open Diensten
 description: Open & gratis publiek toegankelijke SaaS omgevingen voor community organisatie
-email: opendiensten@codefor.nl
+email: info@apitecture.nl
+
+# Uitgever van de website (colofon op /over#colofon)
+uitgever:
+  naam: Apitecture B.V.
+  website: https://www.apitecture.nl
+  adres: Plein 2
+  postcode: 2471 AN
+  plaats: Zwammerdam
+  kvk: "92646379"
+  email: info@apitecture.nl
 
 collections:
-  categories:
+  # Een pagina per software (/software/<id>/) en per aanbieder (/aanbieders/<id>/); de gegevens staan in
+  # _data/software.json en _data/organisaties.json. Maak ontbrekende pagina's met: ruby scripts/profielen.rb paginas
+  software:
     output: true
-    permalink: /:name
+    permalink: /software/:name/
+  aanbieders:
+    output: true
+    permalink: /aanbieders/:name/
+
+defaults:
+  - scope:
+      type: software
+    values:
+      layout: software
+  - scope:
+      type: aanbieders
+    values:
+      layout: aanbieder
+
+# Diensten en profielen staan in _data/profielen/ (schema's in _data/schemas/, gepubliceerd op /schemas/), het register in _data/profielregister.json.
+# Zie docs/ARCHITECTURE.md en scripts/profielen.rb.
+
+# Niet publiceren: documentatie en projectbestanden
+exclude:
+  - README.md
+  - LICENSE.md
+  - CLAUDE.md
+  - docs/
+  - scripts/
+  - assets/images/logo-design-file.svg
+  - assets/images/screenshot.png

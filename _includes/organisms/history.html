@@ -1,0 +1,33 @@
+{%- comment -%}
+  Geschiedenis: de diensten die je zelf gestart hebt. Bovenaan exporteren, importeren en wissen; dan wat nog beoordeeld moet worden, daarna per dag.
+  Alleen als de gebruiker de geschiedenis bijhoudt (standaard uit); anders een uitleg en een knop om hem aan te zetten.
+  Staat alleen in je eigen browser. De kaarten maakt HistoryManager.createHistoryServiceCard() in js/HistoryManager.mjs.
+{%- endcomment -%}
+<section id="geschiedenis-view" class="view geschiedenis-view" aria-labelledby="geschiedenis-title">
+    <div class="view-header">
+        <h2 id="geschiedenis-title">Geschiedenis</h2>
+    </div>
+    <div class="history-off" data-history-off hidden>
+        {% include atoms/hex.html outline=true %}
+        <div>
+            <p><strong>Geschiedenis staat uit.</strong> We bewaren niet welke diensten je start en welke links je krijgt. Die links zijn geheim: wie ze heeft, kan meedoen. Je beoordelingen tellen wel mee, als telling per dienst, zonder links.</p>
+            <p>Zet je de geschiedenis aan, dan bewaren we je sessies alleen op dit apparaat, zodat je een gesprek of document terugvindt.</p>
+            {% include atoms/button.html text="Geschiedenis bijhouden" variant="secondary" class="history-enable" %}
+        </div>
+    </div>
+    <div data-history-on>
+    <p class="view-status">Alleen zichtbaar in deze browser. Er gaat niets naar een server.</p>
+    <div class="view-footer history-actions">
+        <div class="view-actions">
+            {% include atoms/button.html text="Exporteer" id="export-history-btn" variant="secondary" size="small" hidden=true %}
+            {% include atoms/button.html text="Importeer" id="import-history-btn" variant="secondary" size="small" %}
+            {% include atoms/button.html text="Wis alles" id="clear-history-btn" variant="danger" size="small" hidden=true %}
+            <input type="file" id="import-file-input" accept=".json" hidden>
+        </div>
+        <p class="view-status">Naar een andere browser? Exporteer je sessies als bestand en importeer ze daar.</p>
+    </div>
+    <div id="diensten-lijst" class="diensten-lijst">
+        {% include molecules/empty-state.html text="Je hebt nog niets gestart. Klik op 'Start videogesprek' of 'Start samen schrijven' om te beginnen." %}
+    </div>
+    </div>
+</section>

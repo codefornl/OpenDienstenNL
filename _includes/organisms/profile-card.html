@@ -1,0 +1,19 @@
+{%- comment -%}
+  Profielkaart: een organisatie, de categorieën waarvoor ze diensten gebruikt en hoe ver ze zijn met
+  digitale autonomie. Op /profielen/. Verwijst naar Diensten, gefilterd op dit profiel: /?profiel=<id>.
+  Parameters: profiel (id uit _data/profielregister.json)
+{%- endcomment -%}
+{%- include data/profiel.html id=include.profiel -%}
+{%- assign p = rp -%}
+{%- assign pk_cats = rp_cats -%}
+<a href="/?profiel={{ p.id }}" class="profile-card">
+    {% include atoms/org-logo.html naam=p.naam logo=p.logo %}
+    <div class="profile-card-body">
+        <h3>{{ p.naam | escape }}</h3>
+        <p>{{ p.beschrijving | escape }}</p>
+        <p class="profile-card-cats">
+            {%- for cat_slug in pk_cats %}{% include atoms/category-badge.html categorie=cat_slug %} {% endfor -%}
+        </p>
+        {% include molecules/autonomy-meter.html profiel=include.profiel %}
+    </div>
+</a>

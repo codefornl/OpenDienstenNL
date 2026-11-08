@@ -1,6 +1,82 @@
+// Sessies en beoordelingen, alleen in de browser van de gebruiker (localStorage).
+//
+// Geschiedenis bijhouden staat standaard UIT (privacy en security: de unieke links zijn geheim).
+// - Uit: we bewaren geen sessies. Een beoordeling bewaren we alleen als telling per dienst
+//   (opendienstenBeoordelingen), zonder link en zonder tijd, zodat Start er wel van leert.
+// - Aan: elke sessie (dienst, link, tijd, beoordeling) staat in opendienstenStoredUrls.
+// - Uitzetten wist de sessies; hun beoordelingen gaan mee naar de tellingen.
+import { ratingKey } from './ServicesManager.mjs';
+
+
+export const SETTINGS_KEY = 'opendienstenInstellingen';
+export const RATINGS_KEY = 'opendienstenBeoordelingen';
+
 export class HistoryManager {
   constructor() {
     this.storageKey = 'opendienstenStoredUrls';
+  }
+
+  // ----- Instelling: geschiedenis bijhouden -----
+
+  getSettings() {
+    try {
+      return JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+    } catch (e) {
+      return {};
+    }
+  }
+
+  isEnabled() {
+    const settings = this.getSettings();
+    if (typeof settings.geschiedenis === 'boolean') return settings.geschiedenis;
+
+    // From before this setting: who already has a history keeps it
+    const hadHistory = this.getStoredUrls().length > 0;
+    this.saveSettings({ ...settings, geschiedenis: hadHistory });
+    return hadHistory;
+  }
+
+  saveSettings(settings) {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  }
+
+  // Turning it off removes the sessions; their ratings are kept as anonymous counts
+  setEnabled(enabled) {
+    if (!enabled) {
+      this.getStoredUrls()
+        .filter(entry => entry.rating)
+        .forEach(entry => this.addAnonymousRating(entry.service, entry.rating));
+      this.clearStoredUrls();
+    }
+    this.saveSettings({ ...this.getSettings(), geschiedenis: enabled });
+  }
+
+  // ----- Beoordelingen zonder geschiedenis: telling per dienst -----
+
+  ratingKey(service) {
+    return ratingKey(service);
+  }
+
+  getAnonymousRatings() {
+    try {
+      return JSON.parse(localStorage.getItem(RATINGS_KEY) || '{}');
+    } catch (e) {
+      return {};
+    }
+  }
+
+  addAnonymousRating(service, rating) {
+    const ratings = this.getAnonymousRatings();
+    const key = this.ratingKey(service);
+    const current = ratings[key] || { som: 0, aantal: 0 };
+    ratings[key] = { som: current.som + rating, aantal: current.aantal + 1 };
+    localStorage.setItem(RATINGS_KEY, JSON.stringify(ratings));
+  }
+
+  // Rate a session: in the history if it is there, otherwise as an anonymous count
+  rate(sessionId, service, rating) {
+    if (this.isEnabled() && this.updateRating(sessionId, rating)) return;
+    this.addAnonymousRating(service, rating);
   }
 
   // Generate session ID
@@ -10,17 +86,21 @@ export class HistoryManager {
 
   // Store generated URL in localStorage
   storeGeneratedUrl(sessionId, service, category, url) {
+    if (!this.isEnabled()) return false;
     const storedUrls = this.getStoredUrls();
     const timestamp = new Date().toISOString();
 
     storedUrls.unshift({
       sessionId: sessionId,
       service: {
+        id: service.id,
         naam: service.naam,
+        software: service.software,
         categorie: service.categorie,
         aanbieder: service.aanbieder,
         favicon: service.favicon,
-        aanbieder_favicon: service.aanbieder_favicon
+        aanbieder_favicon: service.aanbieder_favicon,
+        eu_hosting: service.eu_hosting
       },
       category: category,
       url: url,
@@ -35,6 +115,7 @@ export class HistoryManager {
     }
 
     localStorage.setItem(this.storageKey, JSON.stringify(storedUrls));
+    return true;
   }
 
   // Get stored URLs from localStorage
@@ -207,48 +288,66 @@ export class HistoryManager {
       });
     }
 
-    if (storedUrls.length === 0) {
-      // No history at all - show only import button
-      const message = 'Je hebt nog geen diensten gegenereerd. Klik op "Start videogesprek" of "Start samen schrijven" om te beginnen!';
-      dienstenLijst.innerHTML = `<p class="empty-state">${message}</p>`;
-      if (clearHistoryBtn) clearHistoryBtn.style.display = 'none';
-      if (exportHistoryBtn) exportHistoryBtn.style.display = 'none';
-      if (importHistoryBtn) importHistoryBtn.style.display = 'inline-block'; // Always show import
+    // Import is always possible; export and clear only when there is something
+    const hasHistory = storedUrls.length > 0;
+    if (importHistoryBtn) importHistoryBtn.hidden = false;
+    if (exportHistoryBtn) exportHistoryBtn.hidden = !hasHistory;
+    if (clearHistoryBtn) clearHistoryBtn.hidden = !hasHistory;
+
+    if (!hasHistory) {
+      dienstenLijst.replaceChildren(this.createEmptyState(
+        'Je hebt nog geen diensten gestart. Klik op \'Start videogesprek\' of \'Start samen schrijven\' om te beginnen.'
+      ));
       return;
     }
-
-    // Show all action buttons when there's history
-    if (clearHistoryBtn) clearHistoryBtn.style.display = 'inline-block';
-    if (exportHistoryBtn) exportHistoryBtn.style.display = 'inline-block';
-    if (importHistoryBtn) importHistoryBtn.style.display = 'inline-block';
 
     if (filteredUrls.length === 0) {
-      const message = `Je hebt nog geen diensten uit de categorie "${this.getCategoryDisplayName(activeCategory)}" gegenereerd.`;
-      dienstenLijst.innerHTML = `<p class="empty-state">${message}</p>`;
+      dienstenLijst.replaceChildren(this.createEmptyState(
+        `Je hebt nog geen diensten uit de categorie ${this.getCategoryDisplayName(activeCategory).toLowerCase()} gestart.`
+      ));
       return;
     }
-
-    // Group by date
-    const groupedByDate = this.groupByDate(filteredUrls);
 
     dienstenLijst.innerHTML = '';
 
+    // First what still needs a rating, then the rest per day
+    const unrated = filteredUrls.filter(entry => this.canRate(entry));
+    const rated = filteredUrls.filter(entry => !this.canRate(entry));
+
+    if (unrated.length > 0) {
+      this.appendGroup(dienstenLijst, 'Nog beoordelen', unrated);
+    }
+
+    const groupedByDate = this.groupByDate(rated);
     Object.keys(groupedByDate).forEach(dateKey => {
-      const dateHeader = document.createElement('h3');
-      dateHeader.className = 'date-header';
-      dateHeader.textContent = this.formatDateHeader(dateKey);
-      dienstenLijst.appendChild(dateHeader);
-
-      const dateGroup = document.createElement('div');
-      dateGroup.className = 'date-group';
-
-      groupedByDate[dateKey].forEach(entry => {
-        const serviceCard = this.createHistoryServiceCard(entry);
-        dateGroup.appendChild(serviceCard);
-      });
-
-      dienstenLijst.appendChild(dateGroup);
+      this.appendGroup(dienstenLijst, this.formatDateHeader(dateKey), groupedByDate[dateKey]);
     });
+  }
+
+  // A heading with a group of history cards
+  appendGroup(container, title, entries) {
+    const header = document.createElement('h3');
+    header.className = 'date-header';
+    header.textContent = title;
+
+    const group = document.createElement('div');
+    group.className = 'date-group';
+    entries.forEach(entry => group.appendChild(this.createHistoryServiceCard(entry)));
+
+    container.append(header, group);
+  }
+
+  // Empty state, same markup as _includes/molecules/empty-state.html
+  createEmptyState(message) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'empty-state';
+    const hex = document.createElement('span');
+    hex.className = 'hex hex-outline';
+    hex.setAttribute('aria-hidden', 'true');
+    const text = document.createElement('p');
+    text.textContent = message;
+    wrapper.append(hex, text);
+    return wrapper;
   }
 
   // Create a service card for history view (same style as service cards)
@@ -260,20 +359,30 @@ export class HistoryManager {
     card.href = entry.url;
     card.className = 'service-card history-variant';
     card.target = '_blank';
+    card.rel = 'noopener';
 
     const faviconContainer = document.createElement('div');
     faviconContainer.className = 'favicon-container';
 
-    const serviceFavicon = document.createElement('img');
-    serviceFavicon.src = entry.service.favicon;
-    serviceFavicon.alt = entry.service.naam;
-    serviceFavicon.className = 'service-favicon';
-    faviconContainer.appendChild(serviceFavicon);
+    // Without a logo: the first letter, like _includes/atoms/org-logo.html
+    if (entry.service.favicon) {
+      const serviceFavicon = document.createElement('img');
+      serviceFavicon.src = entry.service.favicon;
+      serviceFavicon.alt = '';
+      serviceFavicon.className = 'service-favicon';
+      faviconContainer.appendChild(serviceFavicon);
+    } else {
+      const letter = document.createElement('span');
+      letter.className = 'org-logo';
+      letter.setAttribute('aria-hidden', 'true');
+      letter.textContent = (entry.service.naam || '?').slice(0, 1);
+      faviconContainer.appendChild(letter);
+    }
 
     if (entry.service.aanbieder_favicon) {
       const providerFavicon = document.createElement('img');
       providerFavicon.src = entry.service.aanbieder_favicon;
-      providerFavicon.alt = entry.service.aanbieder;
+      providerFavicon.alt = '';
       providerFavicon.className = 'provider-favicon';
       faviconContainer.appendChild(providerFavicon);
     }
@@ -299,6 +408,7 @@ export class HistoryManager {
     });
 
     const renameBtn = document.createElement('button');
+    renameBtn.type = 'button';
     renameBtn.className = 'rename-btn';
     renameBtn.innerHTML = '✎';
     renameBtn.title = 'Hernoem';
@@ -326,7 +436,10 @@ export class HistoryManager {
     // Timestamp display
     const timestampDisplay = document.createElement('p');
     timestampDisplay.className = 'history-timestamp';
-    timestampDisplay.textContent = this.formatTimestamp(entry.timestamp);
+    // Under "Nog beoordelen" there is no day heading, so show the day here
+    timestampDisplay.textContent = entry.rating
+      ? this.formatTimestamp(entry.timestamp)
+      : `${this.formatDateHeader(new Date(entry.timestamp).toDateString())}, ${this.formatTimestamp(entry.timestamp)}`;
 
     const serviceMeta = document.createElement('div');
     serviceMeta.className = 'service-meta';
@@ -337,29 +450,30 @@ export class HistoryManager {
 
     const categoryBadge = document.createElement('span');
     categoryBadge.className = 'category-badge';
-    categoryBadge.textContent = entry.service.categorie;
+    categoryBadge.textContent = entry.service.categorie.replace(/-/g, ' ');
 
     const providerInfo = document.createElement('div');
     providerInfo.className = 'provider-info';
 
-    const euFlag = document.createElement('span');
-    if (entry.service.eu_hosting) {
-      euFlag.className = 'eu-flag';
-      euFlag.textContent = '🇪🇺';
-    } else {
-      euFlag.className = 'non-eu-flag';
-      euFlag.title = 'Niet in EU gehost';
-      euFlag.innerHTML = '<span class="eu-flag-base">🇪🇺</span><span class="prohibited-symbol">✘</span>';
+    // Europees or not, as a label (older entries don't know about EU hosting: then no label)
+    let euTag = null;
+    if (typeof entry.service.eu_hosting === 'boolean') {
+      euTag = document.createElement('span');
+      euTag.className = `tag ${entry.service.eu_hosting ? 'tag-goed' : 'tag-niet'}`;
+      euTag.textContent = entry.service.eu_hosting ? 'europees' : 'niet europees';
     }
 
     const providerName = document.createElement('span');
     providerName.className = 'provider-name';
     providerName.textContent = entry.service.aanbieder || '';
 
-    providerInfo.appendChild(euFlag);
     providerInfo.appendChild(providerName);
 
-    metaRow.appendChild(categoryBadge);
+    const badges = document.createElement('span');
+    badges.className = 'service-badges';
+    badges.appendChild(categoryBadge);
+    if (euTag) badges.appendChild(euTag);
+    metaRow.appendChild(badges);
     metaRow.appendChild(providerInfo);
     serviceMeta.appendChild(metaRow);
 
@@ -370,6 +484,8 @@ export class HistoryManager {
 
       const stars = document.createElement('span');
       stars.className = 'rating-stars';
+      stars.setAttribute('role', 'img');
+      stars.setAttribute('aria-label', `${entry.rating} van 5 sterren`);
       stars.textContent = '★'.repeat(entry.rating) + '☆'.repeat(5 - entry.rating);
 
       const ratingText = document.createElement('span');
@@ -391,6 +507,7 @@ export class HistoryManager {
 
     // Create delete button
     const deleteBtn = document.createElement('button');
+    deleteBtn.type = 'button';
     deleteBtn.className = 'delete-history-item';
     deleteBtn.innerHTML = '×';
     deleteBtn.title = 'Verwijder deze entry';
@@ -404,21 +521,40 @@ export class HistoryManager {
       if (confirm(`Weet je zeker dat je "${entry.service.naam}" wilt verwijderen uit de geschiedenis?`)) {
         this.deleteEntry(entry.sessionId);
         // Refresh the view
-        const activeCategory = this.getCurrentActiveCategory();
-        this.loadStoredServices(activeCategory);
+        this.loadStoredServices();
       }
     });
 
+    const actions = document.createElement('div');
+    actions.className = 'history-card-actions';
+
+    // Not rated yet: back to the start page of this session, where the stars are
+    // (only videobellen and samen schrijven have one)
+    if (this.canRate(entry)) {
+      const rateLink = document.createElement('a');
+      rateLink.className = 'link-more';
+      rateLink.href = `${this.startPageFor(entry.category)}?sessie=${encodeURIComponent(entry.sessionId)}`;
+      rateLink.textContent = 'Beoordeel';
+      actions.appendChild(rateLink);
+      cardWrapper.classList.add('is-unrated');
+    }
+
+    actions.appendChild(deleteBtn);
     cardWrapper.appendChild(card);
-    cardWrapper.appendChild(deleteBtn);
+    cardWrapper.appendChild(actions);
 
     return cardWrapper;
   }
 
-  // Get current active category from the UI
-  getCurrentActiveCategory() {
-    const activeFilter = document.querySelector('.category-filters .filter-btn.active');
-    return activeFilter ? activeFilter.dataset.category : null;
+  // Start page for a category: the quick actions have their own, other categories use /<categorie>
+  // Can this session still be rated? Not rated yet, and there is a start page with the stars
+  canRate(entry) {
+    return !entry.rating && Boolean(this.startPageFor(entry.category));
+  }
+
+  startPageFor(category) {
+    const startPages = { 'videobellen': '/start-videogesprek', 'samen-schrijven': '/start-samen-schrijven' };
+    return startPages[category] || null;
   }
 
   // Get display name for an entry (custom or default)
@@ -451,8 +587,7 @@ export class HistoryManager {
 
     if (this.updateCustomName(entry.sessionId, finalName)) {
       // Refresh the view
-      const activeCategory = this.getCurrentActiveCategory();
-      this.loadStoredServices(activeCategory);
+      this.loadStoredServices();
     }
   }
 
@@ -562,8 +697,7 @@ export class HistoryManager {
           alert(`Import geslaagd!\n\n${result.imported} nieuwe items toegevoegd\n${result.updated} items bijgewerkt\nTotaal: ${result.total} items`);
 
           // Refresh the view
-          const activeCategory = this.getCurrentActiveCategory();
-          this.loadStoredServices(activeCategory);
+          this.loadStoredServices();
         } catch (error) {
           alert(`Import mislukt: ${error.message}`);
           console.error('Import error:', error);

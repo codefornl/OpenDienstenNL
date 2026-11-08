@@ -1,0 +1,5 @@
+---
+permalink: /profielen/register.json
+layout: null
+---
+{{ site.data.profielregister | jsonify }}

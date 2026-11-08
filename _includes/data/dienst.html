@@ -1,0 +1,11 @@
+{%- comment -%}
+  De software en de aanbieder van een dienst opzoeken. Geeft geen uitvoer; zet:
+    dn_sw    de software (uit _data/software.json), of nil
+    dn_org   de organisatie die de dienst aanbiedt (uit _data/organisaties.json), of nil
+  Variabelen zijn globaal in Liquid: lees ze direct na de include.
+  Parameters: dienst
+{%- endcomment -%}
+{%- assign dn_sw = nil -%}
+{%- assign dn_org = nil -%}
+{%- if include.dienst.software -%}{%- assign dn_sw = site.data.software.software | where: "id", include.dienst.software | first -%}{%- endif -%}
+{%- if include.dienst.aanbieder -%}{%- assign dn_org = site.data.organisaties.organisaties | where: "id", include.dienst.aanbieder | first -%}{%- endif -%}

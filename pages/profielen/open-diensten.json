@@ -1,0 +1,5 @@
+---
+permalink: /profielen/open-diensten.json
+layout: null
+---
+{{ site.data.profielen["open-diensten"] | jsonify }}
