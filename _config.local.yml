@@ -10,6 +10,5 @@ exclude:
   - CLAUDE.md
   - docs/
   - scripts/
-  - assets/images/logo-design-file.svg
   - assets/images/screenshot.png
   - _config.local.yml

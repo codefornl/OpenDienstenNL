@@ -1,9 +1,10 @@
 {%- comment -%}
-  Merkkop: OpenDiensten, met de zeshoek. Optioneel een regel eronder in mono.
+  Merkkop: het logo van OpenDiensten (assets/images/logo/opendiensten.svg). Optioneel een regel eronder in mono.
+  Varianten in assets/images/logo/: -oranje (op oranje), -zwart (wit, op donker), -logo (groot, met drie zeshoeken).
   Parameters: href (standaard /), subtitle (optioneel)
 {%- endcomment -%}
 <a href="{{ include.href | default: '/' }}" class="brand">
-    <h1 class="brand-name">{% include atoms/hex.html %}OpenDiensten</h1>
+    <h1 class="brand-name"><img src="/assets/images/logo/opendiensten.svg" alt="OpenDiensten" width="1656" height="225"></h1>
     {%- if include.subtitle %}
     {% include atoms/text-beep.html text=include.subtitle %}
     {%- endif %}

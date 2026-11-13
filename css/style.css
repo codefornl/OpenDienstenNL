@@ -603,16 +603,13 @@ img {
 }
 
 .brand-name {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
     margin: 0;
-    font-size: 28px;
-    letter-spacing: -0.02em;
+    line-height: 0;
 }
 
-.brand-name .hex {
-    font-size: 0.9em;
+.brand-name img {
+    width: auto;
+    height: 30px;
 }
 
 .brand .text-beep {
@@ -2086,15 +2083,7 @@ a.service-card:hover,
     font-size: 18px;
 }
 
-.offline .offline-merk {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: var(--space-2);
-    font-weight: 700;
-    font-size: 20px;
-}
-
-.offline .offline-merk .hex {
-    background: var(--night);
+.offline .offline-merk img {
+    width: auto;
+    height: 36px;
 }

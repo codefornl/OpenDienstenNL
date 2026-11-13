@@ -45,7 +45,7 @@ All data is JSON, validated by the JSON Schemas in `_data/schemas/<naam>.json` (
 - `_includes/atoms/`, `_includes/molecules/`, `_includes/organisms/`: Design system components (atomic design), documented at `/design-system/` — not public: excluded in `_config.yml`, view locally with `bundle exec jekyll serve --config _config.yml,_config.local.yml`
 - `css/style.css`: Design tokens + components, Apitecture branding; used by everything on `_layouts/default.html` (homepage, design system, start pages)
 - `css/design-system.css`: Styling for the design system page itself
-- `assets/images/`: All images (favicon, logos, screenshot); partner/brand logos in `assets/images/logos/`
+- `assets/images/`: All images. The OpenDiensten logo in `assets/images/logo/`: `opendiensten.svg` (light backgrounds, used by `molecules/brand.html`), `-oranje.svg` (on orange, the offline screen), `-zwart.svg` (white, on dark), `-logo.svg` (large, three hexagons); `favicon.svg` is the hexagon from the logo without text. Partner logos in `assets/images/logos/`
 - `assets/fonts/`: Self-hosted fonts (Atkinson Hyperlegible Mono)
 - `js/`: Client-side modules: `ServicesManager` (data, cards, sorting by rating, roulette wheel, unique URLs), `HistoryManager` (sessions in localStorage), `opendienstenapp.js` (Diensten), `geschiedenis.js` (Geschiedenis), `start.js` (start pages), `nav.js` (unrated count, marks the category heading in view)
 - `docs/`: Project documentation (architecture, contributing, category mapping); not published. Read `docs/ARCHITECTURE.md` for the concepts (open dienst, aanbieder, EU) and the start flow.

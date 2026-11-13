@@ -37,7 +37,6 @@ exclude:
   - CLAUDE.md
   - docs/
   - scripts/
-  - assets/images/logo-design-file.svg
   - assets/images/screenshot.png
   # Het design system is niet publiek. Lokaal bekijken:
   #   bundle exec jekyll serve --config _config.yml,_config.local.yml
